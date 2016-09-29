@@ -1,0 +1,42 @@
+.well{
+    background-color: rgb(22, 105, 173);
+    color: rgb(255, 255, 250);
+    font-weight: bold;
+}
+
+.btn-xl {
+   .button-size(20px; 20px; 24px; 1; 10px);
+}
+
+.center {
+    text-align: center;
+}
+.left {
+    test-align: left;
+}
+.nav{
+    text-align: center;
+    font-weight: bold;
+    font-size: large;
+}
+    
+label {
+    display: block;
+    font-size: 150%;
+}
+
+select {
+    width: 25%;
+}
+
+.button {
+    font-size: 100%;
+}
+
+.debit {
+    color: green;
+}
+
+.credit {
+    color: red;
+}

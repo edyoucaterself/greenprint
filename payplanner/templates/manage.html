@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% comment %}
+Item edit template
+Author: Matt Agresta
+Created on: 9/4/2016
+TODO:
+Add if statement to read variable to see if income or expense and
+put correct title
+{% endcomment %}
+
+{% block content %}
+<div class="center">
+<form action="{% url 'manage' %}" method="post">
+{% csrf_token %}
+{{ form }}
+{% if is_get %}
+<div class="center btn-group-vertical btn-group-lg">
+<input type="submit" name="profile" value="Edit Profile" class="btn btn-primary"/>
+<input type="submit" name="categories" value="Add Category" class="btn btn-primary"/>
+<input type="submit" name="deldata" value="Delete Budget" class="btn btn-warning"/>
+<input type="submit" name="delacct" value="Delete Account" class="btn btn-danger"/>
+<input type="submit" name="home" value="Home" class="btn btn-default"/>
+</div>
+{% else %}
+<div class="btn-group">
+<input type="submit" name="save" value="Save" class="btn btn-primary"/>
+<input type="submit" name="cancel" value="Cancel" class="btn btn-default"/>
+</div>
+{% endif %}
+</form>
+</div>
+{% endblock %}
+{% block footer %}
+<div class="center">{{ footer }}</div>
+{% endblock %}
+
