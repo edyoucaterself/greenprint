@@ -7,6 +7,8 @@ To Do list:
 		-Shortterm - Top of view compare request.user to item.parentItem.user, if not  match return redirect('home')
 		-Longterm - Create decerator to compare request.user and instance user (e.g instance user would be parentItem.user)
 
+-Remove key in settings_dev, import settings_dev.py into settings.py (remove rest)
+
 -Extend User object to include categories
 	-models.py 
 		- Create cust_user model, inheriting django.contrib.auth.models.User
