@@ -1,0 +1,8 @@
+python-libs-2.7.5-39.el7_2.x86_64
+python-2.7.5-39.el7_2.x86_64
+apr-1.4.8-3.el7.x86_64
+apr-util-1.5.2-6.el7.x86_64
+httpd-tools-2.4.6-40.el7_2.4.x86_64
+mailcap-2.1.41-2.el7.noarch
+httpd-2.4.6-40.el7_2.4.x86_64
+mod_wsgi-3.4-12.el7_0.x86_64
