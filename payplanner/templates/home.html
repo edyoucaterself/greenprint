@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% comment %}
+Home index template
+Author: Matt Agresta
+Created on: 9/4/2016
+Will hold form to display budget, contain buttons to add item,
+remove item, edit item
+
+{% endcomment %}
+{% block title %}
+<title>PayPlanner Budget</title>
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+<form action="{% url 'config' %}" method="post">
+{% csrf_token %}
+{% if lineitems %}
+<div class="row">
+ <div class="col-xs-3"></div>
+ <div class="col-xs-3"></div>
+ <div class="col-xs-1"><input type="submit" name="add_income" value="Add Income" class="btn btn-primary btn-sm"/></div>
+ <div class="col-xs-1"><input type="submit" name="add_expense" value="Add Expense" class="btn btn-primary btn-sm"/></div>
+ <div class="col-xs-1"></div>
+ <div class="col-xs-3"></div>
+</div>
+{% else %}
+<div class="center row">
+ <div class="col-xs-12"><div class="btn-group-vertical btn-group-lg center">
+  <input type="submit" name="add_income" value="Add Income" class="btn btn-primary"/>
+  <input type="submit" name="add_expense" value="Add Expense" class="btn btn-primary"/></div>
+ </div></div>
+{% endif %}
+{% for itemid,isincome,itemdate,name,amount,running_total,itemnote in lineitems %}
+  {% if isincome %}
+   <div class="row">
+    <div class="col-xs-3">{{ itemdate }}</div>
+    <div class="col-xs-3"><a href="{% url 'edit' itemid %}">{{ name }}</a></div>
+    <div class="col-xs-1"><p class="text-success">+{{ amount }}</p></div>
+    <div class="col-xs-1">      </div>
+    <div class="col-xs-1">{{ running_total }}</div>
+    <div class="col-xs-3">{{ itemnote }}</div>
+   </div>
+  {% else %}
+   <div class="row">
+    <div class="col-xs-3">{{ itemdate }}</div>
+    <div class="col-xs-3"><a href="{% url 'edit' itemid %}">{{ name }}</a></div>
+    <div class="col-xs-1">      </div>
+    <div class="col-xs-1"><p class="text-danger">-{{ amount }}</p></div>
+    <div class="col-xs-1">{{ running_total }}</div>
+    <div class="col-xs-3">{{ itemnote }}</div>
+   </div>
+  {% endif %}
+ {% endfor %}
+ </div>
+</form>
+{% endblock %}
+{% block footer %}
+{{ footer }}
+{% endblock %}
+

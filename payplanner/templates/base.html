@@ -1,0 +1,48 @@
+{% load staticfiles %}
+<html>
+<head>
+ {% load bootstrap3 %}
+ {% bootstrap_css %}
+ {% bootstrap_javascript %}
+ {% bootstrap_messages %}
+
+ <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+ <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+ <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+ <link rel="stylesheet" href="/resources/demos/style.css" />
+ <script>
+ $(function() {
+     $( "#id_nextDueDate" ).datepicker();
+     $( "#id_endDate" ).datepicker();
+ });
+ </script>
+ 
+ <link rel="stylesheet" href="{% static 'css/budget.css' %}">
+</head>
+{% block title %}{% endblock %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12 well well-sm">
+     <h1 class="center">GreenPrint PayPlanner</h1>
+      <div class="row">
+      <div class="col-xs-6">
+      {% if user.is_authenticated %}
+       <p>Welcome {{ user }}!
+        <a title="Manage Settings" href="{% url 'manage' %}"><img border="0" width="75" alt="Manage Account" src="{% static "pics/settings.png" %}"></a>
+       </p>
+       </div>
+       <div class="col-xs-6 text-right">
+       <a href="{% url 'logout' %}" class="text-warning">Logout</a>
+       </div>
+      {% endif %}
+      </div>
+    </div>
+  </div>
+ <div class="row">
+   <div class="col-xs-12">{% block content %}{% endblock %}</div>
+  </div>
+  <div class="row">
+   <div class="col-xs-12">{% block footer %}{% endblock %}</div>
+  </div>
+ </div>
+</html>

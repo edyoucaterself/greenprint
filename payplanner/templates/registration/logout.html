@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% comment %}
+Item edit template
+Author: Matt Agresta
+Created on: 9/4/2016
+TODO:
+Add if statement to read variable to see if income or expense and
+put correct title
+{% endcomment %}
+
+{% block title %}
+<h1>Edit {{ name }}</h1>
+{% endblock %}
+
+{% block content %}
+<form action="{% url 'edit' itemid %}" method="post">
+{% csrf_token %}
+{% bootstrap_form form layout='vertical' %}
+{% if notsingle %}
+<div class="radio">
+<input type="radio" name="edit_opt" value="single" checked="checked"> This occurrence only<br>
+<input type="radio" name="edit_opt" value="future"> Adjust future occurrences<br>
+<input type="radio" name="edit_opt" value="all"> Adjust all occurrence<br><br>
+</div>
+{% endif %}
+<div class="btn-group">
+<input type="submit" name="edititem_update" value="Update" class="btn btn-primary"/>
+<input type="submit" name="edititem_delete" value="Delete" class="btn btn-danger"/>
+<input type="submit" name="cancel" value="Cancel" class="btn btn-default"/>
+</div>
+</form>
+{% endblock %}
+{% block footer %}
+{{ footer }}
+{% endblock %}
+

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% comment %}
+Login
+Author: Matt Agresta
+Created on: 9/20/2016
+<a href="{% url "password_reset_recover" %}" id="forgot"> forgot username/password</a><br />
+{% endcomment %}
+{% block title %}
+<title>PayPlanner Login</title>
+{% endblock %}
+{% block content %}
+{%if form.errors %}
+    <p> Invalid username/password combination, please try again </p>
+    {% endif %}
+    <div class="center">
+    <div class="form-group">
+    <h1>Please sign in</h1>
+      <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        {% bootstrap_form form layout='inline' %}
+        <input type="submit" id="submit" name="submit" value="Sign in" class = "btn btn-primary"/>
+        <input type="hidden" name="next" value="{{ next }}" />        
+      </form>
+    </div>
+    <a href="/register" id="new">new user</a>
+    </div>
+{% endblock %}
+{% block footer %}
+{{ footer }}
+{% endblock %}
+

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% comment %}
+Item edit template
+Author: Matt Agresta
+Created on: 9/4/2016
+{{ form.as_p }}
+<div class="btn-group">
+<input type="submit" name="config_save" value="Save" class="btn btn-primary"/>
+<input type="submit" name="cancel" value="Cancel" class="btn btn-default"/>
+</div>
+
+Need to make button and forms bootstrap!
+{% bootstrap_form form layout='inline' %}
+{% bootstrap_button "Save" button_type="submit" button_class="btn-primary" %}
+or normal (like now)
+{% endcomment %}
+
+{% block title %}
+<title>Add {{ itemtype }}</title>
+{% endblock %}
+
+{% block content %}
+<form action="{% url 'config' %}" method="post">
+{% csrf_token %}
+{{ form.as_p }}
+<div class="btn-group">
+<input type="submit" name="config_save" value="Save" class="btn btn-primary"/>
+<input type="submit" name="cancel" value="Cancel" class="btn btn-default"/>
+</div>
+</form>
+{% endblock %}
+{% block footer %}
+{{ footer }}
+{% endblock %}
+

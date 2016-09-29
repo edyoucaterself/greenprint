@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% comment %}
+User Registration template
+Author: Matt Agresta
+Created on: 9/21/2016
+
+{% endcomment %}
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+{%if form.errors %}
+    <p> Invalid username/password combination, please try again </p>
+{% endif %}
+
+    <h1>Please Register</h1>
+    <form action="{% url 'reg' %}" method="post">
+    {% csrf_token %}
+    {% bootstrap_form form layout='inline' %}
+    <input type="submit" id="submit" name="submit" value="Sign in" />
+    <input type="hidden" name="next" value="{{ next }}" />        
+    </form>
+{% endblock %}
+{% block footer %}
+{{ footer }}
+{% endblock %}
+
