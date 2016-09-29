@@ -2,7 +2,9 @@
 
 Django budget tracking application
 
-### Up and running
+### Setup
+
+`git clone https://github.com/payplanners/greenprint.git`
 
 ### Contributing
 
