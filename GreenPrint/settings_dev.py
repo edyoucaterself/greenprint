@@ -21,17 +21,22 @@ EMAIL_HOST = 'localhost'
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'o4e7d-s4x92kl-38=rwb)lu9twprws#4(1*5e_h!8$oof^94ry'
+import sys
+sys.path.insert(0,"/etc/default")
+import pp_settings
+SECRET_KEY = pp_settings.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+#DEBUG = False
 ADMINS = (('Matt Agresta','agresta_matt@yahoo.com'),)
 MANAGERS = (('Matt Agresta','agresta_matt@yahoo.com'),)
 ALLOWED_HOSTS = []
 
 #Redirect user login
 LOGIN_REDIRECT_URL = 'home'
-LOGIN_URL = 'django.contrib.auth.views.login'
+LOGIN_URL = 'login'
+#LOGIN_URL = 'django.contrib.auth.views.login'
 # Application definition
 
 INSTALLED_APPS = (
@@ -108,6 +113,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = '/app/GreenPrint/payplanner/static/'
 
 #Allow Month Durations
 DURATIONFIELD_ALLOW_MONTHS = True
