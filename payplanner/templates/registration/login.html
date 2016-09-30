@@ -4,7 +4,7 @@
 Login
 Author: Matt Agresta
 Created on: 9/20/2016
-<a href="{% url "password_reset_recover" %}" id="forgot"> forgot username/password</a><br />
+
 {% endcomment %}
 {% block title %}
 <title>PayPlanner Login</title>
@@ -23,7 +23,8 @@ Created on: 9/20/2016
         <input type="hidden" name="next" value="{{ next }}" />        
       </form>
     </div>
-    <a href="/register" id="new">new user</a>
+    <a href="/register" id="new">new user</a><br />
+    <a href="{% url "password_reset_recover" %}" id="forgot"> forgot username/password</a><br />
     </div>
 {% endblock %}
 {% block footer %}
