@@ -228,6 +228,9 @@ def edit(request, item_id):
     else:
         temp = 'edititem.html'
         item = BudgetData.objects.get(pk=item_id)
+        #Test if request user owns item, if not redirect home
+        if not request.user == item.parentItem.user:
+            return redirect('home')
         notsingle = True
         if item.parentItem.payCycle.cycleName == 'Single':
             notsingle = False
