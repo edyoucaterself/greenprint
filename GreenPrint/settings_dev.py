@@ -31,7 +31,7 @@ DEBUG = True
 #DEBUG = False
 ADMINS = (('Matt Agresta','agresta_matt@yahoo.com'),)
 MANAGERS = (('Matt Agresta','agresta_matt@yahoo.com'),)
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 #Redirect user login
 LOGIN_REDIRECT_URL = 'home'
@@ -113,7 +113,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/app/GreenPrint/payplanner/static/'
+STATIC_ROOT = '/data/GreenPrint/payplanner/static/'
 
 #Allow Month Durations
 DURATIONFIELD_ALLOW_MONTHS = True
