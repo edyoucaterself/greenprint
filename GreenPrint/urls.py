@@ -3,9 +3,8 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.views.generic.edit import CreateView
 from password_reset import views as pwviews
-#from django.contrib.auth.forms import UserCreationForm
-#from payplanner.forms import UserCreateForm as UserCreationForm
 from payplanner.views import signup
+
 urlpatterns = [
     url('^register/', signup, name="reg"),
     url(r'^login/$', auth_views.login, name='login'),
