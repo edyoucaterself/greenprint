@@ -1,19 +1,10 @@
 {% extends "base.html" %}
 {% load bootstrap3 %}
 {% comment %}
-Item edit template
+Item Add template
 Author: Matt Agresta
 Created on: 9/4/2016
-{{ form.as_p }}
-<div class="btn-group">
-<input type="submit" name="config_save" value="Save" class="btn btn-primary"/>
-<input type="submit" name="cancel" value="Cancel" class="btn btn-default"/>
-</div>
-
-Need to make button and forms bootstrap!
-{% bootstrap_form form layout='inline' %}
-{% bootstrap_button "Save" button_type="submit" button_class="btn-primary" %}
-or normal (like now)
+Replace Cancel link with button when getting rid of bootstrap
 {% endcomment %}
 
 {% block title %}
@@ -26,7 +17,7 @@ or normal (like now)
 {{ form.as_p }}
 <div class="btn-group">
 <input type="submit" name="config_save" value="Save" class="btn btn-primary"/>
-<input type="submit" name="cancel" value="Cancel" class="btn btn-default"/>
+<a class="btn btn-default" href="{% url 'home' %}">Cancel</a>
 </div>
 </form>
 {% endblock %}
