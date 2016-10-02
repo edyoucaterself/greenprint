@@ -73,7 +73,7 @@ class Items(models.Model):
     itemAmount = models.DecimalField(
         max_digits=6,
         decimal_places=2,
-        verbose_name='Amount Due'
+        verbose_name='Amount'
     )
     #How Often expense is paid Ex One Time Only, Weekly, Monthly, Quarterly
     payCycle = models.ForeignKey(
@@ -91,7 +91,7 @@ class Items(models.Model):
     endDate = models.DateField(
         blank=True,
         null=True,
-        verbose_name='End Date',
+        verbose_name='End Date (optional)',
     )
 
     #Holds serialize json representing date objects
@@ -104,7 +104,7 @@ class Items(models.Model):
     itemNote = models.CharField(
          max_length=400,
          blank=True,
-         verbose_name='Notes'
+         verbose_name='Notes (optional)'
     )
     class Meta:
         verbose_name_plural = "Income/Expenses"
