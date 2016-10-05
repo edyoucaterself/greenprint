@@ -57,8 +57,13 @@ def account_mgmt(request):
             #Find out what form was saved
             #Categories Form
             if 'cats' in request.POST:
-                initcat = UserCat.objects.get(user=request.user)
-                form = UserCatForm(request.POST, instance=initcat)
+                #If object exists for user update
+                try:
+                    initcat = UserCat.objects.get(user=request.user)
+                    form = UserCatForm(request.POST, instance=initcat)
+                #If not create one
+                except:
+                    form = UserCatForm(request.POST)
                 footer = 'Cats Saved!' 
                 if form.is_valid():
                     form.save()
