@@ -10,24 +10,34 @@ put correct title
 {% endcomment %}
 
 {% block content %}
-<div class="center">
-<form action="{% url 'manage' %}" method="post">
-{% csrf_token %}
-{{ form }}<br />
-{% if is_get %}
-<div class="center btn-group-vertical btn-group-lg">
-<input type="submit" name="profile" value="Edit Profile" class="btn btn-primary"/>
-<input type="submit" name="categories" value="Edit Categories" class="btn btn-primary"/>
-<input type="submit" name="deldata" value="Delete Budget" class="btn btn-warning"/>
-<input type="submit" name="delacct" value="Delete Account" class="btn btn-danger"/>
-<input type="submit" name="home" value="Home" class="btn btn-default"/>
-</div>
-{% else %}
-<div class="btn-group">
-<input type="submit" name="save" value="Save" class="btn btn-primary"/>
-<input type="submit" name="cancel" value="Cancel" class="btn btn-default"/>
-</div>
-{% endif %}
+<div class="container-fluid">
+ <div class="row">
+  <div class="col-m-3"></div>
+  <div class="col-m-9">
+   <form action="{% url 'manage' %}" method="post">
+   {% csrf_token %}
+   {{ form.as_table }}
+  </div>
+  <div class="col-m-3"></div>
+ </div>
+ <div class="row center">
+  <div class="col-xs-12">
+   {% if is_get %}
+   <div class="center btn-group-vertical btn-group-lg">
+    <input type="submit" name="profile" value="Edit Profile" class="btn btn-primary"/>
+    <input type="submit" name="categories" value="Edit Categories" class="btn btn-primary"/>
+    <input type="submit" name="deldata" value="Delete Budget" class="btn btn-warning"/>
+    <input type="submit" name="delacct" value="Delete Account" class="btn btn-danger"/>
+    <input type="submit" name="home" value="Home" class="btn btn-default"/>
+   </div>
+   {% else %}
+    <div class="btn-group">
+    <input type="submit" name="save" value="Save" class="btn btn-primary"/>
+    <input type="submit" name="cancel" value="Cancel" class="btn btn-default"/>
+   </div>
+   {% endif %}
+  </div>
+ </div>
 </form>
 </div>
 {% endblock %}

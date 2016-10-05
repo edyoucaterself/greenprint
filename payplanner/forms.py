@@ -102,16 +102,16 @@ class UserCatForm(forms.ModelForm):
 
     """Form to select Categories for user"""
 
+    cats = forms.ModelMultipleChoiceField(
+        label="",
+        queryset=Categories.objects.all(),
+        widget=FilteredSelectMultiple("Categories", is_stacked=False, attrs={'class':'form-control'}),
+        )
+    
     class Meta:
         model = UserCat
         fields = "__all__"
-        widgets = {'user':forms.HiddenInput(),
-                   'cats': forms.SelectMultiple(attrs={'size':'10',
-                                                       'class':'form-control'})}
-        
-    class Media:
-        css = {'all': ('/static/admin/css/widgets.css',),}
-        js = ('/admin/jsi18n',)
+        widgets = {'user':forms.HiddenInput(),}
 
 
 class CategoriesForm(forms.ModelForm):
