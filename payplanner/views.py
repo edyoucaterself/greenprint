@@ -8,8 +8,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.http import HttpResponse
-from .forms import ExpensesForm, IncomeForm, EditForm, UserCreateForm
-from .models import Items, BudgetData
+from .forms import ExpensesForm, IncomeForm, EditForm, UserCreateForm, UserCatForm
+from .models import Items, BudgetData, Categories, UserCat
 from .budget import Budget
 
 #VIew to load and validate registration form
@@ -50,27 +50,71 @@ def account_mgmt(request):
     if request.method == 'POST':
         #BUtton Options 
         #profile - Load Profile Form
-        #categories - Load Categories Form
         #deldata - Delete all Items for user
         #delacct - Delete account
         #save - Get Form Name and save
+        if request.POST.get("save"):
+            #Find out what form was saved
+            #Categories Form
+            if 'cats' in request.POST:
+                initcat = UserCat.objects.get(user=request.user)
+                form = UserCatForm(request.POST, instance=initcat)
+                footer = 'Cats Saved!' 
+                if form.is_valid():
+                    form.save()
+                    form = ''
+                    footer = 'Categories Updated'
+                    #Variable to display menu buttons
+                    is_get = True
+                #No Categories Selected
+                else:
+                    footer = 'Form Invalid'
+                    is_get = False            
+                    
+                temp = 'manage.html'  
+                c = {'is_get': is_get,
+                     'form': form,
+                     'footer':footer}
+                return render(request, temp, c)
+            
         #Cancel - redirect back to this view
-        if request.POST.get("cancel"):
+        elif request.POST.get("cancel"):
             temp = 'manage.html'
             footer = ''
             is_get = True
             c = {'is_get': is_get,
                  'footer':footer}
             return render(request, temp, c)
-            
+        
+        #Edit Categories Button Pressed
+        elif request.POST.get("categories"):
+            #Load UserCatForm
+            #Try and get UserCat object for user
+            try:
+                initcat = UserCat.objects.get(user=request.user)
+                form = UserCatForm(instance=initcat)
+            #If not Load form with initial value
+            except:
+                default = Categories.objects.get(catName='Other')
+                default = [default,]
+                form = UserCatForm(initial={'user':request.user,
+                                            'cats':default})
+            temp = 'manage.html'
+            footer = 'Hold Ctrl and select any desired categories'
+            c = {'form':form,
+                 'footer':footer}
+            return render(request, temp, c)
+        
         #Cancel back to home page
         elif request.POST.get("home"):
             return redirect('home')
+        
         else:
             temp = 'manage.html'
             footer = 'This Feature is in Development!'
             c = {'footer':footer}
             return render(request, temp, c)
+        
     #Accessed from link (GET)
     else:
         temp = 'manage.html'
@@ -105,7 +149,8 @@ def config(request):
             footer = 'Adding Expense'
             itemtype = 'Expense'
             form = ExpensesForm(initial={'itemType': 'expense',
-                                         'user': request.user})
+                                         'user': request.user},
+                                userid=request.user)
             c = {'itemtype':itemtype,
                  'form':form,
                  'footer':footer,}

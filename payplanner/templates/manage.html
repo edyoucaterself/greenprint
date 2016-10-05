@@ -13,11 +13,11 @@ put correct title
 <div class="center">
 <form action="{% url 'manage' %}" method="post">
 {% csrf_token %}
-{{ form }}
+{{ form }}<br />
 {% if is_get %}
 <div class="center btn-group-vertical btn-group-lg">
 <input type="submit" name="profile" value="Edit Profile" class="btn btn-primary"/>
-<input type="submit" name="categories" value="Add Category" class="btn btn-primary"/>
+<input type="submit" name="categories" value="Edit Categories" class="btn btn-primary"/>
 <input type="submit" name="deldata" value="Delete Budget" class="btn btn-warning"/>
 <input type="submit" name="delacct" value="Delete Account" class="btn btn-danger"/>
 <input type="submit" name="home" value="Home" class="btn btn-default"/>

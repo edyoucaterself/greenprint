@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^recover/$', pwviews.recover, name='password_reset_recover'),
     url(r'^reset/done/$', auth_views.login, name='password_reset_done'),
     url(r'^reset/(?P<token>[\w:-]+)/$', pwviews.reset, name='password_reset_reset'),
+    url(r'^admin/jsi18n/$', 'django.views.i18n.javascript_catalog'),
 ]
 
 
