@@ -44,6 +44,13 @@ class Categories(models.Model):
     class Meta:
         verbose_name_plural = "Expense/Income Categories"
         
+
+class UserCat(models.Model):
+    user = models.OneToOneField(User)
+    cats = models.ManyToManyField(Categories,
+                                  verbose_name="Select Desired Categories")
+
+    
 #Holds Bills and one time expenses    
 #Add optional End Date!
 class Items(models.Model):
@@ -63,11 +70,10 @@ class Items(models.Model):
         verbose_name = 'Item Type'
     )
     #Category of item
-    category = models.ForeignKey(
-        Categories,
+    category = models.CharField(
+        max_length=100,
         null=True,
         blank=True,
-        to_field='catName',
     )
     #Ammount Due Ex 9999.99
     itemAmount = models.DecimalField(
@@ -137,3 +143,4 @@ class BudgetData(models.Model):
 
     class Meta:
         verbose_name_plural = "Budget Data"
+
