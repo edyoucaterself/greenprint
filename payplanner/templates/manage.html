@@ -15,8 +15,10 @@ put correct title
   <div class="col-m-3"></div>
   <div class="col-m-9">
    <form action="{% url 'manage' %}" method="post">
-   {% csrf_token %}
-   {{ form.as_table }}
+    <div class="form-group">
+     {% csrf_token %}
+     {{ form.as_table }}
+    </div>
   </div>
   <div class="col-m-3"></div>
  </div>
@@ -32,7 +34,7 @@ put correct title
    </div>
    {% else %}
     <div class="btn-group">
-    <input type="submit" name="save" value="Save" class="btn btn-primary"/>
+    <input type="submit" name="save_{{ form.Meta.name }}" value="Save" class="btn btn-primary"/>
     <input type="submit" name="cancel" value="Cancel" class="btn btn-default"/>
    </div>
    {% endif %}

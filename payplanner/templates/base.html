@@ -3,7 +3,6 @@
 <head>
  {% load bootstrap3 %}
  {% bootstrap_css %}
- {% bootstrap_javascript %}
  {% bootstrap_messages %}
  
  <link rel="stylesheet" href="{% static 'css/budget.css' %}">
@@ -36,7 +35,11 @@
       <div class="row">
       <div class="col-xs-6">
       {% if user.is_authenticated %}
+       {% if user.get_full_name %}
+       <p>Welcome {{ user.first_name }}!
+       {% else %}
        <p>Welcome {{ user }}!
+       {% endif %}
         <a title="Manage Settings" href="{% url 'manage' %}"><img border="0" width="75" alt="Manage Account" src="{% static "pics/settings.png" %}"></a>
        </p>
        </div>

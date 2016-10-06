@@ -8,9 +8,12 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.http import HttpResponse
-from .forms import ExpensesForm, IncomeForm, EditForm, UserCreateForm, UserCatForm
+
+from .forms import ExpensesForm, IncomeForm, EditForm
+from .forms import UserCreateForm, UserCatForm, UserProfileForm
 from .models import Items, BudgetData, Categories, UserCat
 from .budget import Budget
+
 
 #VIew to load and validate registration form
 def signup(request):
@@ -30,6 +33,7 @@ def signup(request):
                     # Redirect to a success page.
                     return redirect('home')
                 #else - Disabled Account would go here
+            #Registration Form Invalid    
             else:
                 temp = 'register.html'
                 footer = 'New User'
@@ -43,7 +47,7 @@ def signup(request):
              'form': form}
         return render(request, temp, c)
 
-# Create your views here.
+
 #View to hold account management
 @login_required
 def account_mgmt(request):
@@ -52,35 +56,49 @@ def account_mgmt(request):
         #profile - Load Profile Form
         #deldata - Delete all Items for user
         #delacct - Delete account
-        #save - Get Form Name and save
-        if request.POST.get("save"):
-            #Find out what form was saved
-            #Categories Form
-            if 'cats' in request.POST:
-                #If object exists for user update
-                try:
-                    initcat = UserCat.objects.get(user=request.user)
-                    form = UserCatForm(request.POST, instance=initcat)
-                #If not create one
-                except:
-                    form = UserCatForm(request.POST)
-                footer = 'Cats Saved!' 
-                if form.is_valid():
-                    form.save()
-                    form = ''
-                    footer = 'Categories Updated'
-                    #Variable to display menu buttons
-                    is_get = True
-                #No Categories Selected
-                else:
-                    footer = 'Form Invalid'
-                    is_get = False            
+        #save_form.Meta.name - Get Form Name and save
+        if request.POST.get("save_UserCatForm"):
+            #If object exists for user update
+            try:
+                initcat = UserCat.objects.get(user=request.user)
+                form = UserCatForm(request.POST, instance=initcat)
+            #If not create one
+            except:
+                form = UserCatForm(request.POST)
+            if form.is_valid():
+                form.save()
+                form = ''
+                footer = ''
+                #Variable to display menu buttons
+                is_get = True
+            #No Categories Selected
+            else:
+                footer = ''
+                is_get = False            
                     
-                temp = 'manage.html'  
-                c = {'is_get': is_get,
-                     'form': form,
-                     'footer':footer}
-                return render(request, temp, c)
+            temp = 'manage.html'  
+            c = {'is_get': is_get,
+                 'form': form,
+                 'footer':footer}
+            return render(request, temp, c)
+        if request.POST.get("save_UserProfileForm"):
+            form = UserProfileForm(request.POST, instance=request.user)
+            if form.is_valid():
+                form.save()
+                form = ""
+                footer = "Profile Updated"
+                #Variable to display menu buttons
+                is_get = True
+            #Invalid Form Selected
+            else:
+                footer = "Edit Your Profile"
+                is_get = False            
+                    
+            temp = 'manage.html'  
+            c = {'is_get': is_get,
+                 'form': form,
+                 'footer':footer}
+            return render(request, temp, c)
             
         #Cancel - redirect back to this view
         elif request.POST.get("cancel"):
@@ -88,6 +106,16 @@ def account_mgmt(request):
             footer = ''
             is_get = True
             c = {'is_get': is_get,
+                 'footer':footer}
+            return render(request, temp, c)
+        
+        #Edit Profile button pressed
+        elif request.POST.get("profile"):
+            #Load UserProfileForm
+            form = UserProfileForm(instance=request.user)
+            temp = "manage.html"
+            footer = "Edit Your Profile"
+            c = {'form': form,
                  'footer':footer}
             return render(request, temp, c)
         
@@ -198,6 +226,8 @@ def config(request):
         footer = 'GET request'
         c = {'footer':footer,}
         return render(request, 'config.html', c)
+
+    
 #Home view - displays budget    
 @login_required
 def home(request):
