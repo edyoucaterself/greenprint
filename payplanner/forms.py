@@ -101,23 +101,39 @@ class EditForm(forms.ModelForm):
 class UserCatForm(forms.ModelForm):
 
     """Form to select Categories for user"""
-
+    
+    form_errors = {"required": "You must choose at least one expense category"}
     cats = forms.ModelMultipleChoiceField(
+        error_messages=form_errors,
         label="",
         queryset=Categories.objects.all(),
         widget=FilteredSelectMultiple("Categories", is_stacked=False, attrs={'class':'form-control'}),
         )
     
     class Meta:
+        name = 'UserCatForm'
         model = UserCat
         fields = "__all__"
         widgets = {'user':forms.HiddenInput(),}
 
+class UserProfileForm(forms.ModelForm):
 
+    """Form for User to edit their profile"""
+
+    class Meta:
+        name = "UserProfileForm"
+        model = User
+        fields = ('first_name','last_name','email')
+        widgets = {'first_name':forms.TextInput(attrs={'class':'form-control',}),
+                  'last_name': forms.TextInput(attrs={'class':'form-control',}),
+                  'email': forms.TextInput(attrs={'class':'form-control',})}
+        
+        
 class CategoriesForm(forms.ModelForm):
 
     """Form to add categories"""
 
     class Meta:
+        name = "CategoriesForm"
         model = Categories
         fields = "__all__"
