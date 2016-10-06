@@ -40,7 +40,7 @@ put correct title
    {% else %}
     <div class="btn-group">
     <input type="submit" name="save_{{ form.Meta.name }}" value="Save" class="btn btn-primary"/>
-    <input type="submit" name="cancel" value="Cancel" class="btn btn-default"/>
+    <a class="btn btn-default" href="{% url 'home' %}">Cancel</a>
    </div>
    {% endif %}
   </div>
