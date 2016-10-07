@@ -133,7 +133,7 @@ def account_mgmt(request):
                 form = UserCatForm(initial={'user':request.user,
                                             'cats':default})
             temp = 'manage.html'
-            footer = 'Hold Ctrl and select any desired categories'
+            footer = 'Select Desired Expense Categories'
             c = {'form':form,
                  'footer':footer}
             return render(request, temp, c)
