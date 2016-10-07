@@ -22,7 +22,6 @@ put correct title
     <div class="form-group">
      {% csrf_token %}
      {{ form.as_table }}
-     <script type="text/javascript">addEvent(window, "load", function(e) {SelectFilter.init("id_cats", "Categories", 0, "/static/admin/"); });</script>
     </div>
   </div>
   <div class="col-m-3"></div>
