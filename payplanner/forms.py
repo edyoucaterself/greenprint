@@ -116,6 +116,9 @@ class UserCatForm(forms.ModelForm):
         fields = "__all__"
         widgets = {'user':forms.HiddenInput(),}
 
+    class Media:
+        js = ("js/catsfilter.js",)
+
 class UserProfileForm(forms.ModelForm):
 
     """Form for User to edit their profile"""
