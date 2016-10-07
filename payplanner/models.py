@@ -47,13 +47,6 @@ class Categories(models.Model):
         unique=True,
         verbose_name='Category'
     )
-    #Description for reports information
-    catDes = models.CharField(
-        max_length=500,
-        null=True,
-        blank=True,
-        verbose_name='Description'
-    )
     
     class Meta:
         
