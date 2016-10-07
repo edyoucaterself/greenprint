@@ -50,7 +50,8 @@ class Categories(models.Model):
     #Description for reports information
     catDes = models.CharField(
         max_length=500,
-        unique=True,
+        null=True,
+        blank=True,
         verbose_name='Description'
     )
     
@@ -94,6 +95,7 @@ class Items(models.Model):
     #Category of item
     category = models.CharField(
         max_length=100,
+        help_text='See Account Settings to modify choices!',
         null=True,
         blank=True,
     )

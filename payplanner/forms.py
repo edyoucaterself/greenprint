@@ -109,7 +109,12 @@ class UserCatForm(forms.ModelForm):
         )
     
     class Meta:
+        #Name used in save button 
         name = 'UserCatForm'
+        #Tells template to display Add Button
+        has_key = True
+        #Value used in Add Button
+        key_name = 'Category'
         model = UserCat
         fields = "__all__"
         widgets = {'user':forms.HiddenInput(),}
@@ -138,3 +143,6 @@ class CategoriesForm(forms.ModelForm):
         name = "CategoriesForm"
         model = Categories
         fields = "__all__"
+        widgets = {'catName': forms.TextInput(attrs={'class':'form-control',}),
+                   'catDes': forms.TextInput(attrs={'class':'form-control',})
+                   }

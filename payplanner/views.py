@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.http import HttpResponse
 
-from .forms import ExpensesForm, IncomeForm, EditForm
+from .forms import ExpensesForm, IncomeForm, EditForm, CategoriesForm
 from .forms import UserCreateForm, UserCatForm, UserProfileForm
 from .models import Items, BudgetData, Categories, UserCat
 from .budget import Budget
@@ -52,8 +52,7 @@ def signup(request):
 @login_required
 def account_mgmt(request):
     if request.method == 'POST':
-        #BUtton Options 
-        #profile - Load Profile Form
+        #Button Options
         #deldata - Delete all Items for user
         #delacct - Delete account
         #save_form.Meta.name - Get Form Name and save
@@ -81,7 +80,9 @@ def account_mgmt(request):
                  'form': form,
                  'footer':footer}
             return render(request, temp, c)
-        if request.POST.get("save_UserProfileForm"):
+
+        #Save button on User Profile Form
+        elif request.POST.get("save_UserProfileForm"):
             form = UserProfileForm(request.POST, instance=request.user)
             if form.is_valid():
                 form.save()
@@ -99,7 +100,32 @@ def account_mgmt(request):
                  'form': form,
                  'footer':footer}
             return render(request, temp, c)
-            
+
+        #Save button on User Profile Form
+        elif request.POST.get("save_CategoriesForm"):
+            form = CategoriesForm(request.POST)
+            if form.is_valid():
+                form.save()
+                footer = 'Category Added'
+                #Load UserCatForm
+                #Try and get UserCat object for user
+                try:
+                    initcat = UserCat.objects.get(user=request.user)
+                    form = UserCatForm(instance=initcat)
+                #If not Load form with initial value
+                except:
+                    default = Categories.objects.get(catName='Other')
+                    default = [default,]
+                    form = UserCatForm(initial={'user':request.user,
+                                            'cats':default})
+            else:
+                footer = 'Form Invalid'
+            #Render Form and Template
+            temp = 'manage.html'  
+            c = {'form': form,
+                 'footer':footer}
+            return render(request, temp, c)
+        
         #Cancel - redirect back to this view
         elif request.POST.get("cancel"):
             temp = 'manage.html'
@@ -108,7 +134,16 @@ def account_mgmt(request):
             c = {'is_get': is_get,
                  'footer':footer}
             return render(request, temp, c)
-        
+
+        #Add Button on UserCatForm Pressed, display CategoriesForm
+        elif request.POST.get("add_Category"):
+            form = CategoriesForm()
+            footer = 'Add Category'
+            temp = 'manage.html'  
+            c = {'form': form,
+                 'footer':footer}
+            return render(request, temp, c)
+            
         #Edit Profile button pressed
         elif request.POST.get("profile"):
             #Load UserProfileForm

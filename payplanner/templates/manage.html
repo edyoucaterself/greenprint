@@ -16,7 +16,8 @@ put correct title
 {% block content %}
 <div class="container-fluid">
  <div class="row">
-  <div class="col-m-3"></div>
+  <div class="col-m-3">
+  </div>
   <div class="col-m-9">
    <form action="{% url 'manage' %}" method="post">
     <div class="form-group">
@@ -39,6 +40,9 @@ put correct title
    {% else %}
     <div class="btn-group">
     <input type="submit" name="save_{{ form.Meta.name }}" value="Save" class="btn btn-primary"/>
+    {% if form.Meta.has_key %}
+     <input type="submit" name="add_{{ form.Meta.key_name }}" value="Add {{ form.Meta.key_name }}" class="btn btn-primary"/>
+    {% endif %}
     <a class="btn btn-default" href="{% url 'manage' %}">Cancel</a>
    </div>
    {% endif %}
