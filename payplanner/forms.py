@@ -5,8 +5,6 @@
 #-----------------------------------------------------------#
 #Set up Enviroment
 from django import forms
-from django.contrib.admin import widgets
-from django.forms.extras.widgets import SelectDateWidget
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.admin.widgets import FilteredSelectMultiple
