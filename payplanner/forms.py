@@ -142,7 +142,5 @@ class CategoriesForm(forms.ModelForm):
     class Meta:
         name = "CategoriesForm"
         model = Categories
-        fields = "__all__"
-        widgets = {'catName': forms.TextInput(attrs={'class':'form-control',}),
-                   'catDes': forms.TextInput(attrs={'class':'form-control',})
-                   }
+        fields = ('catName',)
+        widgets = {'catName': forms.TextInput(attrs={'class':'form-control',})}
