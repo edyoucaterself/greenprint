@@ -12,5 +12,5 @@ urlpatterns = [
     url(r'^config$', views.config, name='config'),
     url(r'^config/(?P<item_id>[0-9]+)/$',views.edit, name='edit'),
     url(r'settings$', views.account_mgmt, name='manage'),
-    url(r'settings/(?P<page>[\w-]+)$', views.categories, name='categories')
+    url(r'settings/(?P<page>[\w-]+)$', views.categories, name='set')
 ]

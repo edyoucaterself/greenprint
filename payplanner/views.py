@@ -146,15 +146,6 @@ def account_mgmt(request):
                  'footer':footer}
             return render(request, temp, c)
 
-        #Add Button on UserCatForm Pressed, display CategoriesForm
-        elif request.POST.get("add_Category"):
-            form = CategoriesForm()
-            footer = 'Add Category'
-            temp = 'manage.html'  
-            c = {'form': form,
-                 'footer':footer}
-            return render(request, temp, c)
-            
         #Edit Profile button pressed
         elif request.POST.get("profile"):
             #Load UserProfileForm
