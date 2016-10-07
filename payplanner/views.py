@@ -47,6 +47,17 @@ def signup(request):
              'form': form}
         return render(request, temp, c)
 
+#View to manage Catgeories
+@login_required
+def categories(request, page):
+    if page == 'Category':
+        form = CategoriesForm()
+        footer = 'Add Category'
+        temp = 'manage.html'  
+        c = {'form': form,'footer':footer}
+        return render(request, temp, c)
+    else:
+        return redirect('account_mgmt')
 
 #View to hold account management
 @login_required

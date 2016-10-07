@@ -41,7 +41,7 @@ put correct title
     <div class="btn-group">
     <input type="submit" name="save_{{ form.Meta.name }}" value="Save" class="btn btn-primary"/>
     {% if form.Meta.has_key %}
-     <input type="submit" name="add_{{ form.Meta.key_name }}" value="Add {{ form.Meta.key_name }}" class="btn btn-primary"/>
+     <a class="btn btn-default" href="{% url 'categories' form.Meta.key_name %}">Add {{ form.Meta.key_name }}</a>
     {% endif %}
     <a class="btn btn-default" href="{% url 'manage' %}">Cancel</a>
    </div>
