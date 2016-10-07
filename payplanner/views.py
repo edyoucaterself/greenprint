@@ -116,7 +116,10 @@ def account_mgmt(request):
         elif request.POST.get("save_CategoriesForm"):
             form = CategoriesForm(request.POST)
             if form.is_valid():
-                form.save()
+                cat = form.save()
+                #Add Category to user cats
+                usercat = UserCat.objects.get(user=request.user)
+                usercat.cats.add(cat)
                 footer = 'Category Added'
                 #Load UserCatForm
                 #Try and get UserCat object for user
