@@ -15,7 +15,7 @@ from .models import Items, BudgetData, Categories, UserCat
 from .budget import Budget
 
 
-#VIew to load and validate registration form
+#View to load and validate registration form
 def signup(request):
     if request.method == 'POST':
         #Figure out which button was pressed
@@ -23,13 +23,19 @@ def signup(request):
         if request.POST.get("submit"):
             form = UserCreateForm(request.POST)
             if form.is_valid():
-                user = form.save()
+                userid = form.save()
                 #Log user in
                 username = request.POST['username']
                 password = request.POST['password1']
-                user = authenticate(username=username, password=password)
-                if user.is_active:
-                    login(request, user)
+                user_obj = authenticate(username=username, password=password)
+                #Create UserCat Object and add default cat of Other
+                default = Categories.objects.get(catName='Other')
+                usercat = UserCat(user=userid)
+                usercat.save()
+                usercat.cats.add(default)
+                #Log user in and redirect to home page
+                if user_obj.is_active:
+                    login(request, user_obj)
                     # Redirect to a success page.
                     return redirect('home')
                 #else - Disabled Account would go here
@@ -163,6 +169,7 @@ def account_mgmt(request):
         elif request.POST.get("categories"):
             #Load UserCatForm
             #Try and get UserCat object for user
+            #Should have been created on user creation
             try:
                 initcat = UserCat.objects.get(user=request.user)
                 form = UserCatForm(instance=initcat)
