@@ -229,6 +229,8 @@ class Budget():
                 #Figure out timedelta based on cycle
                 if paycycle == 'Monthly':
                     itemcycle = relativedelta(months=1)
+                elif paycycle == 'Quarterly':
+                    itemcycle = relativedelta(months=3)
                 else:
                     itemcycle = relativedelta(days=cyclength)
 	
