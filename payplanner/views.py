@@ -271,7 +271,8 @@ def config(request):
                          'footer':footer,}
                     return render(request, temp, c)
         #Edit Categories Button Pressed on ExpensesForm
-        elif request.POST.get("categories"):
+        #Name of button = edit_(fieldname)
+        elif request.POST.get("edit_category"):
             form = usercatformload(request)
             temp = 'manage.html'
             footer = 'Select Desired Expense Categories'
