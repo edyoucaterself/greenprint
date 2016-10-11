@@ -10,7 +10,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.admin.widgets import FilteredSelectMultiple
 
 from .models import Items, BudgetData, Categories, UserCat
-from .widgets import RelatedFieldWidgetCanAdd
+from .widgets import RelatedFieldWidgetAddEdit
 
 class UserCreateForm(UserCreationForm):
 
@@ -48,10 +48,11 @@ class ExpensesForm(forms.ModelForm):
             catchoices.append(catoption)
         #Populate self.fields['category'] with User categories
         #catchoices = [('Choice 1','Choice 1'),]
-        self.fields['category'] = forms.CharField(widget=RelatedFieldWidgetCanAdd(Categories,
-                                                                                  related_url='settings/Category',
+        self.fields['category'] = forms.CharField(widget=RelatedFieldWidgetAddEdit(Categories,
+                                                                                  edit_url='settings',
                                                                                   choices=catchoices,
                                                                                   attrs={'class':'form-control'}))
+
         
     class Meta:
         model = Items
@@ -67,6 +68,7 @@ class ExpensesForm(forms.ModelForm):
                                                          'class':'form-control'}),
                    'endDate': forms.DateInput(attrs={'name': 'date',
                                                      'class':'form-control'})}
+
         
 
 class IncomeForm(forms.ModelForm):

@@ -14,6 +14,21 @@ from .forms import UserCreateForm, UserCatForm, UserProfileForm
 from .models import Items, BudgetData, Categories, UserCat
 from .budget import Budget
 
+#Function to load UserCat Form
+#To Be called by a view, returns form
+def usercatformload(request):
+    #Try and get UserCat object for user
+    #Should have been created on user creation
+    try:
+        initcat = UserCat.objects.get(user=request.user)
+        form = UserCatForm(instance=initcat)
+    #If not Load form with initial value
+    except:
+        default = Categories.objects.get(catName='Other')
+        default = [default,]
+        form = UserCatForm(initial={'user':request.user,
+                                    'cats':default})
+    return form
 
 #View to load and validate registration form
 def signup(request):
@@ -167,18 +182,8 @@ def account_mgmt(request):
         
         #Edit Categories Button Pressed
         elif request.POST.get("categories"):
-            #Load UserCatForm
-            #Try and get UserCat object for user
-            #Should have been created on user creation
-            try:
-                initcat = UserCat.objects.get(user=request.user)
-                form = UserCatForm(instance=initcat)
-            #If not Load form with initial value
-            except:
-                default = Categories.objects.get(catName='Other')
-                default = [default,]
-                form = UserCatForm(initial={'user':request.user,
-                                            'cats':default})
+            #Load UserCatForm from custom function
+            form = usercatformload(request)
             temp = 'manage.html'
             footer = 'Select Desired Expense Categories'
             c = {'form':form,
@@ -265,6 +270,14 @@ def config(request):
                     c = {'form':form,
                          'footer':footer,}
                     return render(request, temp, c)
+        #Edit Categories Button Pressed on ExpensesForm
+        elif request.POST.get("categories"):
+            form = usercatformload(request)
+            temp = 'manage.html'
+            footer = 'Select Desired Expense Categories'
+            c = {'form':form,
+                 'footer':footer}
+            return render(request, temp, c)
         #Cancel Button    
         else:
             return redirect('home')
