@@ -227,6 +227,7 @@ def config(request):
         elif request.POST.get("add_expense"):
             #Render Expense ModelForm
             footer = 'Adding Expense'
+            footer = type(request.user)
             itemtype = 'Expense'
             form = ExpensesForm(initial={'itemType': 'expense',
                                          'user': request.user},
