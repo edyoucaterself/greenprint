@@ -3,6 +3,8 @@
 # Created By: Matt Agresta
 #-----------------------------------------------------------#
 #Set up Environment
+import ast
+
 from django.shortcuts import render,redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
@@ -106,11 +108,32 @@ def account_mgmt(request):
             else:
                 footer = ''
                 is_get = False            
-                    
-            temp = 'manage.html'  
-            c = {'is_get': is_get,
-                 'form': form,
-                 'footer':footer}
+
+            #Test if call came from ExpensesForm
+            if request.POST['formdata']:
+                temp = 'config.html'
+                #Grab Data from form before edit button was pressed
+                formdata = request.POST['formdata']
+                #Translate string back to dict
+                formdata = formdata[11:]
+                formdata = formdata[:-1]
+                formdata = formdata.replace("[u","")
+                formdata = formdata.replace("]","")
+                forminit = eval(formdata)
+                #Load initial values into forms
+                form = ExpensesForm(initial=forminit,
+                                    userid=request.user)
+                footer = request.POST
+                c = {'itemtype': 'Expense',
+                     'form': form,
+                     'footer': footer}
+                
+            #Called from /settings
+            else:
+                temp = 'manage.html'  
+                c = {'is_get': is_get,
+                     'form': form,
+                     'footer':footer}
             return render(request, temp, c)
 
         #Save button on User Profile Form
@@ -273,10 +296,14 @@ def config(request):
         #Edit Categories Button Pressed on ExpensesForm
         #Name of button = edit_(fieldname)
         elif request.POST.get("edit_category"):
+            #Load UserCatForm
             form = usercatformload(request)
+            #put request.post into dict and pass to template
+            expensesform = request.POST
             temp = 'manage.html'
-            footer = 'Select Desired Expense Categories'
+            footer = request.POST
             c = {'form':form,
+                 'nextform': expensesform,
                  'footer':footer}
             return render(request, temp, c)
         #Cancel Button    

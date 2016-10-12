@@ -40,6 +40,7 @@ put correct title
    </div>
    {% else %}
     <div class="btn-group">
+    <input type="hidden" name="formdata" value="{{ nextform }}"/>
     <input type="submit" name="save_{{ form.Meta.name }}" value="Save" class="btn btn-primary"/>
     {% if form.Meta.has_key %}
      <a class="btn btn-default" href="{% url 'set' form.Meta.key_name %}">Add {{ form.Meta.key_name }}</a>

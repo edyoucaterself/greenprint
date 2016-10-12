@@ -10,13 +10,14 @@ from django.conf import settings
 
 class RelatedFieldWidgetAddEdit(widgets.Select):
 
-    def __init__(self, related_model, add_url=None, edit_url=None, *args, **kw):
+    def __init__(self, related_model, add_url=None, edit_url=None, to_page=None, *args, **kw):
 
         super(RelatedFieldWidgetAddEdit, self).__init__(*args, **kw)
 
         # Be careful that here "reverse" is not allowed
         self.add_url = add_url
         self.edit_url = edit_url
+        self.to_page = to_page
 
     def render(self, name, value, *args, **kwargs):
         #self.add_url = reverse(self.related_url)
@@ -33,7 +34,7 @@ class RelatedFieldWidgetAddEdit(widgets.Select):
             alt = 'Edit List'
             output.append(u'<button type="submit" name="edit_%s" value="True" class="link-button">' % name)
             output.append(u'<img src="%sadmin/img/icon_changelink.gif" width="10" height="10" alt="%s"/></button>' % (settings.STATIC_URL, alt))
-
         selectobj = super(RelatedFieldWidgetAddEdit, self).render(name, value, *args, **kwargs)
-        output.append(selectobj)                                                                                                                           
+        output.append(selectobj)
+        
         return mark_safe(u''.join(output))

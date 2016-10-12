@@ -47,11 +47,11 @@ class ExpensesForm(forms.ModelForm):
             catoption = fullcatlist[0]
             catchoices.append(catoption)
         #Populate self.fields['category'] with User categories
-        #catchoices = [('Choice 1','Choice 1'),]
         self.fields['category'] = forms.CharField(widget=RelatedFieldWidgetAddEdit(Categories,
-                                                                                  edit_url='settings',
-                                                                                  choices=catchoices,
-                                                                                  attrs={'class':'form-control'}))
+                                                                                   edit_url='settings',
+                                                                                   to_page='ExpensesForm',
+                                                                                   choices=catchoices,
+                                                                                   attrs={'class':'form-control'}))
 
         
     class Meta:
