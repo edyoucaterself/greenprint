@@ -336,7 +336,8 @@ def home(request):
 def edit(request, item_id):
     if request.method == 'POST':
     #Update button on on edititem.html EditForm
-        if request.POST.get("edititem_update"):
+        edit_btn = request.POST.get("edit_btn")
+        if edit_btn == "Update":
             item = BudgetData.objects.get(pk=item_id)
             init = {'itemAmmount':item.itemAmmount,
                     'itemNote':item.itemNote}
@@ -384,7 +385,7 @@ def edit(request, item_id):
                 return render(request, temp, c)
             
         #Delete button on on edititem.html EditForm
-        elif request.POST.get("edititem_delete"):
+        elif edit_btn == "Delete":
             item = BudgetData.objects.get(pk=item_id)
             #Get Radio button value if present, if not assign single
             try:
@@ -393,7 +394,8 @@ def edit(request, item_id):
                 editopt = 'single'
             Budget.delete_item(item,editopt)
             return redirect('home')
-        #Any other POST request
+        
+        #Cancel, Any other POST request
         else:
             return redirect('home')
     #Get Request (First call from home page)    
