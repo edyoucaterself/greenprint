@@ -32,20 +32,20 @@ put correct title
   <div class="col-xs-12">
    {% if is_get %}
    <div class="center btn-group-vertical btn-group-lg">
-    <input type="submit" name="profile" value="Edit Profile" class="btn btn-primary"/>
-    <input type="submit" name="categories" value="Edit Categories" class="btn btn-primary"/>
-    <input type="submit" name="deldata" value="Delete Budget" class="btn btn-warning"/>
-    <input type="submit" name="delacct" value="Delete Account" class="btn btn-danger"/>
-    <input type="submit" name="home" value="Home" class="btn btn-default"/>
+    <input type="submit" name="account_mgmt_btn" value="Edit Profile" class="btn btn-primary"/>
+    <input type="submit" name="account_mgmt_btn" value="Edit Categories" class="btn btn-primary"/>
+    <input type="submit" name="account_mgmt_btn" value="Delete Budget" class="btn btn-warning"/>
+    <input type="submit" name="account_mgmt_btn" value="Delete Account" class="btn btn-danger"/>
+    <input type="submit" name="account_mgmt_btn" value="Home" class="btn btn-default"/>
    </div>
    {% else %}
-    <div class="btn-group">
     <input type="hidden" name="formdata" value="{{ nextform }}"/>
-    <input type="submit" name="save_{{ form.Meta.name }}" value="Save" class="btn btn-primary"/>
+    <div class="btn-group">
+    <input type="submit" name="account_mgmt_btn" value="Save {{ form.Meta.name }}" class="btn btn-primary">
     {% if form.Meta.has_key %}
-     <a class="btn btn-default" href="{% url 'set' form.Meta.key_name %}">Add {{ form.Meta.key_name }}</a>
+     <input type="submit" name="account_mgmt_btn" value="Add {{ form.Meta.key_name }}" class="btn btn-primary">
     {% endif %}
-    <a class="btn btn-default" href="{% url 'manage' %}">Cancel</a>
+    <input type="submit" name="account_mgmt_btn" value="Cancel" class="btn btn-default"/>
    </div>
    {% endif %}
   </div>

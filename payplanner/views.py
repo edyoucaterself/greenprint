@@ -70,27 +70,17 @@ def signup(request):
              'form': form}
         return render(request, temp, c)
 
-#View to manage Catgeories
-@login_required
-def categories(request, page):
-    if page == 'Category':
-        form = CategoriesForm()
-        footer = 'Add Category'
-        temp = 'manage.html'  
-        c = {'form': form,'footer':footer}
-        return render(request, temp, c)
-    else:
-        return redirect('account_mgmt')
 
 #View to hold account management
 @login_required
 def account_mgmt(request):
     if request.method == 'POST':
+        account_mgmt_btn = request.POST.get("account_mgmt_btn")
         #Button Options
         #deldata - Delete all Items for user
         #delacct - Delete account
         #save_form.Meta.name - Get Form Name and save
-        if request.POST.get("save_UserCatForm"):
+        if account_mgmt_btn == "Save User Categories":
             #If object exists for user update
             try:
                 initcat = UserCat.objects.get(user=request.user)
@@ -137,7 +127,7 @@ def account_mgmt(request):
             return render(request, temp, c)
 
         #Save button on User Profile Form
-        elif request.POST.get("save_UserProfileForm"):
+        elif account_mgmt_btn == "Save User Profile":
             form = UserProfileForm(request.POST, instance=request.user)
             if form.is_valid():
                 form.save()
@@ -157,7 +147,7 @@ def account_mgmt(request):
             return render(request, temp, c)
 
         #Save button on User Profile Form
-        elif request.POST.get("save_CategoriesForm"):
+        elif account_mgmt_btn == "Save Category":
             form = CategoriesForm(request.POST)
             if form.is_valid():
                 cat = form.save()
@@ -183,9 +173,17 @@ def account_mgmt(request):
             c = {'form': form,
                  'footer':footer}
             return render(request, temp, c)
-        
+
+        #Add Category Button
+        elif account_mgmt_btn == "Add Category":
+            form = CategoriesForm()
+            footer = 'Add Category'
+            temp = 'manage.html'  
+            c = {'form': form,'footer':footer}
+            return render(request, temp, c)
+            
         #Cancel - redirect back to this view
-        elif request.POST.get("cancel"):
+        elif account_mgmt_btn == "Cancel":
             temp = 'manage.html'
             footer = ''
             is_get = True
@@ -194,7 +192,7 @@ def account_mgmt(request):
             return render(request, temp, c)
 
         #Edit Profile button pressed
-        elif request.POST.get("profile"):
+        elif account_mgmt_btn == "Edit Profile":
             #Load UserProfileForm
             form = UserProfileForm(instance=request.user)
             temp = "manage.html"
@@ -204,7 +202,7 @@ def account_mgmt(request):
             return render(request, temp, c)
         
         #Edit Categories Button Pressed
-        elif request.POST.get("categories"):
+        elif account_mgmt_btn == "Edit Categories":
             #Load UserCatForm from custom function
             form = usercatformload(request)
             temp = 'manage.html'
@@ -214,7 +212,7 @@ def account_mgmt(request):
             return render(request, temp, c)
         
         #Cancel back to home page
-        elif request.POST.get("home"):
+        elif account_mgmt_btn == "Home":
             return redirect('home')
         
         else:
