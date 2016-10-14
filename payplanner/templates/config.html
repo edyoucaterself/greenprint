@@ -16,8 +16,8 @@ Replace Cancel link with button when getting rid of bootstrap
 {% csrf_token %}
 {{ form.as_p }}
 <div class="btn-group">
-<input type="submit" name="config_save" value="Save" class="btn btn-primary"/>
-<a class="btn btn-default" href="{% url 'home' %}">Cancel</a>
+<input type="submit" name="config_btn" value="Save {{ itemtype }}" class="btn btn-primary"/>
+<input type="submit" name="config_btn" value="Cancel" class="btn btn-primary"/>
 </div>
 </form>
 

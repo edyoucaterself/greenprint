@@ -19,16 +19,16 @@ remove item, edit item
 <div class="row">
  <div class="col-xs-3"></div>
  <div class="col-xs-3"></div>
- <div class="col-xs-1"><input type="submit" name="add_income" value="Add Income" class="btn btn-primary btn-sm"/></div>
- <div class="col-xs-1"><input type="submit" name="add_expense" value="Add Expense" class="btn btn-primary btn-sm"/></div>
+ <div class="col-xs-1"><input type="submit" name="config_btn" value="Add Income" class="btn btn-primary btn-sm"/></div>
+ <div class="col-xs-1"><input type="submit" name="config_btn" value="Add Expense" class="btn btn-primary btn-sm"/></div>
  <div class="col-xs-1"></div>
  <div class="col-xs-3"></div>
 </div>
 {% else %}
 <div class="center row">
  <div class="col-xs-12"><div class="btn-group-vertical btn-group-lg center">
-  <input type="submit" name="add_income" value="Add Income" class="btn btn-primary"/>
-  <input type="submit" name="add_expense" value="Add Expense" class="btn btn-primary"/></div>
+  <input type="submit" name="config_btn" value="Add Income" class="btn btn-primary"/>
+  <input type="submit" name="config_btn" value="Add Expense" class="btn btn-primary"/></div>
  </div></div>
 {% endif %}
 {% for itemid,isincome,itemdate,name,amount,running_total,itemnote in lineitems %}

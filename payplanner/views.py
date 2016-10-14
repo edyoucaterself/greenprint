@@ -123,7 +123,7 @@ def account_mgmt(request):
                 #Load initial values into forms
                 form = ExpensesForm(initial=forminit,
                                     userid=request.user)
-                footer = request.POST
+                footer = 'Categories Updated'
                 c = {'itemtype': 'Expense',
                      'form': form,
                      'footer': footer}
@@ -240,9 +240,12 @@ def config(request):
     #uses config.html
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
+        #Grab button data
+        config_btn = request.POST.get("config_btn")
         #Figure out which button was pressed
-        #Options: add_income, add_expense, edit_item, delete_item
-        if request.POST.get("add_income"):
+
+        #Add Income from home page
+        if config_btn == "Add Income":
             #Render Income ModelForm
             footer = 'Adding Income'
             form = IncomeForm(initial={'itemType': 'income',
@@ -252,7 +255,9 @@ def config(request):
                  'form':form,
                  'footer':form.fields['user'],}
             return render(request, 'config.html', c)
-        elif request.POST.get("add_expense"):
+        
+        #Add Expense from home page
+        elif config_btn == "Add Expense":
             #Render Expense ModelForm
             footer = 'Adding Expense'
             footer = type(request.user)
@@ -264,48 +269,46 @@ def config(request):
                  'form':form,
                  'footer':footer,}
             return render(request, 'config.html', c)
-        #Save button on config.html IncomeForm/Expenses Form
-        elif request.POST.get("config_save"):
-            #ExpensesForm submitted
-            if 'expenseName' in request.POST:
-                form = ExpensesForm(request.POST)
-                #form.fields['user'] = request.user
-                if form.is_valid():
-                    form.save()
-                    return redirect('home')
-                else:
-                    temp = 'config.html'     
-                    footer = 'Expense Form Invalid'
-                    c = {'form':form,
-                         'footer':footer,}
-                    return render(request, temp, c)
-            #IncomeForm submitted
+        
+        #Save Expense 
+        elif config_btn == "Save Expense":
+            form = ExpensesForm(request.POST, userid=request.user)
+            if form.is_valid():
+                form.save()
+                return redirect('home')
+            else:
+                temp = 'config.html'     
+                footer = 'Expense Form Invalid'
+                c = {'form':form,'footer':footer,}
+                return render(request, temp, c)
+            
+        #Save Income
+        elif config_btn == "Save Income":
+            form = IncomeForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('home')
             else:
                 form = IncomeForm(request.POST)
-                #form.fields['user'] = request.user
-                if form.is_valid():
-                    form.save()
-                    return redirect('home')
-                else:
-                    form = IncomeForm(request.POST)
-                    temp = 'config.html'     
-                    footer = 'Form Invalid'
-                    c = {'form':form,
-                         'footer':footer,}
-                    return render(request, temp, c)
+                temp = 'config.html'     
+                footer = 'Form Invalid'
+                c = {'form':form,'footer':footer,}
+                return render(request, temp, c)
+            
         #Edit Categories Button Pressed on ExpensesForm
-        #Name of button = edit_(fieldname)
-        elif request.POST.get("edit_category"):
+        #Name of button = view_name_btn
+        elif config_btn == "edit_category":
             #Load UserCatForm
             form = usercatformload(request)
             #put request.post into dict and pass to template
             expensesform = request.POST
             temp = 'manage.html'
-            footer = request.POST
+            footer = 'Select desired categories'
             c = {'form':form,
                  'nextform': expensesform,
                  'footer':footer}
             return render(request, temp, c)
+        
         #Cancel Button    
         else:
             return redirect('home')

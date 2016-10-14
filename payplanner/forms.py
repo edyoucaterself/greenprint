@@ -48,6 +48,7 @@ class ExpensesForm(forms.ModelForm):
             catchoices.append(catoption)
         #Populate self.fields['category'] with User categories
         self.fields['category'] = forms.CharField(widget=RelatedFieldWidgetAddEdit(Categories,
+                                                                                   'config',
                                                                                    edit_url='settings',
                                                                                    to_page='ExpensesForm',
                                                                                    choices=catchoices,
