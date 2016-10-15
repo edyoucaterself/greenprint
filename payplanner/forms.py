@@ -40,7 +40,7 @@ class ExpensesForm(forms.ModelForm):
         #Grab User Categories from UserCat model
         
         catchoices = []
-        usercatlist = UserCat.objects.values('cats').filter(user=userid)
+        usercatlist = UserCat.objects.values('cats').filter(user=userid).order_by('cats__catName')
         for usercat in usercatlist:
             catid = usercat.get('cats')
             fullcatlist = Categories.objects.values_list('id','catName').filter(pk=catid)
