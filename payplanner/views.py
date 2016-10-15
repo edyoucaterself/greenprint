@@ -16,6 +16,29 @@ from .forms import UserCreateForm, UserCatForm, UserProfileForm
 from .models import Items, BudgetData, Categories, UserCat
 from .budget import Budget
 
+
+#Function to load Expenses Form with previous Data
+#Need to pass category added to this and set it in forminit
+def expensesformload(request, **kwargs):
+    #Grab Data from form before edit button was pressed
+    formdata = request.POST['formdata']
+    #Translate string back to dict
+    formdata = formdata[11:]
+    formdata = formdata[:-1]
+    formdata = formdata.replace("[u","")
+    formdata = formdata.replace("]","")
+    forminit = eval(formdata)
+    #Set initial category
+    #Not working
+    if 'category' in kwargs:
+        cat = kwargs['category']
+        forminit['category'] = cat
+    #Load initial values into forms
+    form = ExpensesForm(initial=forminit,
+                        userid=request.user)
+    return form
+
+
 #Function to load UserCat Form
 #To Be called by a view, returns form
 def usercatformload(request):
@@ -102,17 +125,7 @@ def account_mgmt(request):
             #Test if call came from ExpensesForm
             if request.POST['formdata']:
                 temp = 'config.html'
-                #Grab Data from form before edit button was pressed
-                formdata = request.POST['formdata']
-                #Translate string back to dict
-                formdata = formdata[11:]
-                formdata = formdata[:-1]
-                formdata = formdata.replace("[u","")
-                formdata = formdata.replace("]","")
-                forminit = eval(formdata)
-                #Load initial values into forms
-                form = ExpensesForm(initial=forminit,
-                                    userid=request.user)
+                form = expensesformload(request)
                 footer = 'Categories Updated'
                 c = {'itemtype': 'Expense',
                      'form': form,
@@ -155,23 +168,33 @@ def account_mgmt(request):
                 usercat = UserCat.objects.get(user=request.user)
                 usercat.cats.add(cat)
                 footer = 'Category Added'
-                #Load UserCatForm
-                #Try and get UserCat object for user
-                try:
-                    initcat = UserCat.objects.get(user=request.user)
-                    form = UserCatForm(instance=initcat)
-                #If not Load form with initial value
-                except:
-                    default = Categories.objects.get(catName='Other')
-                    default = [default,]
-                    form = UserCatForm(initial={'user':request.user,
-                                            'cats':default})
+                #If formdata exist, call came from ExpensesForm
+                if request.POST['formdata']:
+                    form = expensesformload(request, category=cat)
+                    temp = 'config.html'
+                    footer = 'Categories Updated'
+                    c = {'itemtype': 'Expense',
+                         'form': form,
+                         'footer': footer}
+                else:
+                    temp = 'manage.html'  
+                    #Load UserCatForm
+                    #Try and get UserCat object for user
+                    try:
+                        initcat = UserCat.objects.get(user=request.user)
+                        form = UserCatForm(instance=initcat)
+                    #If not Load form with initial value
+                    except:
+                        default = Categories.objects.get(catName='Other')
+                        default = [default,]
+                        form = UserCatForm(initial={'user':request.user,
+                                                    'cats':default})
+                    c = {'form': form,'footer':footer}
+                    
             else:
                 footer = 'Form Invalid'
-            #Render Form and Template
-            temp = 'manage.html'  
-            c = {'form': form,
-                 'footer':footer}
+                
+            #Render form with context
             return render(request, temp, c)
 
         #Add Category Button
@@ -180,6 +203,10 @@ def account_mgmt(request):
             footer = 'Add Category'
             temp = 'manage.html'  
             c = {'form': form,'footer':footer}
+            if request.POST.get('formdata'):
+                nextform = request.POST.get('formdata')
+                c = {'form': form,'footer':footer, 'nextform':nextform}
+            
             return render(request, temp, c)
             
         #Cancel - redirect back to this view
