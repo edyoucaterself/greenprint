@@ -216,6 +216,14 @@ def account_mgmt(request):
             is_get = True
             c = {'is_get': is_get,
                  'footer':footer}
+            #If formdata exist, call came from ExpensesForm
+            if request.POST['formdata']:
+                form = expensesformload(request)
+                temp = 'config.html'
+                footer = 'Categories Updated'
+                c = {'itemtype': 'Expense',
+                     'form': form,
+                     'footer': footer}
             return render(request, temp, c)
 
         #Edit Profile button pressed
