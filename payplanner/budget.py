@@ -158,14 +158,23 @@ class Budget():
     
     #Method to build budget with Budget Data
     @staticmethod
-    def build(username):
+    def build(username, **kwargs):
         #Grab all items from BudgetData and sort by date and then income/expense
         itemlst = BudgetData.objects.values().filter(parentItem__user=username).order_by('effectiveDate','-parentItem__itemType')
         running_total = 0
         budget_output = []
         linenum = 1
+        today = date.today()
+        if 'historical_length' in kwargs:
+            w = kwargs['historical_length']
+            tlength = relativedelta(weeks=w)
+        else:
+            tlength = relativedelta(weeks=2)
+        beg_date = today - tlength
         for line in itemlst:
             item = BudgetData.objects.get(pk=line['id'])
+            if item.effectiveDate < beg_date:
+                continue
             name = item.parentItem.itemName
             itemtype = item.parentItem.itemType
             amount = item.itemAmmount

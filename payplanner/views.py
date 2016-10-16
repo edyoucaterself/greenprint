@@ -359,7 +359,7 @@ def home(request):
     footer = '* Line item modified'
     Budget.update_data({'user': request.user,
                         'months':12})
-    lineitems = Budget.build(request.user)
+    lineitems = Budget.build(request.user, historical_length=3)
     c = {'lineitems': lineitems,
          'footer':footer,}
     return render(request, 'home.html', c)
