@@ -198,15 +198,20 @@ class Budget():
     #Add optional passable variable to store newly added item
     #   If item is passed do 'items = Items.objects.values().filter(itemName=passed_data), else - what we have now
     @staticmethod
-    def update_data(optdict):
-	today = date.today()
-	yearlen = relativedelta(months=optdict['months'])
-	username=optdict['user']
+    def update_data(userid, **kwargs):
+        #Grab budget length from keyword args
+	if 'budget_len' in kwargs:
+            m = kwargs['budget_len']
+            yearlen = relativedelta(months=m)
+        else:
+            yearlen = relativedelta(months=12)
+            
+        today = date.today()
 	end_date = today + yearlen
 	#Clean up anything past the end_date
-	BudgetData.objects.filter(effectiveDate__gt=end_date).filter(parentItem__user=username).delete()
+	BudgetData.objects.filter(effectiveDate__gt=end_date).filter(parentItem__user=userid).delete()
 	#Get Items to build BudgetData
-	items = Items.objects.values().filter(user=username)
+	items = Items.objects.values().filter(user=userid)
 	for budgetitem in items:
             #Create model object for item
             item = Items.objects.get(pk=budgetitem['id'])

@@ -357,8 +357,7 @@ def config(request):
 @login_required
 def home(request):
     footer = '* Line item modified'
-    Budget.update_data({'user': request.user,
-                        'months':12})
+    Budget.update_data(request.user,budget_len=12)
     lineitems = Budget.build(request.user, historical_length=3)
     c = {'lineitems': lineitems,
          'footer':footer,}
