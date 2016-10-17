@@ -301,7 +301,7 @@ def config(request):
             itemtype = 'Income'
             c = {'itemtype':itemtype,
                  'form':form,
-                 'footer':form.fields['user'],}
+                 'footer':footer,}
             return render(request, 'config.html', c)
         
         #Add Expense from home page

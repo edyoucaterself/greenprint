@@ -12,15 +12,26 @@ Replace Cancel link with button when getting rid of bootstrap
 {% endblock %}
 
 {% block content %}
-<form action="{% url 'config' %}" method="post">
-{% csrf_token %}
-{{ form.as_p }}
-<div class="btn-group">
-<input type="submit" name="config_btn" value="Save {{ itemtype }}" class="btn btn-primary"/>
-<input type="submit" name="config_btn" value="Cancel" class="btn btn-default"/>
-</div>
-</form>
-
+<div class="container-fluid">
+ <form action="{% url 'config' %}" method="post">
+  <div class="row">
+   <div class="col-lg-4"></div>
+   <div class="col-xs-12 col-lg-4">
+   {% csrf_token %}
+   {{ form.as_p }}
+   </div>
+   <div class="col-lg-4"></div>
+ </div>
+ <div class="row center">
+  <div class=""col-xs-12">
+   <div class="btn-group">
+    <input type="submit" name="config_btn" value="Save {{ itemtype }}" class="btn btn-primary"/>
+    <input type="submit" name="config_btn" value="Cancel" class="btn btn-default"/>
+   </div>
+  </div>
+ </div>
+ </form>
+ </div>
 {% endblock %}
 
 {% block footer %}

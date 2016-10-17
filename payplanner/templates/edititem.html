@@ -14,22 +14,38 @@ put correct title
 {% endblock %}
 
 {% block content %}
-<form action="{% url 'edit' itemid %}" method="post">
-{% csrf_token %}
-{% bootstrap_form form layout='inline' %}
-{% if notsingle %}
-<div class="radio">
-<input type="radio" name="edit_opt" value="single" checked="checked"> This occurrence only<br>
-<input type="radio" name="edit_opt" value="future"> Adjust future occurrences<br>
-<input type="radio" name="edit_opt" value="all"> Adjust all occurrence<br><br>
+<div class="container-fluid">
+ <form action="{% url 'edit' itemid %}" method="post">
+ <div class="row">
+  <div class="col-lg-4"></div>
+  <div class="col-xs-12 col-lg-4 form-group">
+    {% csrf_token %}
+    {{ form.as_p }}
+  </div>
+  <div class="col-lg-4"></div>
+ </div>
+ {% if notsingle %}
+ <div class="row">
+  <div class="col-lg-4"></div>
+  <div class="col-xs-12 col-lg-4">
+   <div class="radio">
+    <input type="radio" name="edit_opt" value="single" checked="checked"> This occurrence only<br>
+    <input type="radio" name="edit_opt" value="future"> Adjust future occurrences<br>
+    <input type="radio" name="edit_opt" value="all"> Adjust all occurrence<br><br>
+   </div>
+  </div>
+  <div class="col-lg-4"></div>
+ </div>
+ {% endif %}
+ <div class="row center">
+  <div class="btn-group">
+   <input type="submit" name="edit_btn" value="Update" class="btn btn-primary"/>
+   <input type="submit" name="edit_btn" value="Delete" class="btn btn-danger"/>
+   <input type="submit" name="edit_btn" value="Cancel" class="btn btn-default"/>
+  </div>
+ </div>
+ </form>
 </div>
-{% endif %}
-<div class="btn-group">
-<input type="submit" name="edit_btn" value="Update" class="btn btn-primary"/>
-<input type="submit" name="edit_btn" value="Delete" class="btn btn-danger"/>
-<input type="submit" name="edit_btn" value="Cancel" class="btn btn-default"/>
-</div>
-</form>
 {% endblock %}
 {% block footer %}
 {{ footer }}

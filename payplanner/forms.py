@@ -68,7 +68,8 @@ class ExpensesForm(forms.ModelForm):
                    'nextDueDate': forms.DateInput(attrs={'name': 'date',
                                                          'class':'form-control'}),
                    'endDate': forms.DateInput(attrs={'name': 'date',
-                                                     'class':'form-control'})}
+                                                     'class':'form-control'})
+                   }
 
         
 
@@ -88,7 +89,8 @@ class IncomeForm(forms.ModelForm):
                    'nextDueDate': forms.DateInput(attrs={'name': 'date',
                                                          'class':'form-control'}),
                    'endDate': forms.DateInput(attrs={'name': 'date',
-                                                     'class':'form-control'})}
+                                                     'class':'form-control'})
+                   }
         
 
 class EditForm(forms.ModelForm):
@@ -98,7 +100,10 @@ class EditForm(forms.ModelForm):
     class Meta:
         model = BudgetData
         exclude = ('effectiveDate',)
-        widgets = {'parentItem':forms.HiddenInput()}
+        widgets = {'parentItem':forms.HiddenInput(),
+                   'itemAmmount':forms.NumberInput(attrs={'class':'form-control',}),
+                   'itemNote':forms.TextInput(attrs={'class':'form-control',})
+                   }
         
 
 class UserCatForm(forms.ModelForm):
@@ -137,7 +142,8 @@ class UserProfileForm(forms.ModelForm):
         fields = ('first_name','last_name','email')
         widgets = {'first_name':forms.TextInput(attrs={'class':'form-control',}),
                   'last_name': forms.TextInput(attrs={'class':'form-control',}),
-                  'email': forms.TextInput(attrs={'class':'form-control',})}
+                  'email': forms.TextInput(attrs={'class':'form-control',})
+                   }
         
         
 class CategoriesForm(forms.ModelForm):
