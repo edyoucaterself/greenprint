@@ -24,20 +24,19 @@ Creation Date: 10-17-2016
 .selector-available h2, .selector-chosen h2 {
     border: 1px solid #ccc;
     border-radius: 5px;
-/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#1e5799+0,1969aa+13,207cca+47,7db9e8+100 */
-    background: #1e5799; /* Old browsers */
-    background: -moz-linear-gradient(45deg,  #1e5799 0%, #1969aa 13%, #207cca 47%, #7db9e8 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(45deg,  #1e5799 0%,#1969aa 13%,#207cca 47%,#7db9e8 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(45deg,  #1e5799 0%,#1969aa 13%,#207cca 47%,#7db9e8 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#7db9e8',GradientType=1 ); /* IE6-9 fallback on        horizontal gradient */
 }
 
 .selector .selector-chosen h2 {
     margin-bottom: 35px;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7db9e8+0,207cca+53,1969aa+87,1e5799+100 */
+    background: #7db9e8; /* Old browsers */
+    background: -moz-linear-gradient(45deg,  #7db9e8 0%, #207cca 53%, #1969aa 87%, #1e5799 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(45deg,  #7db9e8 0%,#207cca 53%,#1969aa 87%,#1e5799 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(45deg,  #7db9e8 0%,#207cca 53%,#1969aa 87%,#1e5799 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7db9e8', endColorstr='#1e5799',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
 .selector .selector-available h2 {
-    border-radius: 5px;
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#1e5799+0,1969aa+13,207cca+47,7db9e8+100 */
     background: #1e5799; /* Old browsers */
     background: -moz-linear-gradient(45deg,  #1e5799 0%, #1969aa 13%, #207cca 47%, #7db9e8 100%); /* FF3.6-15 */
