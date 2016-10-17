@@ -32,8 +32,8 @@ put correct title
     <div class="center btn-group-vertical btn-group-lg">
      <input type="submit" name="account_mgmt_btn" value="Edit Profile" class="btn btn-primary"/>
      <input type="submit" name="account_mgmt_btn" value="Edit Categories" class="btn btn-primary"/>
-     <input type="submit" name="account_mgmt_btn" value="Delete Budget" class="btn btn-warning"/>
-     <input type="submit" name="account_mgmt_btn" value="Delete Account" class="btn btn-danger"/>
+     <input type="submit" name="account_mgmt_btn" value="Delete Budget" class="btn btn-warning" onclick="return confirm('Remove all budget data?');"/>
+     <input type="submit" name="account_mgmt_btn" value="Delete Account" class="btn btn-danger" onclick="return confirm('Remove all account data?');"/>
      <input type="submit" name="account_mgmt_btn" value="Home" class="btn btn-default"/>
     </div>
    {% else %}

@@ -8,7 +8,8 @@ import ast
 from django.shortcuts import render,redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login, authenticate
+from django.contrib.auth.models import User
+from django.contrib.auth import login, authenticate, logout
 from django.http import HttpResponse
 
 from .forms import ExpensesForm, IncomeForm, EditForm, CategoriesForm
@@ -245,6 +246,20 @@ def account_mgmt(request):
             c = {'form':form,
                  'footer':footer}
             return render(request, temp, c)
+        
+        #Delete Budget Button
+        elif account_mgmt_btn == "Delete Budget":
+            #Delete all Items with owner of user
+            Items.objects.filter(user=request.user).delete()
+            return redirect('home')
+        
+        #Delete Budget Button
+        elif account_mgmt_btn == "Delete Account":
+            #Delete all Items with owner of user
+            username = request.user.username
+            user = User.objects.get(username=username)
+            user.delete()
+            return redirect('logout')
         
         #Cancel back to home page
         elif account_mgmt_btn == "Home":
