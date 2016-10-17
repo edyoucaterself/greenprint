@@ -5,9 +5,9 @@ Creation Date: 10-17-2016
 
 .selector {
     width: 100%;
-    float: center;
     border: 5px;
     border-color: black;
+    margin: auto;
 }
 
 .selector select {
@@ -16,14 +16,9 @@ Creation Date: 10-17-2016
 }
 
 .selector-available, .selector-chosen {
-    float: left;
-    width: 30%;
+    width: 46%;
     text-align: center;
-    margin-bottom: 0px;
-}
-
-.selector-chosen select {
-    border-top: none;
+    margin-bottom: 5px;
 }
 
 .selector-available h2, .selector-chosen h2 {
