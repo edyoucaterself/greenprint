@@ -1,0 +1,141 @@
+/* Jquery Datepicker CSS for payplanner */
+
+/* Widget Container */
+.ui-widget-content {
+	border: 0px;
+	background: #ffffff url(images/ui-bg_flat_75_ffffff_40x100.png) 50% 50% repeat-x;
+	color: #222222;
+	width: 264px;
+}
+
+	
+/* Header 
+----------------------------------*/
+.ui-widget-header {
+	background: rgb(22, 105, 173);
+	font-weight: bold;
+  	line-height: 30px;
+	width: 260px;
+  	border-width: 1px 0 0 0;
+  	border-style: solid;
+  	border-color: #111;
+}
+
+/* Calander Days Header
+----------------------------------*/
+.ui-datepicker thead {
+	 background-color: #f7f7f7;
+  	 border-bottom: 1px solid #bbb;
+}
+
+.ui-datepicker th {
+  	text-transform: uppercase;
+  	font-size: 8pt;
+  	padding: 5px 0;
+  	color: #666666;
+  	text-shadow: 1px 0px 0px #fff;
+  	filter: dropshadow(color=#fff, offx=1, offy=0);
+}
+
+/* Calander Table
+----------------------------------*/
+.ui-datepicker table {
+	padding: 0;
+	border-collapse: collapse;
+	border: 1px solid #bbb;
+}
+
+/* Calander Days Borders
+----------------------------------*/
+.ui-datepicker tbody td {
+  	padding: 0;
+  	border-right: 1px solid #bbb;
+}
+.ui-datepicker tbody td:last-child {
+  	border-right: 0px;
+	width: 35px;
+	margin: 0;
+}
+.ui-datepicker tbody tr {
+  	border-bottom: 1px solid #bbb;
+}
+.ui-datepicker tbody tr:last-child {
+  	border-bottom: 0px;
+	width: 35px;
+}
+
+/* Calander Days Default State
+----------------------------------*/
+ td span, .ui-datepicker td a {
+  	display: inline-block;
+  	font-weight: bold;
+  	text-align: center;
+  	width: 36px;
+  	height: 36px;
+  	line-height: 36px;
+  	color: #666666;
+  	text-shadow: 1px 1px 0px #fff;
+  	filter: dropshadow(color=#fff, offx=1, offy=1);
+}
+
+.ui-datepicker-calendar .ui-state-default {
+  	background: #ededed;
+  	background: -moz-linear-gradient(top,  #ededed 0%, #dedede 100%);
+  	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ededed), color-stop(100%,#dedede));
+  	background: -webkit-linear-gradient(top,  #ededed 0%,#dedede 100%);
+  	background: -o-linear-gradient(top,  #ededed 0%,#dedede 100%);
+  	background: -ms-linear-gradient(top,  #ededed 0%,#dedede 100%);
+  	background: linear-gradient(top,  #ededed 0%,#dedede 100%);
+  	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ededed', endColorstr='#dedede',GradientType=0 );
+  	-webkit-box-shadow: inset 1px 1px 0px 0px rgba(250, 250, 250, .5);
+  	-moz-box-shadow: inset 1px 1px 0px 0px rgba(250, 250, 250, .5);
+  	box-shadow: inset 1px 1px 0px 0px rgba(250, 250, 250, .5);
+}
+.ui-datepicker-unselectable .ui-state-default {
+  	background: #f4f4f4;
+  	color: #b4b3b3;
+}
+
+/* Current Day */
+.ui-state-highlight,
+.ui-widget-content .ui-state-highlight,
+.ui-widget-header .ui-state-highlight {
+	border: 3px solid #fcefa1;
+	padding: 1px
+  	width: 36px;
+  	height: 36px;
+  	line-height: 36px;
+  	color: #666666;
+  	text-shadow: 1px 1px 0px #fff;
+  	filter: dropshadow(color=#fff, offx=1, offy=1);
+}
+.ui-state-highlight a,
+.ui-widget-content .ui-state-highlight a,
+.ui-widget-header .ui-state-highlight a {
+	color: #363636;
+	font-weight: bold;
+  	text-align: center;
+}
+
+/* Calander Days Hover State
+----------------------------------*/
+.ui-datepicker-calendar .ui-state-hover {
+  	background: #f7f7f7;
+}
+
+/* Calander Days Active State
+----------------------------------*/
+.ui-datepicker-calendar .ui-state-active {
+  	width: 36px;
+  	height: 36px;
+  	background: rgb(22, 105, 173);
+  	-webkit-box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, .1);
+  	-moz-box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, .1);
+  	box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, .1);
+  	color: #e0e0e0;
+  	text-shadow: 0px 1px 0px #4d7a85;
+  	filter: dropshadow(color=#4d7a85, offx=0, offy=1);
+  	border: 1px solid #55838f;
+  	position: relative;
+}
+

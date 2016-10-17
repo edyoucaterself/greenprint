@@ -1,3 +1,5 @@
+
+
 .inline {
   display: inline;
 }
@@ -19,8 +21,10 @@
 }
 .well{
     background-color: rgb(22, 105, 173);
-    color: rgb(255, 255, 250);
+    color: rgb(255, 255, 240);
     font-weight: bold;
+    height: 25%;
+    margin: 0 auto;
 }
 
 .btn-xl {
@@ -44,10 +48,6 @@ label {
     font-size: 150%;
 }
 
-select {
-    width: 25%;
-}
-
 .button {
     font-size: 100%;
 }
@@ -58,4 +58,8 @@ select {
 
 .credit {
     color: red;
+}
+
+.form-group {
+ margin: 0 auto;
 }

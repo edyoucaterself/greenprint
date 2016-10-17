@@ -1,0 +1,170 @@
+/* Styling for Side by Side Selection Boxes 
+Author: Matt Agresta
+Creation Date: 10-17-2016
+*/
+
+.selector {
+    width: 100%;
+    float: center;
+    border: 5px;
+    border-color: black;
+}
+
+.selector select {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.selector-available, .selector-chosen {
+    float: left;
+    width: 30%;
+    text-align: center;
+    margin-bottom: 0px;
+}
+
+.selector-chosen select {
+    border-top: none;
+}
+
+.selector-available h2, .selector-chosen h2 {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#1e5799+0,1969aa+13,207cca+47,7db9e8+100 */
+    background: #1e5799; /* Old browsers */
+    background: -moz-linear-gradient(45deg,  #1e5799 0%, #1969aa 13%, #207cca 47%, #7db9e8 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(45deg,  #1e5799 0%,#1969aa 13%,#207cca 47%,#7db9e8 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(45deg,  #1e5799 0%,#1969aa 13%,#207cca 47%,#7db9e8 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#7db9e8',GradientType=1 ); /* IE6-9 fallback on        horizontal gradient */
+}
+
+.selector .selector-chosen h2 {
+    margin-bottom: 35px;
+}
+
+.selector .selector-available h2 {
+    border-radius: 5px;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#1e5799+0,1969aa+13,207cca+47,7db9e8+100 */
+    background: #1e5799; /* Old browsers */
+    background: -moz-linear-gradient(45deg,  #1e5799 0%, #1969aa 13%, #207cca 47%, #7db9e8 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(45deg,  #1e5799 0%,#1969aa 13%,#207cca 47%,#7db9e8 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(45deg,  #1e5799 0%,#1969aa 13%,#207cca 47%,#7db9e8 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#7db9e8',GradientType=1 ); /* IE6-9 fallback on        horizontal gradient */
+    color: rgb(255, 255, 240);
+}
+
+.selector .selector-filter {
+    background: white;
+    border: 0px solid #ccc;
+    padding: 1px;
+    color: #999;
+    font-size: 14px;
+    margin: 0;
+    text-align: left;
+}
+
+.selector .selector-filter label,
+.inline-group .aligned .selector .selector-filter label {
+    width: 5%;
+    padding: 2px;
+    float: right;
+}
+
+.selector .selector-available input {
+    width: 93%;
+    float: left;
+}
+
+
+.selector ul.selector-chooser {
+    float: center;
+    width: 22px;
+    background-color: #eee;
+    border-radius: 12px;
+    margin: 10em 5px 0 5px;
+    padding: 0;
+}
+
+.selector-chooser li {
+    margin: 0;
+    float: center;
+    list-style-type: none;
+}
+
+.selector select {
+    margin-bottom: 10px;
+    margin-top: 0;
+}
+
+.selector-add, .selector-remove {
+    width: 16px;
+    height: 16px;
+    display: block;
+    text-indent: -3000px;
+    overflow: hidden;
+    text-align: center;
+}
+
+
+.selector-add {
+    background: url(../admin/img/selector-icons.gif) 0 -161px no-repeat;
+    cursor: default;
+}
+
+.active.selector-add {
+    background: url(../admin/img/selector-icons.gif) 0 -187px no-repeat;
+    cursor: pointer;
+}
+
+.selector-remove {
+    background: url(../admin/img/selector-icons.gif) 0 -109px no-repeat;
+    cursor: default;
+}
+
+.active.selector-remove {
+    background: url(../admin/img/selector-icons.gif) 0 -135px no-repeat;
+    cursor: pointer;
+}
+
+a.selector-chooseall, a.selector-clearall {
+    display: inline-block;
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: bold;
+    color: #666;
+}
+
+a.selector-chooseall {
+    padding: 3px 18px 3px 0;
+}
+
+a.selector-clearall {
+    padding: 3px 0 3px 18px;
+}
+
+a.active.selector-chooseall:hover, a.active.selector-clearall:hover {
+    color: #036;
+}
+
+a.selector-chooseall {
+    background: url(../admin/img/selector-icons.gif) right -263px no-repeat;
+    cursor: default;
+}
+
+a.active.selector-chooseall {
+    background: url(../admin/img/selector-icons.gif) right -289px no-repeat;
+    cursor: pointer;
+}
+
+a.selector-clearall {
+    background: url(../admin/img/selector-icons.gif) left -211px no-repeat;
+    cursor: default;
+}
+
+a.active.selector-clearall {
+    background: url(../admin/img/selector-icons.gif) left -237px no-repeat;
+    cursor: pointer;
+}
+
+
+
