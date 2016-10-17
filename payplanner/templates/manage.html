@@ -16,13 +16,13 @@ put correct title
 {% block content %}
 <div class="container-fluid">
  <div class="row">
-  <div class="col-lg-4"></div>
-  <div class="col-xs-12 col-lg-4 form-group">
+  <div class="col-lg-3"></div>
+  <div class="col-xs-12 col-lg-6 form-group">
    <form action="{% url 'manage' %}" method="post">
      {% csrf_token %}
      {{ form.as_table }}
   </div>
-  <div class="col-lg-4"></div>
+  <div class="col-lg-3"></div>
   </div>
  </div>
  <div class="row center">
