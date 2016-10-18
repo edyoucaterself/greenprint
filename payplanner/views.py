@@ -369,6 +369,9 @@ def config(request):
 #Home view - displays budget    
 @login_required
 def home(request):
+    #Check is highest effective date in BudgetData is lower than
+    #Desired Budget End Date, if so run UpdateData
+    #Plug Beginning and End Times into Build to display only data user wants
     footer = '* Line item modified'
     Budget.update_data(request.user,budget_len=12)
     lineitems = Budget.build(request.user, historical_length=3)

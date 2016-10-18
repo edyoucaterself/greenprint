@@ -87,3 +87,12 @@ a.page-header:active {
     text-decoration: underline;
     color: rgb(245, 245, 230);
 }
+
+.radio {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.radio label {
+    font-size: 10pt;
+}

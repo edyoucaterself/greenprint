@@ -28,11 +28,15 @@ put correct title
  <div class="row">
   <div class="col-lg-4"></div>
   <div class="col-xs-12 col-lg-4">
-   <div class="radio">
-    <input type="radio" name="edit_opt" value="single" checked="checked"> This occurrence only<br>
-    <input type="radio" name="edit_opt" value="future"> Adjust future occurrences<br>
-    <input type="radio" name="edit_opt" value="all"> Adjust all occurrence<br><br>
+   <div id="radios" class="radio">
+    <input id="single" type="radio" name="edit_opt" value="single" checked="checked">
+    <label for="single">This {{ name }} only</label> 
+    <input id="future" type="radio" name="edit_opt" value="future"> 
+    <label for="future">Future {{ name }}</label>
+    <input id="all" type="radio" name="edit_opt" value="all"> 
+    <label for="all">All {{ name }}</label>
    </div>
+   <script type="text/javascript">$('#radios').radiosToSlider({animation: true,});</script>
   </div>
   <div class="col-lg-4"></div>
  </div>
