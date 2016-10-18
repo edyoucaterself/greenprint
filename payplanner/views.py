@@ -321,6 +321,9 @@ def config(request):
             form = ExpensesForm(request.POST, userid=request.user)
             if form.is_valid():
                 form.save()
+                Budget.update_data(request.user,
+                                   budget_len=12,
+                                   force=True)
                 return redirect('home')
             else:
                 temp = 'config.html'     
@@ -333,6 +336,9 @@ def config(request):
             form = IncomeForm(request.POST)
             if form.is_valid():
                 form.save()
+                Budget.update_data(request.user,
+                                   budget_len=12,
+                                   force=True)
                 return redirect('home')
             else:
                 form = IncomeForm(request.POST)
@@ -373,8 +379,9 @@ def home(request):
     #Desired Budget End Date, if so run UpdateData
     #Plug Beginning and End Times into Build to display only data user wants
     footer = '* Line item modified'
-    Budget.update_data(request.user,budget_len=12)
-    lineitems = Budget.build(request.user, historical_length=3)
+    lineitems = Budget.build(request.user,
+                             historical_length=3,
+                             budget_length=12)
     c = {'lineitems': lineitems,
          'footer':footer,}
     return render(request, 'home.html', c)

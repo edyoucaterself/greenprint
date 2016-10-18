@@ -1,19 +1,20 @@
-from .models import Items, BudgetData, Cycles
-from dateutil.relativedelta import relativedelta
-from datetime import date
+#budget.py
+#Created By: Matt Agresta
+#Created On: 9/07/2016
+
+#Set up Environment
 import json
-#TODO
-#Build - Check if item exists already in budget, if not add it
-#Update Budget - Called on item alter - Remove item, run build again
-#If item altered -
-#   Ammount Changed - alter entries with date > today
-#   End Date specified - Remove any entries with date > new enddate
-#   End Date changed
-#       newdate < original date - See End Date Specified (above)
-#       newdate > original date - Run build method
-#Class usage:
-#instance = Budget(expense/income query object, form.has_changed() object)
+from datetime import date
+from dateutil.relativedelta import relativedelta
+
+from django.db.models import Max
+
+from .models import Items, BudgetData, Cycles
+
+
 class Budget():
+
+    """ Controls BudgetData via Items tables """
     #Function to serialize date list to json
     #Returns str of serialized data
     @staticmethod
@@ -165,15 +166,25 @@ class Budget():
         budget_output = []
         linenum = 1
         today = date.today()
+        #Check for historical length (in weeks)
         if 'historical_length' in kwargs:
             w = kwargs['historical_length']
             tlength = relativedelta(weeks=w)
         else:
             tlength = relativedelta(weeks=2)
         beg_date = today - tlength
+
+        #Check for budget length (in months)
+        if 'budget_length' in kwargs:
+            m = kwargs['budget_length']
+            tlength = relativedelta(months=m)
+        else:
+            tlength = relativedelta(months=12)
+        end_date = today + tlength
+        
         for line in itemlst:
             item = BudgetData.objects.get(pk=line['id'])
-            if item.effectiveDate < beg_date:
+            if item.effectiveDate < beg_date or item.effectiveDate > end_date:
                 continue
             name = item.parentItem.itemName
             itemtype = item.parentItem.itemType
@@ -195,21 +206,33 @@ class Budget():
         return budget_output
     
     #Method to Add New items to budget
-    #Add optional passable variable to store newly added item
-    #   If item is passed do 'items = Items.objects.values().filter(itemName=passed_data), else - what we have now
     @staticmethod
     def update_data(userid, **kwargs):
-        #Grab budget length from keyword args
+        #Grab force from keyword args
+        if 'force' in kwargs:
+            force = kwargs['force']
+        else:
+            force = False
+
+        #Get End Date from kwargs
 	if 'budget_len' in kwargs:
             m = kwargs['budget_len']
             yearlen = relativedelta(months=m)
         else:
-            yearlen = relativedelta(months=12)
-            
+            yearlen = relativedelta(months=12) 
         today = date.today()
 	end_date = today + yearlen
-	#Clean up anything past the end_date
-	BudgetData.objects.filter(effectiveDate__gt=end_date).filter(parentItem__user=userid).delete()
+	
+	#Get last item in budget data and compare to end date
+	maxdate = BudgetData.objects.filter(parentItem__user=userid).aggregate(Max('effectiveDate'))
+	maxdate = maxdate['effectiveDate__max']
+	if maxdate > end_date and force == False:
+            exitmsg = []
+            exitmsg.append('End Date: %s' % end_date)
+            exitmsg.append('Max Date: %s' % maxdate)
+            exitmsg.append('Nothing to Build')
+            return exitmsg
+        
 	#Get Items to build BudgetData
 	items = Items.objects.values().filter(user=userid)
 	for budgetitem in items:
@@ -222,6 +245,7 @@ class Budget():
 	    nextdue = item.nextDueDate
 	    paycycle = item.payCycle.cycleName
 	    itemenddate = item.endDate
+	    itemnote = item.itemNote
 	    skiplist = Budget.json_to_date(item.skiplst)
 	    
 	    
@@ -249,8 +273,7 @@ class Budget():
                     itemcycle = relativedelta(days=cyclength)
 	
                 while itemduedate < end_date:
-                    #Issue with running this second time on single EMS item, posssible others
-
+                    #Break loop, go to next item if due date is past budget end date
                     if itemduedate > itemenddate:
                             break
                     #If date is on skip list increase duedate and continue
@@ -263,11 +286,14 @@ class Budget():
                         continue
                     else:
                         #Need to Add itemNote - Don't want to add it for everyone, need to figure out how to delete with foreign keys and keep budget items
-                        data = BudgetData(parentItem = item, effectiveDate = itemduedate,itemAmmount = amount)
+                        data = BudgetData(parentItem = item,
+                                          effectiveDate = itemduedate,
+                                          itemAmmount = amount,
+                                          itemNote = itemnote)
                         data.save()
                         print('Added %s: %s - %s - %s' % (name,itemduedate,amount,paycycle))
                         itemduedate += itemcycle
                     
-                #Clean up anything older than beginning time frame
+              
                     
 				 
