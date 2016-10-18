@@ -101,8 +101,6 @@ def account_mgmt(request):
     if request.method == 'POST':
         account_mgmt_btn = request.POST.get("account_mgmt_btn")
         #Button Options
-        #deldata - Delete all Items for user
-        #delacct - Delete account
         #save_form.Meta.name - Get Form Name and save
         if account_mgmt_btn == "Save User Categories":
             #If object exists for user update

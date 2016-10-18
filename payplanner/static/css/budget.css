@@ -65,4 +65,25 @@ label {
     color: red;
 }
 
+a.page-header {
+    border: 0px;
+}
+a.page-header:link {
+    text-decoration: none;
+    color: rgb(255, 255, 240);
+}
 
+a.page-header:visited {
+    text-decoration: none;
+    color: rgb(255, 255, 240);
+}
+
+a.page-header:hover {
+    text-decoration: underline;
+    color: rgb(245, 245, 230);
+}
+
+a.page-header:active {
+    text-decoration: underline;
+    color: rgb(245, 245, 230);
+}
