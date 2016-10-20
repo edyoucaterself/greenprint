@@ -306,11 +306,15 @@ def config(request):
         config_btn = request.POST.get("config_btn")
         #Grab Settings from profile
         #Get settings from budget profile
-        budgetprofile = BudgetProfile.objects.get(user=request.user)
-        budlen = budgetprofile.budgetLength
-        histlen = budgetprofile.histLength
+        try:
+            budgetprofile = BudgetProfile.objects.get(user=request.user)
+            budlen = budgetprofile.budgetLength
+            histlen = budgetprofile.histLength
+        except DoesNotExist:
+            budlen = 12
+            histlen = 4
+            
         #Figure out which button was pressed
-
         #Add Income from home page
         if config_btn == "Add Income":
             #Render Income ModelForm
@@ -397,9 +401,13 @@ def config(request):
 @login_required
 def home(request):
     #Get settings from budget profile
-    budgetprofile = BudgetProfile.objects.get(user=request.user)
-    budlen = budgetprofile.budgetLength
-    histlen = budgetprofile.histLength
+    try:
+        budgetprofile = BudgetProfile.objects.get(user=request.user)
+        budlen = budgetprofile.budgetLength
+        histlen = budgetprofile.histLength
+    except BudgetProfile.DoesNotExist:
+        budlen = 12
+        histlen = 4
     footer = '* Line item modified'
     Budget.update_data(request.user,budget_length=budlen)
     lineitems = Budget.build(request.user,
