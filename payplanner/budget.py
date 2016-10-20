@@ -208,28 +208,50 @@ class Budget():
     #Method to Add New items to budget
     @staticmethod
     def update_data(userid, **kwargs):
+        exitmsg = []
         #Grab force from keyword args
+        #force overrides maxdate comparison
+        # Use after adding new Item
         if 'force' in kwargs:
             force = kwargs['force']
         else:
             force = False
-
+        #Something obout this not working
+            
         #Get End Date from kwargs
-	if 'budget_len' in kwargs:
-            m = kwargs['budget_len']
+	if 'budget_length' in kwargs:
+            m = kwargs['budget_length']
             yearlen = relativedelta(months=m)
         else:
             yearlen = relativedelta(months=12) 
         today = date.today()
 	end_date = today + yearlen
 	
-	#Get last item in budget data and compare to end date
-	maxdate = BudgetData.objects.filter(parentItem__user=userid).aggregate(Max('effectiveDate'))
-	maxdate = maxdate['effectiveDate__max']
-	if maxdate > end_date and force == False:
-            exitmsg = []
-            exitmsg.append('End Date: %s' % end_date)
-            exitmsg.append('Max Date: %s' % maxdate)
+	#Get last item in budget data 
+	budgetdata = BudgetData.objects.filter(parentItem__user=userid).annotate(Max('effectiveDate'))
+        maxline = budgetdata.last()
+        #If no BudgetData set max date to today to exit method
+	if maxline is None:
+            maxdate = date.today()
+        else:
+            maxdate = maxline.effectiveDate
+            #Get Cycle Length
+            cycle = maxline.parentItem.payCycle
+            if cycle.cycleName == 'Single':
+                linecycle = relativedelta(months=1)
+            elif cycle.cycleName == 'Monthly':
+                linecycle = relativedelta(months=1)
+            elif cycle.cycleName == 'Quarterly':
+                linecycle = relativedelta(months=3)
+            else:
+                linecycle = relativedelta(days=cycle.cycleLength)
+            exitmsg.append('Max Line Cycle: %s' % linecycle)
+            maxdate += linecycle
+        
+        print('End Date: %s' % end_date)
+        print('Max Date: %s' % maxdate)
+        print('Force: %s' % force)   
+	if maxdate >= end_date and force == False:
             exitmsg.append('Nothing to Build')
             return exitmsg
         
@@ -255,12 +277,13 @@ class Budget():
                 if not BudgetData.objects.values().filter(parentItem = item,effectiveDate = itemduedate):
                     data = BudgetData(parentItem = item, effectiveDate = itemduedate,itemAmmount = amount)
                     data.save()
-                    print('Added %s: %s - %s - %s' % (name,itemduedate,amount,paycycle))
+                    exitmsg.append('Added %s: %s - %s - %s' % (name,itemduedate,amount,paycycle))
                     continue
-                    
+            #Reoccuring line item, cycle through till budget end        
 	    else:
                 #If no end date specified create fake on that will always be greater then itemduedate
                 if itemenddate is None:
+                    #Change to  = itemenddate + itemcycle (move below)
                     itemenddate = date(9999,12,31)
 	    	#Get cyclelength from Item
                 cyclength = item.payCycle.cycleLength
@@ -291,9 +314,10 @@ class Budget():
                                           itemAmmount = amount,
                                           itemNote = itemnote)
                         data.save()
-                        print('Added %s: %s - %s - %s' % (name,itemduedate,amount,paycycle))
+                        exitmsg.append('Added %s: %s - %s - %s' % (name,itemduedate,amount,paycycle))
                         itemduedate += itemcycle
                     
-              
+        #Exit with message
+        return exitmsg
                     
 				 

@@ -21,6 +21,7 @@ put correct title
    <form action="{% url 'manage' %}" method="post">
      {% csrf_token %}
      {{ form.as_table }}
+     {{ form2.as_table }}
   </div>
   <div class="col-lg-3"></div>
   </div>

@@ -7,7 +7,7 @@ from datetime import date
 
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 class Cycles(models.Model):
     
@@ -175,3 +175,17 @@ class BudgetData(models.Model):
         
         verbose_name_plural = 'Budget Data'
 
+
+class BudgetProfile(models.Model):
+
+    """ Holds settings for budget display """
+    
+    user = models.OneToOneField(User)
+    
+    budgetLength = models.IntegerField(
+        validators=[MaxValueValidator(100), MinValueValidator(1)],
+        verbose_name='Budget Length (Months)')
+    
+    histLength = models.IntegerField(
+        validators=[MaxValueValidator(52), MinValueValidator(1)],
+        verbose_name='Historical Length (Weeks)')

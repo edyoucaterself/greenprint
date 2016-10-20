@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.admin.widgets import FilteredSelectMultiple
 
-from .models import Items, BudgetData, Categories, UserCat
+from .models import Items, BudgetData, Categories, UserCat, BudgetProfile
 from .widgets import RelatedFieldWidgetAddEdit
 
 class UserCreateForm(UserCreationForm):
@@ -155,3 +155,17 @@ class CategoriesForm(forms.ModelForm):
         model = Categories
         fields = ('catName',)
         widgets = {'catName': forms.TextInput(attrs={'class':'form-control',})}
+
+
+class BudgetProfileForm(forms.ModelForm):
+
+    """Form to control budget settings"""
+
+    class Meta:
+        name = "Budget Profile"
+        model = BudgetProfile
+        fields = '__all__'
+        widgets = {'user':forms.HiddenInput(),
+                   'budgetLength':forms.NumberInput(attrs={'class':'form-control',}),
+                   'histLength':forms.NumberInput(attrs={'class':'form-control',})
+                   }
