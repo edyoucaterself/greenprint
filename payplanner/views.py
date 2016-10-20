@@ -143,28 +143,27 @@ def account_mgmt(request):
         elif account_mgmt_btn == "Save User Profile":
             #Load Forms
             form = UserProfileForm(request.POST, instance=request.user)
-            initcat = BudgetProfile.objects.get(user=request.user)
-            form2 = BudgetProfileForm(request.POST, instance=initcat)
+            try:
+                initcat = BudgetProfile.objects.get(user=request.user)
+                form2 = BudgetProfileForm(request.POST, instance=initcat)
+            except:
+                form2 = BudgetProfileForm(request.POST)
             #Validate Forms    
             if form.is_valid() and form2.is_valid():
                 form.save()
                 form2.save()
-                form = ""
-                form2= ""
-                footer = "Profile Updated"
-                #Variable to display menu buttons
-                is_get = True
+                return redirect('home')
             #Invalid Form Selected
             else:
                 footer = "Edit Your Profile"
                 is_get = False            
                     
-            temp = 'manage.html'  
-            c = {'is_get': is_get,
-                 'form': form,
-                 'form2': form2,
-                 'footer':footer}
-            return render(request, temp, c)
+                temp = 'manage.html'  
+                c = {'is_get': is_get,
+                     'form': form,
+                     'form2': form2,
+                     'footer':footer}
+                return render(request, temp, c)
 
         #Save button on User Profile Form
         elif account_mgmt_btn == "Save Category":
@@ -305,6 +304,11 @@ def config(request):
     if request.method == 'POST':
         #Grab button data
         config_btn = request.POST.get("config_btn")
+        #Grab Settings from profile
+        #Get settings from budget profile
+        budgetprofile = BudgetProfile.objects.get(user=request.user)
+        budlen = budgetprofile.budgetLength
+        histlen = budgetprofile.histLength
         #Figure out which button was pressed
 
         #Add Income from home page
@@ -339,7 +343,7 @@ def config(request):
             if form.is_valid():
                 form.save()
                 Budget.update_data(request.user,
-                                   budget_length=12,
+                                   budget_length=budlen,
                                    force=True)
                 return redirect('home')
             else:
@@ -354,7 +358,7 @@ def config(request):
             if form.is_valid():
                 form.save()
                 footer = Budget.update_data(request.user,
-                                   budget_length=12,
+                                   budget_length=budlen,
                                    force=True)
                 return redirect('home')
             else:
@@ -392,14 +396,15 @@ def config(request):
 #Home view - displays budget    
 @login_required
 def home(request):
-    #Check is highest effective date in BudgetData is lower than
-    #Desired Budget End Date, if so run UpdateData
-    #Plug Beginning and End Times into Build to display only data user wants
+    #Get settings from budget profile
+    budgetprofile = BudgetProfile.objects.get(user=request.user)
+    budlen = budgetprofile.budgetLength
+    histlen = budgetprofile.histLength
     footer = '* Line item modified'
-    Budget.update_data(request.user,budget_length=12)
+    Budget.update_data(request.user,budget_length=budlen)
     lineitems = Budget.build(request.user,
-                             historical_length=3,
-                             budget_length=12)
+                             historical_length=histlen,
+                             budget_length=budlen)
     c = {'lineitems': lineitems,
          'footer':footer,}
     return render(request, 'home.html', c)
@@ -409,7 +414,12 @@ def home(request):
 def edit(request, item_id):
     if request.method == 'POST':
     #Update button on on edititem.html EditForm
+        #Get settings from budget profile
+        budgetprofile = BudgetProfile.objects.get(user=request.user)
+        budlen = budgetprofile.budgetLength
+        histlen = budgetprofile.histLength
         edit_btn = request.POST.get("edit_btn")
+        
         if edit_btn == "Update":
             item = BudgetData.objects.get(pk=item_id)
             init = {'itemAmmount':item.itemAmmount,
@@ -436,7 +446,7 @@ def edit(request, item_id):
                     elif editopt == 'all':
                         Budget.update_all(item,request.POST)
                         Budget.update_data(request.user,
-                                           budget_length=12,
+                                           budget_length=budlen,
                                            force=True)
                         
                     #If single or not present (implied single) update line
