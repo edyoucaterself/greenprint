@@ -104,13 +104,7 @@ label#id_histLength {
     font-size: 5em;
 }
 
-#id_budgetLength {
-    vertical-align: top;
-    width: 25%;
-    min-width: 60px;
-}
-
-#id_histLength {
+#id_budgetLength, #id_histLength {
     vertical-align: top;
     width: 25%;
     min-width: 60px;
