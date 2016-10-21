@@ -209,6 +209,11 @@ class Budget():
     @staticmethod
     def update_data(userid, **kwargs):
         exitmsg = []
+        #exit status
+        #1 - Nothing to Build
+        #0 - Items Added
+        #2 - Error/Not Run Properly
+        exitstatus = 2
         #Grab force from keyword args
         #force overrides maxdate comparison
         # Use after adding new Item
@@ -248,15 +253,20 @@ class Budget():
             exitmsg.append('Max Line Cycle: %s' % linecycle)
             maxdate += linecycle
         
-        print('End Date: %s' % end_date)
-        print('Max Date: %s' % maxdate)
-        print('Force: %s' % force)   
+        exitmsg.append('End Date: %s' % end_date)
+        exitmsg.append('Max Date: %s' % maxdate)
+        exitmsg.append('Force: %s' % force)   
 	if maxdate >= end_date and force == False:
-            exitmsg.append('Nothing to Build')
-            return exitmsg
+            exitstatus = 1
+            exitmsg.append('Nothing New to Build')
+            return exitstatus, exitmsg
         
-	#Get Items to build BudgetData
+	#Get Items to build BudgetData, if empty, exit
 	items = Items.objects.values().filter(user=userid)
+	if len(items) is 0:
+            exitstatus = 1
+            exitmsg.append('No Items to build from')
+            
 	for budgetitem in items:
             #Create model object for item
             item = Items.objects.get(pk=budgetitem['id'])
@@ -277,6 +287,7 @@ class Budget():
                 if not BudgetData.objects.values().filter(parentItem = item,effectiveDate = itemduedate):
                     data = BudgetData(parentItem = item, effectiveDate = itemduedate,itemAmmount = amount)
                     data.save()
+                    exitstatus = 0
                     exitmsg.append('Added %s: %s - %s - %s' % (name,itemduedate,amount,paycycle))
                     continue
             #Reoccuring line item, cycle through till budget end        
@@ -314,10 +325,11 @@ class Budget():
                                           itemAmmount = amount,
                                           itemNote = itemnote)
                         data.save()
+                        exitstatus = 0
                         exitmsg.append('Added %s: %s - %s - %s' % (name,itemduedate,amount,paycycle))
                         itemduedate += itemcycle
                     
         #Exit with message
-        return exitmsg
+        return exitstatus, exitmsg
                     
 				 

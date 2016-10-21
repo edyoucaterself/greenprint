@@ -114,6 +114,7 @@ label#id_histLength {
     width: 70%;
     float: left;
     font-size: 12pt;
+    font-weight: 600;
     margin: 5 2;
     max-width: 210px;
 }

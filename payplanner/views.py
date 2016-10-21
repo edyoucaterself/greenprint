@@ -84,13 +84,13 @@ def signup(request):
             #Registration Form Invalid    
             else:
                 temp = 'register.html'
-                footer = 'New User'
+                footer = ''
                 c = {'footer': footer,'form': form}
                 return render(request, temp, c)
     else:
         form = UserCreateForm()
         temp = 'register.html'
-        footer = 'New User'
+        footer = ''
         c = {'footer': footer,
              'form': form}
         return render(request, temp, c)
@@ -361,7 +361,7 @@ def config(request):
             form = IncomeForm(request.POST)
             if form.is_valid():
                 form.save()
-                footer = Budget.update_data(request.user,
+                Budget.update_data(request.user,
                                    budget_length=budlen,
                                    force=True)
                 return redirect('home')
