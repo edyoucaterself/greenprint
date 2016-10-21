@@ -9,6 +9,10 @@ https://docs.djangoproject.com/en/1.8/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.8/ref/settings/
 """
+#fixtute location
+FIXTURE_DIRS = (
+   '/app/GreenPrint/payplanner/fixtures/',
+)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
