@@ -310,7 +310,7 @@ def config(request):
             budgetprofile = BudgetProfile.objects.get(user=request.user)
             budlen = budgetprofile.budgetLength
             histlen = budgetprofile.histLength
-        except DoesNotExist:
+        except BudgetProfile.DoesNotExist:
             budlen = 12
             histlen = 4
             
