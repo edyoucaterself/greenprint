@@ -407,7 +407,7 @@ def home(request):
         histlen = budgetprofile.histLength
     except BudgetProfile.DoesNotExist:
         budlen = 12
-        histlen = 4
+        histlen = 3
     footer = '* Line item modified'
     Budget.update_data(request.user,budget_length=budlen)
     lineitems = Budget.build(request.user,
@@ -423,9 +423,13 @@ def edit(request, item_id):
     if request.method == 'POST':
     #Update button on on edititem.html EditForm
         #Get settings from budget profile
-        budgetprofile = BudgetProfile.objects.get(user=request.user)
-        budlen = budgetprofile.budgetLength
-        histlen = budgetprofile.histLength
+        try:
+            budgetprofile = BudgetProfile.objects.get(user=request.user)
+            budlen = budgetprofile.budgetLength
+            histlen = budgetprofile.histLength
+        except BudgetProfile.DoesNotExist:
+            budlen = 12
+            histlen = 3
         edit_btn = request.POST.get("edit_btn")
         
         if edit_btn == "Update":

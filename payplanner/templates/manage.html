@@ -21,10 +21,27 @@ put correct title
    <form action="{% url 'manage' %}" method="post">
      {% csrf_token %}
      {{ form.as_table }}
-     {{ form2.as_table }}
-  </div>
-  <div class="col-lg-3"></div>
-  </div>
+  <div>
+  <div class="col-sm-3"></div>
+ </div>
+ <div class="row">
+  <div class="col-sm-3"></div>
+     {% for hidden in form2.hidden_fields %}
+      <div class="col-xs-12 col-sm-6 form-group">{{ hidden }}</div>
+     {% endfor %}
+  <div class="col-sm-3"></div>
+ </div>
+ <div class="row">
+     {% for field in form2.visible_fields %}
+       <div class="col-xs-6 input-small form-group">
+        {{ field.errors }}
+        {{ field.label_tag }}
+        {{ field }}
+        {% if field.help_text %}
+         <p class="help">{{ field.help_text|safe }}</p>
+        {% endif %}
+       </div>
+     {% endfor %}
  </div>
  <div class="row center">
   <div class="col-xs-12">
