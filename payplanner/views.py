@@ -497,6 +497,7 @@ def edit(request, item_id):
         #Cancel, Any other POST request
         else:
             return redirect('home')
+        
     #Get Request (First call from home page)    
     else:
         temp = 'edititem.html'
@@ -509,9 +510,11 @@ def edit(request, item_id):
             notsingle = False
         form = EditForm(instance=item)
         name = item.parentItem.itemName.rstrip('*')
+        content_title = "%s - %s" % (name, item.effectiveDate)
         footer = ('Edit %s' % name)
         c = {'itemid': item_id,
              'name':name,
+             'content_title': content_title,
              'notsingle':notsingle,
              'form':form,
              'footer':footer,}

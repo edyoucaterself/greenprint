@@ -16,6 +16,9 @@ put correct title
 {% block content %}
 <div class="container-fluid">
  <form action="{% url 'edit' itemid %}" method="post">
+  <div class="row">
+   <div class="col-xs-12 center"><h3><strong>{{ content_title }}</strong></h3></div>
+ </div>
  <div class="row">
   <div class="col-lg-4"></div>
   <div class="col-xs-12 col-lg-4 form-group">
