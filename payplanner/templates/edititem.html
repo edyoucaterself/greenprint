@@ -31,12 +31,13 @@ put correct title
  <div class="row">
   <div class="col-lg-4"></div>
   <div class="col-xs-12 col-lg-4">
+   <h4>Apply to:</h4>
    <div id="radios" class="radio">
-    <input id="single" type="radio" name="edit_opt" value="single" checked="checked">
+    <input title="Apply Changes to this line only" id="single" type="radio" name="edit_opt" value="single" checked="checked">
     <label for="single">This {{ name }} only</label> 
-    <input id="future" type="radio" name="edit_opt" value="future"> 
+    <input title="Apply Changes to this line and future dates"id="future" type="radio" name="edit_opt" value="future"> 
     <label for="future">Future {{ name }}</label>
-    <input id="all" type="radio" name="edit_opt" value="all"> 
+    <input title="Apply Changes to all lines like this" id="all" type="radio" name="edit_opt" value="all"> 
     <label for="all">All {{ name }}</label>
    </div>
    <script type="text/javascript">$('#radios').radiosToSlider({animation: true,});</script>
