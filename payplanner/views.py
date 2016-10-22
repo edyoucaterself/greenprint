@@ -331,7 +331,6 @@ def config(request):
         elif config_btn == "Add Expense":
             #Render Expense ModelForm
             footer = 'Adding Expense'
-            footer = type(request.user)
             itemtype = 'Expense'
             form = ExpensesForm(initial={'itemType': 'expense',
                                          'user': request.user},
@@ -353,6 +352,7 @@ def config(request):
             else:
                 temp = 'config.html'     
                 footer = 'Expense Form Invalid'
+                footer = form.is_valid()
                 c = {'form':form,'footer':footer,}
                 return render(request, temp, c)
             
