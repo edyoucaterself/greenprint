@@ -1,0 +1,69 @@
+[
+{
+    "model": "payplanner.cycles",
+    "pk": 1,
+    "fields": {
+        "cycleName": "Single",
+        "cycleLength": 0
+    }
+},
+{
+    "model": "payplanner.cycles",
+    "pk": 2,
+    "fields": {
+        "cycleName": "Weekly",
+        "cycleLength": 7
+    }
+},
+{
+    "model": "payplanner.cycles",
+    "pk": 3,
+    "fields": {
+        "cycleName": "Bi-Weekly",
+        "cycleLength": 14
+    }
+},
+{
+    "model": "payplanner.cycles",
+    "pk": 4,
+    "fields": {
+        "cycleName": "Monthly",
+        "cycleLength": 30
+    }
+},
+{
+    "model": "payplanner.cycles",
+    "pk": 5,
+    "fields": {
+        "cycleName": "Quarterly",
+        "cycleLength": 91
+    }
+},
+{
+    "model": "payplanner.cycles",
+    "pk": 6,
+    "fields": {
+        "cycleName": "Annual",
+        "cycleLength": 365
+    }
+},
+{
+    "model": "payplanner.categories",
+    "pk": 1,
+    "fields": {
+        "catName": "Other"
+    }
+},
+{
+    "model": "payplanner.usercat",
+    "pk": 1,
+    "fields": {
+        "user": [
+            "freshuser"
+        ],
+        "cats": [
+            1
+        ]
+    }
+}
+]

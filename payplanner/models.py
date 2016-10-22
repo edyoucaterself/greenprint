@@ -59,7 +59,7 @@ class UserCat(models.Model):
     
     user = models.OneToOneField(User)
     cats = models.ManyToManyField(Categories,
-                                  verbose_name='Select Desired Categories')
+                                  verbose_name='Select Categories')
 
     
 class Items(models.Model):
