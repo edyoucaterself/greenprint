@@ -352,7 +352,6 @@ def config(request):
             else:
                 temp = 'config.html'     
                 footer = 'Expense Form Invalid'
-                footer = form.is_valid()
                 c = {'form':form,'footer':footer,}
                 return render(request, temp, c)
             
@@ -453,7 +452,7 @@ def edit(request, item_id):
                     if editopt == 'future':
                         #Update current and future dates()
                         junk,bunk = Budget.update_future(item,request.POST)
-                        footer = ('NEW:%s   -   OLD:%s' % (junk,bunk))
+                        footer = ''
                     #If All button selected    
                     elif editopt == 'all':
                         Budget.update_all(item,request.POST)
@@ -511,7 +510,7 @@ def edit(request, item_id):
         form = EditForm(instance=item)
         name = item.parentItem.itemName.rstrip('*')
         content_title = "%s - %s" % (name, item.effectiveDate.strftime("%m/%d/%Y"))
-        footer = ('Edit %s' % name)
+        footer = ''
         c = {'itemid': item_id,
              'name':name,
              'content_title': content_title,
