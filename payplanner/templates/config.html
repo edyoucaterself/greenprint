@@ -4,7 +4,6 @@
 Item Add template
 Author: Matt Agresta
 Created on: 9/4/2016
-Replace Cancel link with button when getting rid of bootstrap
 {% endcomment %}
 
 {% block title %}
@@ -15,23 +14,21 @@ Replace Cancel link with button when getting rid of bootstrap
 <div class="container-fluid">
  <form action="{% url 'config' %}" method="post">
   <div class="row">
-   <div class="col l4"></div>
-   <div class="col s12 l4">
-   {% csrf_token %}
-   {{ form.as_table }}
-   </div>
-   <div class="col l4"></div>
- </div>
- <div class="row center">
-  <div class="col s12">
-   <div class="btn-group">
-    <input type="submit" name="config_btn" value="Save {{ itemtype }}" class="btn btn-primary"/>
-    <input type="submit" name="config_btn" value="Cancel" class="btn btn-default"/>
-   </div>
+    <div class="col s12 l4 push-l4">
+     {% csrf_token %}
+     <div class="browser-default">
+     {{ form.as_table }}
+     </div>
+    </div>
   </div>
- </div>
+  <div class="row center">
+    <div class="col s12 l4 push-l4">
+      <input type="submit" name="config_btn" value="Save {{ itemtype }}" class="btn"/>
+      <input type="submit" name="config_btn" value="Cancel" class="btn"/>
+    </div>
+  </div>
  </form>
- </div>
+</div>
 {% endblock %}
 
 {% block footer %}

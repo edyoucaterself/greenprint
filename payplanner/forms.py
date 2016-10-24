@@ -51,7 +51,8 @@ class ExpensesForm(forms.ModelForm):
                                                                                    'config',
                                                                                    edit_url='settings',
                                                                                    to_page='ExpensesForm',
-                                                                                   choices=catchoices)
+                                                                                   choices=catchoices,
+                                                                                   attrs={'class':'browser-default'})
                                                   )
 
         
@@ -60,8 +61,9 @@ class ExpensesForm(forms.ModelForm):
         exclude = ('skiplst',)
         widgets = {'user': forms.HiddenInput(),
                    'itemType': forms.HiddenInput(),
-                   'nextDueDate': forms.DateInput(attrs={'name': 'date'}),
-                   'endDate': forms.DateInput(attrs={'name': 'date'})
+                   'payCycle': forms.Select(attrs={'class':'browser-default',}),
+                   'nextDueDate': forms.DateInput(attrs={'name': 'date', 'class':'browser-default'}),
+                   'endDate': forms.DateInput(attrs={'name': 'date', 'class':'browser-default'})
                    }
 
         
@@ -77,7 +79,7 @@ class IncomeForm(forms.ModelForm):
                    'itemType': forms.HiddenInput(),
                    'itemName': forms.TextInput(attrs={'class':'form-control',}),
                    'itemAmount': forms.NumberInput(attrs={'class':'form-control',}),
-                   'payCycle': forms.Select(attrs={'class':'form-control',}),
+                   'payCycle': forms.Select(attrs={'class':'browser-default',}),
                    'itemNote': forms.TextInput(attrs={'class':'form-control',}),
                    'nextDueDate': forms.DateInput(attrs={'name': 'date',
                                                          'class':'form-control'}),
@@ -108,7 +110,7 @@ class UserCatForm(forms.ModelForm):
         error_messages=form_errors,
         label="",
         queryset=Categories.objects.all(),
-        widget=FilteredSelectMultiple("Categories", is_stacked=False, attrs={'class':'form-control'}),
+        widget=FilteredSelectMultiple("Categories", is_stacked=False, attrs={'class':'browser-default'}),
         )
     
     class Meta:

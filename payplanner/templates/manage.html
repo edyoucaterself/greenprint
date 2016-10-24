@@ -14,26 +14,25 @@ put correct title
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid">
- <div class="row">
-  <div class="col-lg-3"></div>
-  <div class="col-xs-12 col-lg-6 form-group">
+<div class="container">
+ <div class="row form">
+  <div class="col m3"></div>
+  <div class="col s12 m6">
    <form action="{% url 'manage' %}" method="post">
      {% csrf_token %}
      {{ form.as_table }}
-  <div>
-  <div class="col-sm-3"></div>
+  </div>
+  <div class="col m3"></div>
  </div>
- <div class="row">
-  <div class="col-sm-3"></div>
+ <div class="row form">
      {% for hidden in form2.hidden_fields %}
-      <div class="col-xs-12 col-sm-6 form-group">{{ hidden }}</div>
+  <div class="col s12">{{ hidden }}</div>
      {% endfor %}
-  <div class="col-sm-3"></div>
+  
  </div>
- <div class="row">
+ <div class="row form">
      {% for field in form2.visible_fields %}
-       <div class="col-xs-6 input-small form-group">
+       <div class="col s6 m3 push-m3">
         {{ field.errors }}
         {{ field.label_tag }}
         {{ field }}
@@ -44,24 +43,24 @@ put correct title
      {% endfor %}
  </div>
  <div class="row center">
-  <div class="col-xs-12">
+  <div class="col s12">
    {% if is_get %}
-    <div class="center btn-group-vertical btn-group-lg">
-     <input type="submit" name="account_mgmt_btn" value="Edit Profile" class="btn btn-primary"/>
-     <input type="submit" name="account_mgmt_btn" value="Edit Categories" class="btn btn-primary"/>
-     <input type="submit" name="account_mgmt_btn" value="Delete Budget" class="btn btn-warning" onclick="return confirm('Remove all budget data?');"/>
-     <input type="submit" name="account_mgmt_btn" value="Delete Account" class="btn btn-danger" onclick="return confirm('Remove all account data?');"/>
-     <input type="submit" name="account_mgmt_btn" value="Home" class="btn btn-default"/>
-    </div>
+    <ul class="collection btn-group">
+     <li><input type="submit" name="account_mgmt_btn" value="Edit Profile" class="btn-grp btn"/></li>
+     <li><input type="submit" name="account_mgmt_btn" value="Edit Categories" class="btn-grp btn"/></li>
+     <li><input type="submit" name="account_mgmt_btn" value="Delete Budget" class="btn-grp btn" onclick="return confirm('Remove all budget data?');"/></li>
+     <li><input type="submit" name="account_mgmt_btn" value="Delete Account" class="btn-grp btn" onclick="return confirm('Remove all account data?');"/></li>
+     <li><input type="submit" name="account_mgmt_btn" value="Home" class="btn-grp btn"/></li>
+    </ul>
    {% else %}
     <input type="hidden" name="formdata" value="{{ nextform }}"/>
-    <div class="btn-group">
+
      <input type="submit" name="account_mgmt_btn" value="Save {{ form.Meta.name }}" class="btn btn-primary">
       {% if form.Meta.has_key %}
      <input type="submit" name="account_mgmt_btn" value="Add {{ form.Meta.key_name }}" class="btn btn-primary">
       {% endif %}
      <input type="submit" name="account_mgmt_btn" value="Cancel" class="btn btn-default"/>
-    </div>
+
    {% endif %}
   </div>
  </div>

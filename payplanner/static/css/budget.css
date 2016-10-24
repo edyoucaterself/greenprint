@@ -18,39 +18,6 @@
 .link-button:active {
     color:red;
 }
-.well{
-    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#1e5799+0,1969aa+44,207cca+75,7db9e8+100 */
-    background: #1e5799; /* Old browsers */
-    background: -moz-linear-gradient(top,  #1e5799 0%, #1969aa 44%, #207cca 75%, #7db9e8 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(top,  #1e5799 0%,#1969aa 44%,#207cca 75%,#7db9e8 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to bottom,  #1e5799 0%,#1969aa 44%,#207cca 75%,#7db9e8 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#7db9e8',GradientType=0 ); /* IE6-9 */
-    color: rgb(255,255, 240);
-    font-weight: bold;
-    height: 25%;
-    margin: 0 auto;
-}
-
-.btn-xl {
-   .button-size(20px; 20px; 24px; 1; 10px);
-}
-
-.center {
-    text-align: center;
-}
-.left {
-    test-align: left;
-}
-.nav{
-    text-align: center;
-    font-weight: bold;
-    font-size: large;
-}
-    
-label {
-    display: block;
-    font-size: 120%;
-}
 
 .button {
     font-size: 100%;
@@ -62,29 +29,6 @@ label {
 
 .credit {
     color: red;
-}
-
-a.page-header {
-    border: 0px;
-}
-a.page-header:link {
-    text-decoration: none;
-    color: rgb(255, 255, 240);
-}
-
-a.page-header:visited {
-    text-decoration: none;
-    color: rgb(255, 255, 240);
-}
-
-a.page-header:hover {
-    text-decoration: underline;
-    color: rgb(245, 245, 230);
-}
-
-a.page-header:active {
-    text-decoration: underline;
-    color: rgb(245, 245, 230);
 }
 
 .radio {
@@ -110,13 +54,34 @@ label#id_histLength {
     min-width: 60px;
 }
 
-.input-small label {
-    width: 70%;
-    float: left;
-    font-size: 12pt;
-    font-weight: 600;
-    margin: 5 2;
-    max-width: 210px;
+/* Customize Select inputs to match materialize */
+.browser-default select{
+    font: inherit;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #9e9e9e;
+    border-radius: 0;
+    outline: none;
+    height: 3rem;
+    width: 100%;
+    font-size: 1rem;
+    margin: 0 0 20px 0;
+    box-shadow: none;
+    box-sizing: content-box;
+    transition: all 0.3s;
 }
 
+/* Format btn group adding onto materialize collection class */
 
+.collection.btn-group {
+    border: none;
+}
+
+.btn-grp {
+    width: 40%;
+}
+
+/* Format materialize rows containing forms */
+.row.form {
+   margin: 0 auto;
+}

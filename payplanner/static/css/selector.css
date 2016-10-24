@@ -24,10 +24,11 @@ Creation Date: 10-17-2016
 .selector-available h2, .selector-chosen h2 {
     border: 1px solid #ccc;
     border-radius: 5px;
+    font-size: 16pt;
 }
 
 .selector .selector-chosen h2 {
-    margin-bottom: 35px;
+    margin-bottom: 72px;
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7db9e8+0,207cca+53,1969aa+87,1e5799+100 */
     background: #7db9e8; /* Old browsers */
     background: -moz-linear-gradient(45deg,  #7db9e8 0%, #207cca 53%, #1969aa 87%, #1e5799 100%); /* FF3.6-15 */
@@ -67,7 +68,6 @@ Creation Date: 10-17-2016
     width: 93%;
     float: left;
 }
-
 
 .selector ul.selector-chooser {
     float: center;
