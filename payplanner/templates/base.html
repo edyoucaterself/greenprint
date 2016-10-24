@@ -1,25 +1,31 @@
 {% load staticfiles %}
 <html>
 <head>
- {% load bootstrap3 %}
- {% bootstrap_css %}
- {% bootstrap_messages %}
- 
- <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
- <link rel="stylesheet" href="{% static 'css/datepicker.css' %}">
- <link rel="stylesheet" href="{% static 'admin/css/widgets.css' %}" />
- <link rel="stylesheet" href="{% static 'css/selector.css' %}">
- <link rel="stylesheet" href="{% static 'css/budget.css' %}">
- <link rel="stylesheet" href="{% static 'css/radios-to-slider.css' %}">
+ <!--Import Google Icon Font-->
+   <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+ <!--Import jquery CSS-->
+   <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+ <!--Import materialize.css-->
+   <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}" media="screen,projection"/>
+ <!--Import Custom CSS to formate widgets-->
+   <link rel="stylesheet" href="{% static 'css/datepicker.css' %}">
+   <link rel="stylesheet" href="{% static 'admin/css/widgets.css' %}" />
+   <link rel="stylesheet" href="{% static 'css/selector.css' %}">
+   <!--<link rel="stylesheet" href="{% static 'css/budget.css' %}">-->
+   <link rel="stylesheet" href="{% static 'css/radios-to-slider.css' %}">
 
- 
- <script type="text/javascript" src="{% static 'js/jsi18n.js' %}"></script>
- <script type="text/javascript" src="/static/admin/js/jquery.min.js"></script>
- <script type="text/javascript" src="/static/admin/js/jquery.init.js"></script>
+ <!--Import local jquery scripts for forms-->
+   <script type="text/javascript" src="{% static 'js/jsi18n.js' %}"></script>
+   <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+   <script type="text/javascript" src="{% static 'js/jquery.init.js' %}"></script>
     {{ form.media }}
- <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
- <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
- <script type="text/javascript" src="{% static 'js/jquery.radios-to-slider.js' %}"></script>
+ <!--Import jquery scripts for datetimepicker-->
+   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+   <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+   <script type="text/javascript" src="{% static 'js/jquery.radios-to-slider.js' %}"></script>
+ <!--Import jQuery before materialize.js-->
+   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+   <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
  
  <script>
  $(function() {
@@ -34,16 +40,19 @@
  });
  </script>
  
-
+ <!--Let browser know website is optimized for mobile-->
+   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 {% block title %}{% endblock %}
 </head>
-<div class="container-fluid">
+<body>
+<div class="container">
   <div class="row">
-    <div class="col-xs-12 well well-sm">
-     <h1 class="center"><a title="PayPlanner Home" href="{% url 'home' %}" class="page-header">GreenPrint PayPlanner</a></h1>
-      <div class="row">
-      <div class="col-xs-6">
-      {% if user.is_authenticated %}
+    <div class="col s12">
+       <h1 class="center"><a title="PayPlanner Home" href="{% url 'home' %}" class="page-header">GreenPrint PayPlanner</a></h1>
+    </div>
+   {% if user.is_authenticated %}
+  <div class="row">
+    <div class="col s6">
        {% if user.get_full_name %}
        <p>Welcome {{ user.first_name }}!
        {% else %}
@@ -51,19 +60,18 @@
        {% endif %}
         <a title="Manage Settings" href="{% url 'manage' %}"><img border="0" width="75" alt="Manage Account" src="{% static "pics/settings.png" %}"></a>
        </p>
-       </div>
-       <div class="col-xs-6 text-right">
-       <a href="{% url 'logout' %}" class="text-warning">Logout</a>
-       </div>
-      {% endif %}
-      </div>
+    </div>
+    <div class="col s6">
+         <a href="{% url 'logout' %}" class="text-warning">Logout</a>
     </div>
   </div>
- <div class="row">
-   <div class="col-xs-12">{% block content %}{% endblock %}</div>
+   {% endif %}
+  <div class="row">
+    <div class="col s12">{% block content %}{% endblock %}</div>
   </div>
   <div class="row">
-   <div class="col-xs-12">{% block footer %}{% endblock %}</div>
+    <div class="col s12">{% block footer %}{% endblock %}</div>
   </div>
  </div>
+</body>
 </html>
