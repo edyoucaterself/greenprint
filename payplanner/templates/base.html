@@ -3,16 +3,18 @@
 <head>
  <!--Import Google Icon Font-->
    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
  <!--Import jquery CSS-->
    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
- <!--Import materialize.css-->
-   <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}" media="screen,projection"/>
  <!--Import Custom CSS to formate widgets-->
    <link rel="stylesheet" href="{% static 'css/datepicker.css' %}">
    <link rel="stylesheet" href="{% static 'admin/css/widgets.css' %}" />
    <link rel="stylesheet" href="{% static 'css/selector.css' %}">
    <!--<link rel="stylesheet" href="{% static 'css/budget.css' %}">-->
    <link rel="stylesheet" href="{% static 'css/radios-to-slider.css' %}">
+   <!--Import materialize.css-->
+   <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}" media="screen,projection"/>
+
 
  <!--Import local jquery scripts for forms-->
    <script type="text/javascript" src="{% static 'js/jsi18n.js' %}"></script>
@@ -38,6 +40,7 @@
             selectOtherMonths: true
         });
  });
+ 
  </script>
  
  <!--Let browser know website is optimized for mobile-->
@@ -46,10 +49,12 @@
 </head>
 <body>
 <div class="container">
+  <div class="card-panel">
   <div class="row">
     <div class="col s12">
        <h1 class="center"><a title="PayPlanner Home" href="{% url 'home' %}" class="page-header">GreenPrint PayPlanner</a></h1>
     </div>
+  </div>
    {% if user.is_authenticated %}
   <div class="row">
     <div class="col s6 left-align">
@@ -66,6 +71,7 @@
     </div>
   </div>
    {% endif %}
+ </div>
   <div class="row">
     <div class="col s12">{% block content %}{% endblock %}</div>
   </div>

@@ -51,8 +51,8 @@ class ExpensesForm(forms.ModelForm):
                                                                                    'config',
                                                                                    edit_url='settings',
                                                                                    to_page='ExpensesForm',
-                                                                                   choices=catchoices,
-                                                                                   attrs={'class':'form-control'}))
+                                                                                   choices=catchoices)
+                                                  )
 
         
     class Meta:
@@ -60,15 +60,8 @@ class ExpensesForm(forms.ModelForm):
         exclude = ('skiplst',)
         widgets = {'user': forms.HiddenInput(),
                    'itemType': forms.HiddenInput(),
-                   'itemName': forms.TextInput(attrs={'class':'form-control',}),
-                   'category': forms.Select(attrs={'class':'form-control',}),
-                   'itemAmount': forms.NumberInput(attrs={'class':'form-control',}),
-                   'payCycle': forms.Select(attrs={'class':'form-control',}),
-                   'itemNote': forms.TextInput(attrs={'class':'form-control',}),
-                   'nextDueDate': forms.DateInput(attrs={'name': 'date',
-                                                         'class':'form-control'}),
-                   'endDate': forms.DateInput(attrs={'name': 'date',
-                                                     'class':'form-control'})
+                   'nextDueDate': forms.DateInput(attrs={'name': 'date'}),
+                   'endDate': forms.DateInput(attrs={'name': 'date'})
                    }
 
         
