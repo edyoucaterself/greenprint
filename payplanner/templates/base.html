@@ -52,7 +52,7 @@
     </div>
    {% if user.is_authenticated %}
   <div class="row">
-    <div class="col s6">
+    <div class="col s6 left-align">
        {% if user.get_full_name %}
        <p>Welcome {{ user.first_name }}!
        {% else %}
@@ -61,8 +61,8 @@
         <a title="Manage Settings" href="{% url 'manage' %}"><img border="0" width="75" alt="Manage Account" src="{% static "pics/settings.png" %}"></a>
        </p>
     </div>
-    <div class="col s6">
-         <a href="{% url 'logout' %}" class="text-warning">Logout</a>
+    <div class="col s6 right-align">
+         <a href="{% url 'logout' %}">Logout</a>
     </div>
   </div>
    {% endif %}

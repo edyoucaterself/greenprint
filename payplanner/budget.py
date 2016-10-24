@@ -199,7 +199,14 @@ class Budget():
                 running_total -= amount
                 isincome = False
             
-            lineitem = (itemid,isincome,itemdate,name,amount,running_total,itemnote)
+            #lineitem = (itemid,isincome,itemdate,name,amount,running_total,itemnote)
+            lineitem = {'itemid':itemid,
+                        'isincome':isincome,
+                        'itemdate':itemdate,
+                        'name':name,
+                        'amount':amount,
+                        'running_total':running_total,
+                        'itemnote':itemnote}
             budget_output.append(lineitem)
             #print('%s %s\t%s\t\t%s\t\t%s' % (linenum,itemdate,name,amount,running_total))
             linenum +=1
