@@ -7,26 +7,29 @@ Created on: 9/21/2016
 {% endcomment %}
 
 {% block title %}
+<title>User Registration</title>
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid">
- <div class="row">
-{%if form.errors %}
-    <p> Invalid username/password combination, please try again </p>
-{% endif %}
-  <div class="col-sm-3"></div>
-  <div class="col-xs-12 col-sm-6 form-group">
-   <h1>Please Register</h1>
-    <form action="{% url 'reg' %}" method="post">
-    {% csrf_token %}
-    {% bootstrap_form form layout='inline' %}
-    <input type="submit" id="submit" name="submit" value="Sign in" class="btn btn-primary"/>
-    <input type="hidden" name="next" value="{{ next }}" />        
-    </form>
+<div class="col s12 m6 push-m3">
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title">Please Register</span>
+    </div>
+    <div class="card action"> 
+      {%if form.errors %}
+      <p> Invalid username/password combination, please try again </p>
+      {% endif %}
+      <form action="{% url 'reg' %}" method="post" class="regform">
+      {% csrf_token %}
+      {{ form }}
+    </div>
   </div>
-  <div class="col-sm-3"></div>
- </div>
+  <div class="valign-wrapper">
+      <input type="submit" id="submit" name="submit" value="Sign in" class="btn valign"/>
+      <input type="hidden" name="next" value="{{ next }}" />  
+  </div>      
+      </form>
 </div>
 {% endblock %}
 {% block footer %}

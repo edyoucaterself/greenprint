@@ -91,3 +91,20 @@ label#id_histLength {
 .select-wrapper+label {
    margin: 24 auto;
 }
+
+/* Format registration form */
+.regform {
+  margin: 30 20px;
+  padding-bottom: 10px;
+}
+
+.regform label {
+  padding: 5 0px
+}
+.regform span {
+  font-size: 10pt;
+}
+
+input#id_username, input#id_password2 {
+  margin-bottom: 5px;
+}
