@@ -109,7 +109,7 @@ class Items(models.Model):
     
     #Hold day of the month expense is due
     nextDueDate = models.DateField(
-        default=date.today,
+        default=date.today().strftime('%m/%d/%Y'),
         verbose_name='Next Due Date',
     )
     
