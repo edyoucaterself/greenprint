@@ -12,6 +12,7 @@ Created on: 9/4/2016
 {% block content %}
 <div class="container-fluid">
  <form action="{% url 'config' %}" method="post">
+      {% csrf_token %}
    <div class="row form">
       {% for hidden in form.hidden_fields %}
      <div class="col s12">{{ hidden }}</div>
