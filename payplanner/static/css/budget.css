@@ -106,3 +106,9 @@ form p {
 .btn.budget-header {
   padding: 0 14px;
 }
+
+/* Site Header */
+.page-header {
+  font-size: 22pt;
+  font-weight: 600;
+}
