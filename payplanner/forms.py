@@ -61,8 +61,8 @@ class ExpensesForm(forms.ModelForm):
         widgets = {'user': forms.HiddenInput(),
                    'itemType': forms.HiddenInput(),
                    'payCycle': forms.Select(),
-                   'nextDueDate': forms.DateInput(attrs={'name': 'date'}),
-                   'endDate': forms.DateInput(attrs={'name': 'date'})
+                   'nextDueDate': forms.DateInput(attrs={'class': 'datepicker'}),
+                   'endDate': forms.DateInput(attrs={'class': 'datepicker'})
                    }
 
         
@@ -80,10 +80,8 @@ class IncomeForm(forms.ModelForm):
                    'itemAmount': forms.NumberInput(attrs={'class':'form-control',}),
                    'payCycle': forms.Select(),
                    'itemNote': forms.TextInput(attrs={'class':'form-control',}),
-                   'nextDueDate': forms.DateInput(attrs={'name': 'date',
-                                                         'class':'form-control'}),
-                   'endDate': forms.DateInput(attrs={'name': 'date',
-                                                     'class':'form-control'})
+                   'nextDueDate': forms.DateInput(attrs={'class': 'datepicker'}),
+                   'endDate': forms.DateInput(attrs={'class': 'datepicker'})
                    }
         
 
@@ -109,7 +107,9 @@ class UserCatForm(forms.ModelForm):
         error_messages=form_errors,
         label="",
         queryset=Categories.objects.all(),
-        widget=FilteredSelectMultiple("Categories", is_stacked=False, attrs={'class':'browser-default'}),
+        widget=FilteredSelectMultiple("Categories",
+                                      is_stacked=False,
+                                      attrs={'class':'browser-default'}),
         )
     
     class Meta:

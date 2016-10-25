@@ -1,5 +1,4 @@
 {% load staticfiles %}
-{% load materialize %}
 <html>
 <head>
  <!--Import Google Icon Font-->
@@ -28,15 +27,18 @@
       <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
       <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
     {{ form.media }}
- <!--Import jquery scripts for datetimepicker-->
-   <!--<script src="http://code.jquery.com/jquery-1.9.1.js"></script>-->
-   <!--<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>-->
 <script>
  
  $(document).ready(function() {
     $( 'select' ).material_select();
+    $('.datepicker').pickadate({
+    	selectMonths: true, // Creates a dropdown to control month
+    	selectYears: 15, // Creates a dropdown of 15 years to control year
+        showOtherMonths: true,
+        selectOtherMonths: true
+    });
   });
-
+ 
  </script>
  
  <!--Let browser know website is optimized for mobile-->
