@@ -31,14 +31,12 @@
     color: red;
 }
 
-.radio {
-    width: 70%;
-    margin: 0 auto;
-}
-
 .radio label {
     font-size: 10pt;
+    margin-right: 15;
+    margin-bottom: 28;
 }
+
 
 label#id_budgetLength {
     font-size: 5em;
