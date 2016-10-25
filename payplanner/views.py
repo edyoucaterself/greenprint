@@ -509,11 +509,11 @@ def edit(request, item_id):
             notsingle = False
         form = EditForm(instance=item)
         name = item.parentItem.itemName.rstrip('*')
-        content_title = "%s - %s" % (name, item.effectiveDate.strftime("%m/%d/%Y"))
         footer = ''
         c = {'itemid': item_id,
              'name':name,
-             'content_title': content_title,
+             'name': name,
+             'date': item.effectiveDate,
              'notsingle':notsingle,
              'form':form,
              'footer':footer,}

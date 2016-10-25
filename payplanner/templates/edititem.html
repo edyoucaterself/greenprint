@@ -17,42 +17,41 @@ put correct title
 <div class="container-fluid">
  <form action="{% url 'edit' itemid %}" method="post">
   <div class="row">
-   <div class="col-xs-12 center"><h3><strong>{{ content_title }}</strong></h3></div>
- </div>
- <div class="row">
-  <div class="col-lg-4"></div>
-  <div class="col-xs-12 col-lg-4 form-group">
-    {% csrf_token %}
-    {{ form.as_p }}
-  </div>
-  <div class="col-lg-4"></div>
- </div>
- {% if notsingle %}
- <div class="row">
-  <div class="col-lg-4"></div>
-  <div class="col-xs-12 col-lg-4">
-   <h4>Apply to:</h4>
-   <div id="radios" class="radio">
-    <input title="Apply Changes to this line only" id="single" type="radio" name="edit_opt" value="single" checked="checked">
-    <label for="single">This {{ name }} only</label> 
-    <input title="Apply Changes to this line and future dates"id="future" type="radio" name="edit_opt" value="future"> 
-    <label for="future">Future {{ name }}</label>
-    <input title="Apply Changes to all lines like this" id="all" type="radio" name="edit_opt" value="all"> 
-    <label for="all">All {{ name }}</label>
+   <div class="col s6 m8">
+    <div class="card">
+     <div class="card-content">
+       <span class="card-title">{{ name }} - {{ date }}</span>
+       {% csrf_token %}
+       {{ form.as_p }}
+     </div>
+    </div>
    </div>
-   <script type="text/javascript">$('#radios').radiosToSlider({animation: true,});</script>
-  </div>
-  <div class="col-lg-4"></div>
+ {% if notsingle %}
+   <div class="col s6 m4">
+    <div class="card">
+     <div class="card-content">
+       <span class="card-title">Apply to:</span>
+       <div id="radios" class="radio">
+        <input title="Apply Changes to this line only" id="single" type="radio" name="edit_opt" value="single" checked="checked">
+        <label for="single">{{ date }} only</label> 
+        <input title="Apply Changes to this line and future dates"id="future" type="radio" name="edit_opt" value="future"> 
+        <label for="future">{{ date }} and on</label>
+        <input title="Apply Changes to all lines like this" id="all" type="radio" name="edit_opt" value="all"> 
+        <label for="all">All {{ name }}</label>
+       </div>
+     </div>
+    </div>
+   </div>
  </div>
  {% endif %}
- <div class="row center">
-  <div class="btn-group">
-   <input type="submit" name="edit_btn" value="Update" class="btn btn-primary"/>
-   <input type="submit" name="edit_btn" value="Delete" class="btn btn-danger"/>
-   <input type="submit" name="edit_btn" value="Cancel" class="btn btn-default"/>
-  </div>
- </div>
- </form>
+ <div class="row">
+   <div class="col s5 push-s4">
+     <input type="submit" name="edit_btn" value="Update" class="btn"/>
+     <input type="submit" name="edit_btn" value="Delete" class="btn"/>
+     <input type="submit" name="edit_btn" value="Cancel" class="btn"/>
+   </div>
+ </div> 
+</form>
 </div>
 {% endblock %}
 {% block footer %}
