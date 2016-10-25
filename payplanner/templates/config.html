@@ -20,7 +20,7 @@ Created on: 9/4/2016
    </div>
    <div class="row">
       {% for field in form.visible_fields %}
-     <div class="input-field col s12">
+     <div class="input-field col s12 l6">
         {{ field.errors }}
         {{ field }}
         <label class="active" for="{{ field.name }}">{{ field.label }}</label>
