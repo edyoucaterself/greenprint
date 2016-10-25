@@ -73,3 +73,41 @@ form p {
   padding: 0 14px;
 }
 
+/* Table columns for budget */
+
+.tcol-date {
+  width: 20%;
+}
+
+.tcol-name {
+  width: 30%;
+}
+
+.tcol-income {
+  width: 15%;
+}
+
+.tcol-expense {
+  width: 15%;
+}
+
+.tcol-total {
+  width: 20%;
+}
+
+
+/** item config page **/
+/* edit category button */
+.btn-edit-rel {
+  position: relative;
+  z-index : 1;
+  border: none;
+  float: right;
+}
+
+
+/** Test 
+div, span, p{
+    border: 1px solid red;
+}
+**/

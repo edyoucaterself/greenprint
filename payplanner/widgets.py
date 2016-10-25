@@ -33,7 +33,7 @@ class RelatedFieldWidgetAddEdit(widgets.Select):
         #Edit Button
         if self.edit_url:
             alt = 'Edit List'
-            output.append(u'<button type="submit" name="%s_btn" value="edit_%s" class="link-button right">' % (self.view_name, name))
+            output.append(u'<button type="submit" name="%s_btn" value="edit_%s" class="white btn-edit-rel">' % (self.view_name, name))
             output.append(u'<img src="%sadmin/img/icon_changelink.gif" width="12" height="12" alt="%s"/></button>' % (settings.STATIC_URL, alt))
             
         selectobj = super(RelatedFieldWidgetAddEdit, self).render(name, value, *args, **kwargs)

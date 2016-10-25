@@ -360,9 +360,12 @@ def config(request):
             form = IncomeForm(request.POST)
             if form.is_valid():
                 form.save()
-                Budget.update_data(request.user,
+                msg = Budget.update_data(request.user,
                                    budget_length=budlen,
                                    force=True)
+                form = IncomeForm(request.POST)
+                temp = 'config.html'     
+                footer = 'Form Invalid'
                 return redirect('home')
             else:
                 form = IncomeForm(request.POST)

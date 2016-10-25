@@ -21,29 +21,31 @@ remove item, edit item
    <table class="highlight">
      <thead>
        <tr>
-        <th></th>
-        <th></th>
-        <th><button name="config_btn" value="Add Income" class="btn budget-header green lighten-1"><i class="material-icons">add</i>Income</button></th>
-        <th><button name="config_btn" value="Add Expense" class="btn budget-header green lighten-1"><i class="material-icons">add</i>Expense</button></th>
-        <th></th>
+        <th class="tcol-date"></th>
+        <th class="tcol-name"></th>
+        <th class="tcol-income"><button name="config_btn" value="Add Income" class="btn budget-header green lighten-1"><i class="material-icons">add</i>Income</button></th>
+        <th class="tcol-expense"><button name="config_btn" value="Add Expense" class="btn budget-header green lighten-1"><i class="material-icons">add</i>Expense</button></th>
+        <th class="tcol-total"></th>
        </tr>
      </thead>
      <tbody>
       {% for item in lineitems %}
+	{% if item.running_total < 0 %}
+       <tr title="{{ item.itemnote }}" class="red-text text-darken-1">
+        {% else %}
        <tr title="{{ item.itemnote }}">
-       {% if item.isincome %}
+        {% endif %}
         <td>{{ item.itemdate }}</td>
+       {% if item.isincome %}
         <td><a href="{% url 'edit' item.itemid %}" title="Edit Item">{{ item.name }}</a></td>
         <td class="light-green-text text-darken-2">{{ item.amount }}</td>
         <td></td>
-        <td>{{ item.running_total }}</td>
        {% else %}
-        <td>{{ item.itemdate }}</td>
         <td><a href="{% url 'edit' item.itemid %}" title="Edit Item">{{ item.name }}</a></td>
         <td></td>
-        <td class="red-text text-darken-2">{{ item.amount }}</td>
-        <td>{{ item.running_total }}</td>       
+        <td class="red-text text-darken-2">{{ item.amount }}</td>      
        {% endif %}
+        <td>{{ item.running_total }}</td>
       </tr>
       {% endfor %}
      <tbody>
