@@ -43,11 +43,11 @@ put correct title
   <div class="col s12">
    {% if is_get %}
     <ul class="collection btn-group">
-     <li><input type="submit" name="account_mgmt_btn" value="Edit Profile" class="btn-grp btn"/></li>
-     <li><input type="submit" name="account_mgmt_btn" value="Edit Categories" class="btn-grp btn"/></li>
-     <li><input type="submit" name="account_mgmt_btn" value="Delete Budget" class="btn-grp btn" onclick="return confirm('Remove all budget data?');"/></li>
-     <li><input type="submit" name="account_mgmt_btn" value="Delete Account" class="btn-grp btn" onclick="return confirm('Remove all account data?');"/></li>
-     <li><input type="submit" name="account_mgmt_btn" value="Home" class="btn-grp btn"/></li>
+     <li><button name="account_mgmt_btn" value="Edit Profile" class="btn-grp btn btn-large"><i class="large material-icons left">person</i>Edit Profile</button></li>
+     <li><button name="account_mgmt_btn" value="Edit Categories" class="btn-grp btn btn-large"><i class="large material-icons left">tune</i>Edit Categories</button></li>
+     <li><button name="account_mgmt_btn" value="Delete Budget" class="btn-grp btn btn-large" onclick="return confirm('Remove all budget data?');"><i class="large material-icons left">delete</i>Delete Budget</button></li>
+     <li><button name="account_mgmt_btn" value="Delete Account" class="btn-grp btn btn-large" onclick="return confirm('Remove all account data?');"><i class="large material-icons left">delete_forever</i>Delete Account</button></li>
+     <li><button name="account_mgmt_btn" value="Home" class="btn-grp btn btn-large"><i class="large material-icons left">home</i>Home</button></li>
     </ul>
    {% else %}
     <input type="hidden" name="formdata" value="{{ nextform }}"/>

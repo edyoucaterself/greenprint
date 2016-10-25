@@ -100,3 +100,9 @@ form p {
 .card .card-content.welcome {
   padding-bottom: 0px;
 }
+
+
+/* buttons on top of budget */
+.btn.budget-header {
+  padding: 0 14px;
+}
