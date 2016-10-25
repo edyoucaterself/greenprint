@@ -44,8 +44,7 @@ LOGIN_URL = 'login'
 
 INSTALLED_APPS = (
     'password_reset',
-    'bootstrap3',
-    'bootstrap3_datetime',
+    'materialize_forms',
     'payplanner',
     'django.contrib.admin',
     'django.contrib.auth',

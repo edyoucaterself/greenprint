@@ -54,7 +54,7 @@ label#id_histLength {
     min-width: 60px;
 }
 
-/* Customize Select inputs to match materialize */
+/* Customize Select inputs to match materialize 
 .browser-default select{
     font: inherit;
     background-color: transparent;
@@ -70,6 +70,7 @@ label#id_histLength {
     box-sizing: content-box;
     transition: all 0.3s;
 }
+*/
 
 /* Format btn group adding onto materialize collection class */
 
@@ -86,4 +87,7 @@ label#id_histLength {
    margin: 0 auto;
 }
 
-
+/* Currect select box labels for materialize */
+.select-wrapper+label {
+   margin: 24 auto;
+}

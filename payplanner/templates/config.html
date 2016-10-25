@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load bootstrap3 %}
 {% comment %}
 Item Add template
 Author: Matt Agresta
@@ -13,20 +12,29 @@ Created on: 9/4/2016
 {% block content %}
 <div class="container-fluid">
  <form action="{% url 'config' %}" method="post">
-  <div class="row">
-    <div class="col s12 l6 push-l3">
-     {% csrf_token %}
-     <div class="browser-default">
-     {{ form.as_table }}
+   <div class="row form">
+      {% for hidden in form.hidden_fields %}
+     <div class="col s12">{{ hidden }}</div>
+      {% endfor %}
+   </div>
+   <div class="row">
+      {% for field in form.visible_fields %}
+     <div class="input-field col s12">
+        {{ field.errors }}
+        {{ field }}
+        <label class="active" for="{{ field.name }}">{{ field.label }}</label>
+        {% if field.help_text %}
+        <p class="help">{{ field.help_text|safe }}</p>
+        {% endif %}
      </div>
-    </div>
-  </div>
-  <div class="row center">
-    <div class="col s12 l4 push-l4">
-      <input type="submit" name="config_btn" value="Save {{ itemtype }}" class="btn"/>
-      <input type="submit" name="config_btn" value="Cancel" class="btn"/>
-    </div>
-  </div>
+     {% endfor %}
+   </div>
+   <div class="row center">
+     <div class="col s12 l4 push-l4">
+       <input type="submit" name="config_btn" value="Save {{ itemtype }}" class="btn"/>
+       <input type="submit" name="config_btn" value="Cancel" class="btn"/>
+     </div>
+   </div>
  </form>
 </div>
 {% endblock %}

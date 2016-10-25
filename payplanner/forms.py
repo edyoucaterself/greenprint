@@ -51,8 +51,7 @@ class ExpensesForm(forms.ModelForm):
                                                                                    'config',
                                                                                    edit_url='settings',
                                                                                    to_page='ExpensesForm',
-                                                                                   choices=catchoices,
-                                                                                   attrs={'class':'browser-default'})
+                                                                                   choices=catchoices)
                                                   )
 
         
@@ -61,9 +60,9 @@ class ExpensesForm(forms.ModelForm):
         exclude = ('skiplst',)
         widgets = {'user': forms.HiddenInput(),
                    'itemType': forms.HiddenInput(),
-                   'payCycle': forms.Select(attrs={'class':'browser-default',}),
-                   'nextDueDate': forms.DateInput(attrs={'name': 'date', 'class':'browser-default'}),
-                   'endDate': forms.DateInput(attrs={'name': 'date', 'class':'browser-default'})
+                   'payCycle': forms.Select(),
+                   'nextDueDate': forms.DateInput(attrs={'name': 'date'}),
+                   'endDate': forms.DateInput(attrs={'name': 'date'})
                    }
 
         
@@ -79,7 +78,7 @@ class IncomeForm(forms.ModelForm):
                    'itemType': forms.HiddenInput(),
                    'itemName': forms.TextInput(attrs={'class':'form-control',}),
                    'itemAmount': forms.NumberInput(attrs={'class':'form-control',}),
-                   'payCycle': forms.Select(attrs={'class':'browser-default',}),
+                   'payCycle': forms.Select(),
                    'itemNote': forms.TextInput(attrs={'class':'form-control',}),
                    'nextDueDate': forms.DateInput(attrs={'name': 'date',
                                                          'class':'form-control'}),
