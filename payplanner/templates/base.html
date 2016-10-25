@@ -10,13 +10,12 @@
  <!--Import materialize.css-->
    <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}" media="screen,projection"/>
  <!--Import Custom CSS to formate widgets-->
-   <link rel="stylesheet" href="{% static 'css/datepicker.css' %}">
    <link rel="stylesheet" href="{% static 'admin/css/widgets.css' %}" />
    <link rel="stylesheet" href="{% static 'css/selector.css' %}">
    <link rel="stylesheet" href="{% static 'css/budget.css' %}">
-   <link rel="stylesheet" href="{% static 'css/radios-to-slider.css' %}">
  <!--Import materialize.css-->
       <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}"  media="screen,projection"/>
+
 
  <!--Import local jquery scripts for filtered multiple select-->
    <script type="text/javascript" src="{% static 'js/jsi18n.js' %}"></script>
@@ -53,9 +52,9 @@
 <div class="container">
   <div class="row">
     <div class="col s12">
-      <div class="card">
+      <div class="card green lighten-1">
        <div class="card-content center">
-        <span class="card-title"><a title="PayPlanner Home" href="{% url 'home' %}" class="page-header">GreenPrint PayPlanner</a></span>
+        <span class="card-title"><a title="PayPlanner Home" href="{% url 'home' %}" class="amber-text text-darken-1 page-header">GreenPrint PayPlanner</a></span>
        </div>
         {% if user.is_authenticated %}
        <div class="card-action header">

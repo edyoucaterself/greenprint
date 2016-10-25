@@ -23,8 +23,8 @@ remove item, edit item
        <tr>
         <th></th>
         <th></th>
-        <th><button name="config_btn" value="Add Income" class="btn budget-header"><i class="material-icons">add</i>Income</button></th>
-        <th><button name="config_btn" value="Add Expense" class="btn budget-header"><i class="material-icons">add</i>Expense</button></th>
+        <th><button name="config_btn" value="Add Income" class="btn budget-header green lighten-1"><i class="material-icons">add</i>Income</button></th>
+        <th><button name="config_btn" value="Add Expense" class="btn budget-header green lighten-1"><i class="material-icons">add</i>Expense</button></th>
         <th></th>
        </tr>
      </thead>
@@ -34,14 +34,14 @@ remove item, edit item
        {% if item.isincome %}
         <td>{{ item.itemdate }}</td>
         <td><a href="{% url 'edit' item.itemid %}" title="Edit Item">{{ item.name }}</a></td>
-        <td>{{ item.amount }}</td>
+        <td class="light-green-text text-darken-2">{{ item.amount }}</td>
         <td></td>
         <td>{{ item.running_total }}</td>
        {% else %}
         <td>{{ item.itemdate }}</td>
         <td><a href="{% url 'edit' item.itemid %}" title="Edit Item">{{ item.name }}</a></td>
         <td></td>
-        <td>{{ item.amount }}</td>
+        <td class="red-text text-darken-2">{{ item.amount }}</td>
         <td>{{ item.running_total }}</td>       
        {% endif %}
       </tr>

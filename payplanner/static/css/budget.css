@@ -1,34 +1,15 @@
-
-.debit {
-    color: green;
+/** General Site-wide **/
+ /* Site Header */
+.page-header {
+  font-size: 22pt;
+  font-weight: 600;
 }
 
-.credit {
-    color: red;
+.card .card-action.header {
+  padding: 20 20 30 20px;
 }
 
-.radio label {
-    font-size: 10pt;
-    margin-right: 15;
-    margin-bottom: 28;
-}
-
-
-label#id_budgetLength {
-    font-size: 5em;
-}
-
-label#id_histLength {
-    font-size: 5em;
-}
-
-#id_budgetLength, #id_histLength {
-    vertical-align: top;
-    width: 25%;
-    min-width: 60px;
-}
-
-/* Format btn group adding onto materialize collection class */
+ /* Format btn group adding onto materialize collection class */
 
 .collection.btn-group {
     border: none;
@@ -38,17 +19,27 @@ label#id_histLength {
     width: 40%;
 }
 
-/* Format materialize rows containing forms */
-.row.form {
-   margin: 0 auto;
-}
-
-/* Currect select box labels for materialize */
+ /* Currect select box labels for materialize */
 .select-wrapper+label {
    margin: 24 auto;
 }
 
-/* Format registration form */
+
+/** edititem page **/
+ /* Radio Buttons */
+.radio label {
+    font-size: 10pt;
+    margin-right: 15;
+    margin-bottom: 28;
+}
+
+ /* Format materialize rows containing forms */
+.row.form {
+   margin: 0 auto;
+}
+
+
+/** Registration form **/
 .regform {
   margin: 30 20px;
   padding-bottom: 10px;
@@ -65,7 +56,8 @@ input#id_username, input#id_password2 {
   margin-bottom: 5px;
 }
 
-/* welcome message formatting */
+/** Home Page **/
+ /* welcome message formatting */
 form p {
   margin: 10 10px;
   padding: 5 5px;
@@ -81,12 +73,3 @@ form p {
   padding: 0 14px;
 }
 
-/* Site Header */
-.page-header {
-  font-size: 22pt;
-  font-weight: 600;
-}
-
-.card .card-action.header {
-  padding: 20 20 30 20px;
-}
