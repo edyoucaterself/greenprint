@@ -76,10 +76,6 @@ class IncomeForm(forms.ModelForm):
         exclude = ('category','skiplst')
         widgets = {'user': forms.HiddenInput(),
                    'itemType': forms.HiddenInput(),
-                   'itemName': forms.TextInput(attrs={'class':'form-control',}),
-                   'itemAmount': forms.NumberInput(attrs={'class':'form-control',}),
-                   'payCycle': forms.Select(),
-                   'itemNote': forms.TextInput(attrs={'class':'form-control',}),
                    'nextDueDate': forms.DateInput(attrs={'class': 'datepicker'}),
                    'endDate': forms.DateInput(attrs={'class': 'datepicker'})
                    }
@@ -93,8 +89,6 @@ class EditForm(forms.ModelForm):
         model = BudgetData
         exclude = ('effectiveDate',)
         widgets = {'parentItem':forms.HiddenInput(),
-                   'itemAmmount':forms.NumberInput(attrs={'class':'form-control',}),
-                   'itemNote':forms.TextInput(attrs={'class':'form-control',})
                    }
         
 
@@ -134,10 +128,6 @@ class UserProfileForm(forms.ModelForm):
         name = "User Profile"
         model = User
         fields = ('first_name','last_name','email')
-        widgets = {'first_name':forms.TextInput(attrs={'class':'form-control',}),
-                  'last_name': forms.TextInput(attrs={'class':'form-control',}),
-                  'email': forms.TextInput(attrs={'class':'form-control',})
-                   }
         
         
 class CategoriesForm(forms.ModelForm):
@@ -148,7 +138,6 @@ class CategoriesForm(forms.ModelForm):
         name = "Category"
         model = Categories
         fields = ('catName',)
-        widgets = {'catName': forms.TextInput(attrs={'class':'form-control',})}
 
 
 class BudgetProfileForm(forms.ModelForm):
@@ -160,6 +149,4 @@ class BudgetProfileForm(forms.ModelForm):
         model = BudgetProfile
         fields = '__all__'
         widgets = {'user':forms.HiddenInput(),
-                   'budgetLength':forms.NumberInput(attrs={'class':'form-control',}),
-                   'histLength':forms.NumberInput(attrs={'class':'form-control',})
                    }
