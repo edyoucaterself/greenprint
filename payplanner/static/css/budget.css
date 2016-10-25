@@ -108,3 +108,13 @@ label#id_histLength {
 input#id_username, input#id_password2 {
   margin-bottom: 5px;
 }
+
+/* welcome message formatting */
+form p {
+  margin: 10 10px;
+  padding: 5 5px;
+}
+
+.card .card-content.welcome {
+  padding-bottom: 0px;
+}

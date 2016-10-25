@@ -53,18 +53,21 @@ remove item, edit item
  </div>
  {% else %}
  <div class="row">
-  <div class="col s12 m6 push-m3">
-      <h3>Welcome to PayPlanner! A simplistic budget tool.</h3>
-      <p>Please use at your own risk, and avoid inputing account numbers or any other sensitive information.</p>
-      <p>It is recommended that you visit <a title="Manage Settings" href="{% url 'manage' %}">Account Settings</a> and configure spending categories before inputing your budget.</p>
-  </div>
- </div>
- <div class="center row">
-    <div class="col s6 m4 l2 push-s3 push-m4 push-l5"><div class="btn-group-vertical btn-group-lg center">
-      <input type="submit" name="config_btn" value="Add Income" class="btn btn-primary"/>
-      <input type="submit" name="config_btn" value="Add Expense" class="btn btn-primary"/>
+  <div class="col s12 m8 push-m2">
+    <div class="card">
+      <div class="card-content welcome">
+        <span class="card-title">Welcome to PayPlanner!</span>
+        <p><strong>A simplistic budget tool.</strong></p>
+      </div> 
+      <div class="card action">
+        <p>Please use at your own risk, and avoid inputing account numbers or any other sensitive information.</p>
+        <p>It is recommended that you visit <a title="Manage Settings" href="{% url 'manage' %}">Account Settings</a> and configure spending categories before inputing your budget.</p>
+      </div>
     </div>
+        <input type="submit" name="config_btn" value="Add Income" class="btn left"/>
+        <input type="submit" name="config_btn" value="Add Expense" class="btn right"/>
   </div>
+</div>
  {% endif %}
   </form>
 </div>
