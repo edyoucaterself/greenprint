@@ -18,7 +18,13 @@ put correct title
   <div class="col s12">
    <form action="{% url 'manage' %}" method="post">
      {% csrf_token %}
-     {{ form.as_table }}
+     {% if form.Meta.name == 'User Categories' %}
+      <div class="browser-default">
+      {{ form.as_table }}
+      </div>
+     {% else %}
+      {{ form.as_table }}
+     {% endif %}
   </div>
  </div>
  <div class="row form">
