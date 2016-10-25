@@ -58,14 +58,15 @@
         <span class="card-title"><a title="PayPlanner Home" href="{% url 'home' %}" class="page-header">GreenPrint PayPlanner</a></span>
        </div>
         {% if user.is_authenticated %}
-       <div class="card-action">
-          {% if user.get_full_name %}
+       <div class="card-action header">
          <span class="left">
+          {% if user.get_full_name %}
            Welcome {{ user.first_name }}!
           {% else %}
            Welcome {{ user }}!
           {% endif %}
-         <a title="Manage Settings" href="{% url 'manage' %}"><i class="tiny material-icons">settings</i></a></span>
+         <a title="Manage Settings" href="{% url 'manage' %}"><i class="tiny material-icons">settings</i></a>
+         </span>
            <a href="{% url 'logout' %}" class="right">Logout<i class="material-icons right">exit_to_app</i></a>
         {% endif %}
        </div>
