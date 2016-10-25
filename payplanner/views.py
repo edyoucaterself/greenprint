@@ -198,7 +198,9 @@ def account_mgmt(request):
                     c = {'form': form,'footer':footer}
                     
             else:
+                temp = 'manage.html'
                 footer = 'Form Invalid'
+                c = {'form': form,'footer':footer}
                 
             #Render form with context
             return render(request, temp, c)

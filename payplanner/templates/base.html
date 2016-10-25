@@ -17,15 +17,20 @@
       <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}"  media="screen,projection"/>
 
 
- <!--Import local jquery scripts for filtered multiple select-->
-   <script type="text/javascript" src="{% static 'js/jsi18n.js' %}"></script>
-   <script type="text/javascript" src="{% static 'admin/js/jquery.min.js' %}"></script>
-   <script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>
-
+ 
 <!--Import materialize.js-->
       <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
       <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
-    {{ form.media }}
+
+<!--Import local jquery scripts for filtered multiple select-->
+   <script type="text/javascript" src="{% static 'js/jsi18n.js' %}"></script>
+   <script type="text/javascript" src="{% static 'admin/js/jquery.min.js' %}"></script>
+   <script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>
+   
+<!--Form Media -->
+{{ form.media }}
+
+<!-Initialize select boxes and date pickers -->
 <script>
  
  $(document).ready(function() {
