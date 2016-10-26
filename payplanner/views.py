@@ -257,9 +257,11 @@ def account_mgmt(request):
         elif account_mgmt_btn == "Edit Categories":
             #Load UserCatForm from custom function
             form = usercatformload(request)
+            form3 = CategoriesForm()
             temp = 'manage.html'
             footer = 'Select Desired Expense Categories'
             c = {'form':form,
+                 'form3': form3,
                  'footer':footer}
             return render(request, temp, c)
         

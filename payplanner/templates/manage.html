@@ -88,7 +88,20 @@ put correct title
 
      <input type="submit" name="account_mgmt_btn" value="Save {{ form.Meta.name }}" class="btn btn-primary">
       {% if form.Meta.has_key %}
-     <input type="submit" name="account_mgmt_btn" value="Add {{ form.Meta.key_name }}" class="btn btn-primary">
+     <a class="btn modal-trigger" href="#modal3"><i class="large material-icons left">add</i>Category</a>
+       
+       <!-- Modal Structure -->
+       <div id="modal3" class="modal modal-fixed-footer">
+          <div class="modal-content">
+             <h4>Add Category</h4>
+             {{ form3 }}
+          </div>
+          <div class="modal-footer">
+             <button name="account_mgmt_btn" value="Save {{ form3.Meta.name }}" class="btn btn-primary">Save</button>
+          </div>
+       </div>
+       <!-- End of Modal -->
+   
       {% endif %}
      <input type="submit" name="account_mgmt_btn" value="Cancel" class="btn btn-default"/>
 
