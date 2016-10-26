@@ -31,9 +31,9 @@ remove item, edit item
      <tbody>
       {% for item in lineitems %}
 	{% if item.running_total < 0 %}
-       <tr title="{{ item.itemnote }}" class="red-text text-darken-1">
+       <tr id="budget-line" "title="{{ item.itemnote }}" class="red-text text-darken-1">
         {% else %}
-       <tr title="{{ item.itemnote }}">
+       <tr id="budget-line" title="{{ item.itemnote }}">
         {% endif %}
         <td>{{ item.itemdate }}</td>
        {% if item.isincome %}
@@ -47,6 +47,23 @@ remove item, edit item
        {% endif %}
         <td>{{ item.running_total }}</td>
       </tr>
+       <!-- Modal Structure -->
+       <div id="modal1" class="modal bottom-sheet">
+          <div class="modal-content">
+             {% if item.isincome %}
+             <h4>Income</h4>
+             {% else %}
+             <h4>Expense</h4>
+          </div>
+          <div class="modal-footer">
+             {% endif %}
+             <p>{{ item.name }}</p>
+             <p>{{ item.itemdate }}</p>
+             <p>{{ item.amount }}</p>
+             <p>{{ item.itemnote }}</p>
+          </div>
+       </div>
+       <!-- End of Modal -->
       {% endfor %}
      <tbody>
    </table>
