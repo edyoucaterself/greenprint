@@ -52,7 +52,20 @@ put correct title
      <li><button name="account_mgmt_btn" value="Edit Profile" class="btn-grp btn btn-large"><i class="large material-icons left">person</i>Edit Profile</button></li>
      <li><button name="account_mgmt_btn" value="Edit Categories" class="btn-grp btn btn-large"><i class="large material-icons left">tune</i>Edit Categories</button></li>
      <li><button name="account_mgmt_btn" value="Delete Budget" class="btn-grp btn btn-large" onclick="return confirm('Remove all budget data?');"><i class="large material-icons left">delete</i>Delete Budget</button></li>
-     <li><button name="account_mgmt_btn" value="Delete Account" class="btn-grp btn btn-large " onclick="return confirm('Remove all account data?');"><i class="large material-icons left">delete_forever</i>Delete Account</button></li>
+     <li><a class="btn btn-large modal-trigger" href="#modal1"><i class="large material-icons left">delete_forever</i>Delete Account</a></li>
+
+<!-- Modal Structure -->
+       <div id="modal1" class="modal bottom-sheet">
+          <div class="modal-content">
+             <h4>Delete Account</h4>
+          </div>
+          <div class="modal-footer">
+             <button name="account_mgmt_btn" value="Delete Account" class="btn">Yes</button>
+             <button name="account_mgmt_btn" value="Home" class="btn">No</button>
+          </div>
+       </div>
+       <!-- End of Modal -->
+
      <li><button name="account_mgmt_btn" value="Home" class="btn-grp btn btn-large"><i class="large material-icons left">home</i>Home</button></li>
     </ul>
    {% else %}

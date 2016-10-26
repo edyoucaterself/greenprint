@@ -54,9 +54,9 @@ remove item, edit item
              <h4>Income</h4>
              {% else %}
              <h4>Expense</h4>
+             {% endif %}
           </div>
           <div class="modal-footer">
-             {% endif %}
              <p>{{ item.name }}</p>
              <p>{{ item.itemdate }}</p>
              <p>{{ item.amount }}</p>
