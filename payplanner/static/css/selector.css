@@ -24,9 +24,14 @@ Creation Date: 10-17-2016
 .selector-available, .selector-chosen {
     width: 46%;
     text-align: center;
-    margin-bottom: 5px;
 }
 
+.selector-available {
+    border-right: 3px;
+}
+.selector-chosen {
+    border-left: 3px;
+}
 /* Column headers */
 .selector-available h2, .selector-chosen h2 {
     border: none;
@@ -36,11 +41,11 @@ Creation Date: 10-17-2016
 
 .selector .selector-chosen h2 {
     margin-bottom: 72px;
-    background: transparent;
+    background: #4db6ac;
 }
 
 .selector .selector-available h2 {
-    background: transparent;
+    background: #4db6ac;
     
 }
 
