@@ -14,7 +14,8 @@
    <link rel="stylesheet" href="{% static 'css/selector.css' %}">
    <link rel="stylesheet" href="{% static 'css/budget.css' %}">
  <!--Import materialize.css-->
-      <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}"  media="screen,projection"/>
+   <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}"  media="screen,projection"/>
+   <link rel="stylesheet" href="{% static 'css/budget.css' %}">
 
 
  
@@ -49,10 +50,7 @@
   });
  
   $(document).ready(function(){
-    $('.modal-trigger').leanModal();
-    $( "#budget-line" ).click(function() {
-           $('.modal').openModal();
-            });  
+    $('.modal-trigger').leanModal();  
      });
 
  </script>

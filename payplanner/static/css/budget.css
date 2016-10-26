@@ -30,6 +30,10 @@
    margin: 0 auto;
 }
 
+.model {
+   height: 100% !important ;
+}
+
 /** edititem page **/
  /* Radio Buttons */
 .radio label {

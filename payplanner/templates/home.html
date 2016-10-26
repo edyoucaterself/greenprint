@@ -35,7 +35,7 @@ remove item, edit item
         {% else %}
        <tr id="budget-line" title="{{ item.itemnote }}">
         {% endif %}
-        <td>{{ item.itemdate }}</td>
+        <td><a class="modal-trigger" href="#modal3" title="Edit Item">{{ item.itemdate }}</a></td>
        {% if item.isincome %}
         <td><a href="{% url 'edit' item.itemid %}" title="Edit Item">{{ item.name }}</a></td>
         <td class="light-green-text text-darken-2">{{ item.amount }}</td>
@@ -48,19 +48,20 @@ remove item, edit item
         <td>{{ item.running_total }}</td>
       </tr>
        <!-- Modal Structure -->
-       <div id="modal1" class="modal bottom-sheet">
+       <div id="modal3" class="modal modal-fixed-footer">
           <div class="modal-content">
              {% if item.isincome %}
              <h4>Income</h4>
              {% else %}
              <h4>Expense</h4>
              {% endif %}
-          </div>
-          <div class="modal-footer">
-             <p>{{ item.name }}</p>
-             <p>{{ item.itemdate }}</p>
+             <p>{{ item.name }}&nbsp&nbsp{{ item.itemdate }}</p>
              <p>{{ item.amount }}</p>
              <p>{{ item.itemnote }}</p>
+          </div>
+          <div class="modal-footer">
+              <a class="btn" href="{% url 'edit' item.itemid %}" title="Edit Item">Edit</a>&nbsp
+              <a href="#!" class="modal-action modal-close btn">Ok</a>            
           </div>
        </div>
        <!-- End of Modal -->
