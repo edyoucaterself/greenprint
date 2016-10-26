@@ -24,6 +24,11 @@
    margin: 24 auto;
 }
 
+/* modal customizations */
+.modal.bottom-sheet.open {
+   width: 60%;
+   margin: 0 auto;
+}
 
 /** edititem page **/
  /* Radio Buttons */
