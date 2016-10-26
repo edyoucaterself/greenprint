@@ -28,6 +28,7 @@ remove item, edit item
         <th class="tcol-total"></th>
        </tr>
      </thead>
+ </form>
      <tbody>
       {% for item in lineitems %}
 	{% if item.running_total < 0 %}
@@ -87,9 +88,9 @@ remove item, edit item
         <input type="submit" name="config_btn" value="Add Income" class="btn left"/>
         <input type="submit" name="config_btn" value="Add Expense" class="btn right"/>
   </div>
+</form>
 </div>
  {% endif %}
-  </form>
 </div>
 {% endblock %}
 {% block footer %}
