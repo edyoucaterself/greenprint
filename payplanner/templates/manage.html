@@ -51,11 +51,25 @@ put correct title
     <ul class="collection btn-group">
      <li><button name="account_mgmt_btn" value="Edit Profile" class="btn-grp btn btn-large"><i class="large material-icons left">person</i>Edit Profile</button></li>
      <li><button name="account_mgmt_btn" value="Edit Categories" class="btn-grp btn btn-large"><i class="large material-icons left">tune</i>Edit Categories</button></li>
-     <li><button name="account_mgmt_btn" value="Delete Budget" class="btn-grp btn btn-large" onclick="return confirm('Remove all budget data?');"><i class="large material-icons left">delete</i>Delete Budget</button></li>
-     <li><a class="btn btn-grp btn-large modal-trigger" href="#modal1"><i class="large material-icons left">delete_forever</i>Delete Account</a></li>
+     <li><a class="btn btn-grp btn-large modal-trigger" href="#modal1"><i class="large material-icons left">delete</i>Delete Budget</a></li>
 
-<!-- Modal Structure -->
+       <!-- Modal Structure -->
        <div id="modal1" class="modal bottom-sheet">
+          <div class="modal-content">
+             <h4>Delete Budget?</h4>
+             <p>This will erase your budget, are you sure?</p>
+          </div>
+          <div class="modal-footer">
+             <button name="account_mgmt_btn" value="Delete Budget" class="btn">Yes</button>
+             <button name="account_mgmt_btn" value="Home" class="btn">No</button>
+          </div>
+       </div>
+      <!-- End of Modal -->
+
+     <li><a class="btn btn-grp btn-large modal-trigger" href="#modal2"><i class="large material-icons left">delete_forever</i>Delete Account</a></li>
+
+      <!-- Modal Structure -->
+       <div id="modal2" class="modal bottom-sheet">
           <div class="modal-content">
              <h4>Delete Account?</h4>
              <p>This will erase all of your data, are you sure?</p>
