@@ -23,8 +23,8 @@ remove item, edit item
        <tr>
         <th class="tcol-date"></th>
         <th class="tcol-name"></th>
-        <th class="tcol-income"><button name="config_btn" value="Add Income" class="btn budget-header green lighten-1"><i class="material-icons">add</i>Income</button></th>
-        <th class="tcol-expense"><button name="config_btn" value="Add Expense" class="btn budget-header green lighten-1"><i class="material-icons">add</i>Expense</button></th>
+        <th class="tcol-income"><button name="config_btn" value="Add Income" class="btn budget-header"><i class="material-icons">add</i>Income</button></th>
+        <th class="tcol-expense"><button name="config_btn" value="Add Expense" class="btn budget-header"><i class="material-icons">add</i>Expense</button></th>
         <th class="tcol-total"></th>
        </tr>
      </thead>
@@ -36,8 +36,8 @@ remove item, edit item
         {% else %}
        <tr id="budget-line-{{ item.itemid }}" name="{{ item.itemid }}" title="{{ item.itemnote }}" class="modal-form-trigger">
         {% endif %}
-        <td name="header2_date">{{ item.itemdate }}</td>
-        <td name="header1_name">{{ item.name }}</a></td>
+        <td name="{{ item.itemid }}_header">{{ item.itemdate }} - </td>
+        <td name="{{ item.itemid }}_header">{{ item.name }}</a></td>
        {% if item.isincome %}
         <td name="id_itemAmmount" class="light-green-text text-darken-2">{{ item.amount }}</td>
         <td name="id_parentItem"><div style="display:none;">{{ item.parent }}</div></td>
@@ -55,7 +55,8 @@ remove item, edit item
        <!-- Modal Structure --> 
        <div id="modal1" class="modal modal-fixed-footer"> 
           <div class="modal-content"> 
-            <h4>Edit Item</h4> 
+            <h4>Edit Item</h4>
+            <h5 id="subhead"></h5> 
             <form id="modalform" action="/config/" method="post"> 
              {% csrf_token %}
              {{ form }} 

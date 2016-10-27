@@ -18,6 +18,11 @@ function loadModalForm(modalform, row) {
     }
     //console.log('test' + cycle);
 
+    //Pass values to header
+    var header = $('[name="' + itemid + '_header"]').text();
+    console.log(header);        
+    $("#subhead").text(header);
+
     //Get parentItem and pass
     //find each td element and populate form 
     row.find("td").each(function(){ 
