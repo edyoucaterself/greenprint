@@ -2,13 +2,13 @@
 
 function loadModalForm(modalform, row) { 
     //Get itemnote and id from for 
-    var note = row.attr("title");
+    //var note = row.attr("title");
     var itemid = row.attr("name");
 
     //Set form path with itemid
     var formpath = "/config/" + itemid + "/";
     $(modalform).attr("action", formpath);
-    $("#modalform input[id=id_itemNote]").val(note);
+    //$("#modalform input[id=id_itemNote]").val(note);
 
     //Get parentItem and pass
     //find each td element and populate form 

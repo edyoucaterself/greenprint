@@ -42,10 +42,11 @@ remove item, edit item
         <td name="id_itemAmmount" class="light-green-text text-darken-2">{{ item.amount }}</td>
         <td name="id_parentItem"><div style="display:none;">{{ item.parent }}</div></td>
        {% else %}
-        <td name="id_parentItem"><div style="display:none;">{{ item.parent }}</div>></td>
+        <td name="id_parentItem"><div style="display:none;">{{ item.parent }}</div></td>
         <td name="id_itemAmmount" class="red-text text-darken-2">{{ item.amount }}</td>      
        {% endif %}
         <td>{{ item.running_total }}</td>
+        <td name="id_itemNote" <div style="display:none;">{{ item.itemnote }}</div></td> 
       </tr>
       {% endfor %}
      <tbody>
