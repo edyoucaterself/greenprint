@@ -14,11 +14,12 @@ remove item, edit item
 <div class="container-fluid">
   <form action="{% url 'config' %}" method="post">
     {% csrf_token %}
+
  {% if lineitems %}
  <div class="row">
   <div class="col s12">
    <div class="card-panel">
-   <table class="highlight">
+   <table id="budget_table" class="highlight">
      <thead>
        <tr>
         <th class="tcol-date"></th>
@@ -30,14 +31,19 @@ remove item, edit item
      </thead>
  </form>
      <tbody>
+
       {% for item in lineitems %}
+    
 	{% if item.running_total < 0 %}
-       <tr id="budget-line-{{ item.itemid }}" name="{{ item.itemid }}" title="{{ item.itemnote }}" class="modal-form-trigger red-text text-darken-1">
+       
+       <tr id="budget-line-{{ item.itemid }}" name="{{ item.istoday }}" title="{{ item.itemnote }}" class="modal-form-trigger red-text text-darken-1">
         {% else %}
-       <tr id="budget-line-{{ item.itemid }}" name="{{ item.itemid }}" title="{{ item.itemnote }}" class="modal-form-trigger">
+       <tr id="budget-line-{{ item.itemid }}" name="{{ item.istoday }}" title="{{ item.itemnote }}" class="modal-form-trigger">
         {% endif %}
-        <td name="{{ item.itemid }}_header">{{ item.itemdate }} - </td>
-        <td name="{{ item.itemid }}_header">{{ item.name }}</a></td>
+
+        <td name="{{ item.itemid }}_header">{{ item.itemdate }}  {{ item.istoday }}</td>
+        <td name="{{ item.itemid }}_header">{{ item.name }}</td>
+
        {% if item.isincome %}
         <td name="id_itemAmmount" class="light-green-text text-darken-2">{{ item.amount }}</td>
         <td name="id_parentItem"><div style="display:none;">{{ item.parent }}</div></td>
@@ -45,11 +51,14 @@ remove item, edit item
         <td name="id_parentItem"><div style="display:none;">{{ item.parent }}</div></td>
         <td name="id_itemAmmount" class="red-text text-darken-2">{{ item.amount }}</td>      
        {% endif %}
+
         <td>{{ item.running_total }}</td>
         <td name="id_itemNote" <div style="display:none;">{{ item.itemnote }}</div></td> 
         <td name="{{ item.itemid }}_cycle"><div style="display:none;">{{ item.cycle }}</div></td> 
       </tr>
+    
       {% endfor %}
+
      <tbody>
    </table>
        <!-- Modal Structure --> 

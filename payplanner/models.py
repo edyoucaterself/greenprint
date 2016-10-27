@@ -176,6 +176,13 @@ class BudgetData(models.Model):
         verbose_name_plural = 'Budget Data'
 
 
+    @property
+    def is_today(self):
+       if date.today() == self.effectiveDate:
+           return True
+       return False
+
+
 class BudgetProfile(models.Model):
 
     """ Holds settings for budget display """

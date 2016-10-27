@@ -1,8 +1,23 @@
-//Function to load form on modal with info from table row
+//Function to highlight first row of today
+function isToday(table) {
+    $('[id^="budget-line"]').each(function(){ 
+        //get istoday in id  
+        if ($(this).attr("name") == "True"){; 
+            var rowclass=$(this).attr("class");
+            rowclass = rowclass + ' orange lighten-4';
+            console.log(rowclass);
+            $(this).attr("class", rowclass);
+            exit();
+        };
+    });
+}
 
+
+//Function to load form on modal with info from table row
 function loadModalForm(modalform, row) { 
-    //Get itemnote and id from for 
-    var itemid = row.attr("name");
+    //Get itemid from tr id budget-line-itemid then use name for istoday
+    var rowid = row.attr("id");
+    var itemid = rowid.match(/\d+/);
 
     //Set form path with itemid
     var formpath = "/config/" + itemid + "/";
@@ -12,11 +27,9 @@ function loadModalForm(modalform, row) {
     var cycle = $('[name="' + itemid +'_cycle"]').text();
     if (cycle == "Single"){
         $('#radios').attr("style","display:none");
-        console.log("Single Item");
     } else {
         $('#radios').attr("style","");
     }
-    //console.log('test' + cycle);
 
     //Pass values to header
     var header = $('[name="' + itemid + '_header"]').text();
@@ -27,8 +40,7 @@ function loadModalForm(modalform, row) {
     //find each td element and populate form 
     row.find("td").each(function(){ 
         var data=$(this).text(); 
-        var line_id=$(this).attr("name"); 
-        //console.log(line_id, data); 
+        var line_id=$(this).attr("name");  
         //put value into form 
         var form_input=modalform + " input[id=" + line_id + "]"; 
         $(form_input).val(data); 
