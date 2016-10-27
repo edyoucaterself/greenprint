@@ -1,10 +1,10 @@
 //Function to highlight first row of today
-function isToday(table) {
+function isToday(table, add_class) {
     $('[id^="budget-line"]').each(function(){ 
         //get istoday in id  
         if ($(this).attr("name") == "True"){; 
             var rowclass=$(this).attr("class");
-            rowclass = rowclass + ' orange lighten-4';
+            rowclass = rowclass + ' ' + add_class;
             console.log(rowclass);
             $(this).attr("class", rowclass);
             exit();
