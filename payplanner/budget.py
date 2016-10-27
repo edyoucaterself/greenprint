@@ -200,7 +200,8 @@ class Budget():
                 isincome = False
             
             #lineitem = (itemid,isincome,itemdate,name,amount,running_total,itemnote)
-            lineitem = {'parent': item.parentItem.id,
+            lineitem = {'cycle':item.parentItem.payCycle,
+                        'parent': item.parentItem.id,
                         'itemid':itemid,
                         'isincome':isincome,
                         'itemdate':itemdate,
