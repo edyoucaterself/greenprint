@@ -36,7 +36,7 @@ remove item, edit item
         {% else %}
        <tr id="budget-line-{{ item.itemid }}" name="{{ item.itemid }}" title="{{ item.itemnote }}" class="modal-form-trigger">
         {% endif %}
-        <td name="header2_date">{{ item.itemdate }} {{ item.cycle }}</td>
+        <td name="header2_date">{{ item.itemdate }}</td>
         <td name="header1_name">{{ item.name }}</a></td>
        {% if item.isincome %}
         <td name="id_itemAmmount" class="light-green-text text-darken-2">{{ item.amount }}</td>
