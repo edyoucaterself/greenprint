@@ -32,43 +32,49 @@ remove item, edit item
      <tbody>
       {% for item in lineitems %}
 	{% if item.running_total < 0 %}
-       <tr id="budget-line" "title="{{ item.itemnote }}" class="red-text text-darken-1">
+       <tr id="budget-line-{{ item.itemid }}" name="{{ item.itemid }}" title="{{ item.itemnote }}" class="modal-form-trigger red-text text-darken-1">
         {% else %}
-       <tr id="budget-line" title="{{ item.itemnote }}">
+       <tr id="budget-line-{{ item.itemid }}" name="{{ item.itemid }}" title="{{ item.itemnote }}" class="modal-form-trigger">
         {% endif %}
-        <td><a class="modal-trigger" href="#modal3" title="Edit Item">{{ item.itemdate }}</a></td>
+        <td name="header2_date">{{ item.itemdate }}</td>
+        <td name="header1_name">{{ item.name }}</a></td>
        {% if item.isincome %}
-        <td><a href="{% url 'edit' item.itemid %}" title="Edit Item">{{ item.name }}</a></td>
-        <td class="light-green-text text-darken-2">{{ item.amount }}</td>
-        <td></td>
+        <td name="id_itemAmmount" class="light-green-text text-darken-2">{{ item.amount }}</td>
+        <td name="id_parentItem"><div style="display:none;">{{ item.parent }}</div></td>
        {% else %}
-        <td><a href="{% url 'edit' item.itemid %}" title="Edit Item">{{ item.name }}</a></td>
-        <td></td>
-        <td class="red-text text-darken-2">{{ item.amount }}</td>      
+        <td name="id_parentItem"><div style="display:none;">{{ item.parent }}</div>></td>
+        <td name="id_itemAmmount" class="red-text text-darken-2">{{ item.amount }}</td>      
        {% endif %}
         <td>{{ item.running_total }}</td>
       </tr>
-       <!-- Modal Structure -->
-       <div id="modal3" class="modal modal-fixed-footer">
-          <div class="modal-content">
-             {% if item.isincome %}
-             <h4>Income</h4>
-             {% else %}
-             <h4>Expense</h4>
-             {% endif %}
-             <p>{{ item.name }}&nbsp&nbsp{{ item.itemdate }}</p>
-             <p>{{ item.amount }}</p>
-             <p>{{ item.itemnote }}</p>
-          </div>
-          <div class="modal-footer">
-              <a class="btn" href="{% url 'edit' item.itemid %}" title="Edit Item">Edit</a>&nbsp
-              <a href="#!" class="modal-action modal-close btn">Ok</a>            
-          </div>
-       </div>
-       <!-- End of Modal -->
       {% endfor %}
      <tbody>
    </table>
+       <!-- Modal Structure --> 
+       <div id="modal1" class="modal modal-fixed-footer"> 
+          <div class="modal-content"> 
+            <h4>Edit Item</h4> 
+            <form id="modalform" action="/config/" method="post"> 
+             {% csrf_token %}
+             {{ form }} 
+             <div id="radios" class="radio"> 
+              <input title="Apply Changes to this line only" id="single" type="radio" name="edit_opt" value="single"
+checked="checked"> 
+              <label for="single">This date only</label> 
+              <input title="Apply Changes to this line and future dates"id="future" type="radio" name="edit_opt" value="future"> 
+              <label for="future">Future</label> 
+              <input title="Apply Changes to all lines like this" id="all" type="radio" name="edit_opt" value="all"> 
+              <label for="all">All</label> 
+             </div> 
+          </div> 
+          <div class="modal-footer"> 
+              <input type="submit" name="edit_btn" value="Update" class="btn"/> 
+              <input type="submit" name="edit_btn" value="Delete" class="btn"/> 
+              <input type="submit" name="edit_btn" value="Cancel" class="btn"/> 
+          </div> 
+       </div> 
+       <!-- End of Modal --> 
+
   </div>
   </div>
  </div>

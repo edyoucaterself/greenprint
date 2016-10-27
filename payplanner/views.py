@@ -205,7 +205,8 @@ def account_mgmt(request):
             #Render form with context
             return render(request, temp, c)
 
-        #Add Category Button
+        #Add Category Button - Depricated
+        #Replaced with modal (form3) on Edit Cateogries 
         elif account_mgmt_btn == "Add Category":
             form = CategoriesForm()
             footer = 'Add Category'
@@ -257,6 +258,7 @@ def account_mgmt(request):
         elif account_mgmt_btn == "Edit Categories":
             #Load UserCatForm from custom function
             form = usercatformload(request)
+            #Cateogry form for modal
             form3 = CategoriesForm()
             temp = 'manage.html'
             footer = 'Select Desired Expense Categories'
@@ -414,12 +416,14 @@ def home(request):
     except BudgetProfile.DoesNotExist:
         budlen = 12
         histlen = 3
+    form = EditForm()
     footer = '* Line item modified'
     Budget.update_data(request.user,budget_length=budlen)
     lineitems = Budget.build(request.user,
                              historical_length=histlen,
                              budget_length=budlen)
-    c = {'lineitems': lineitems,
+    c = {'form': form,
+         'lineitems': lineitems,
          'footer':footer,}
     return render(request, 'home.html', c)
 

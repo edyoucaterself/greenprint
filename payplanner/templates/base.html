@@ -50,9 +50,14 @@
   });
  
   $(document).ready(function(){
+    $( ".modal-form-trigger" ).click(function() { 
+        loadModalForm('#modalform',$(this)); 
+        $('#modal1').openModal();
+      }); 
+   
     $('.modal-trigger').leanModal();  
      });
-
+  
  </script>
  
  <!--Let browser know website is optimized for mobile-->

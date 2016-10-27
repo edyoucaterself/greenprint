@@ -91,7 +91,10 @@ class EditForm(forms.ModelForm):
         widgets = {'parentItem':forms.HiddenInput(),
                    }
         
+    class Media:
+        js = ("js/formload.js",)
 
+        
 class UserCatForm(forms.ModelForm):
 
     """Form to select Categories for user"""
