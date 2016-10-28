@@ -3,10 +3,7 @@ function isToday(table, add_class) {
     $('[id^="budget-line"]').each(function(){ 
         //get istoday in id  
         if ($(this).attr("name") == "True"){; 
-            var rowclass=$(this).attr("class");
-            rowclass = rowclass + ' ' + add_class;
-            console.log(rowclass);
-            $(this).attr("class", rowclass);
+            $(this).addClass(add_class);
             exit();
         };
     });
