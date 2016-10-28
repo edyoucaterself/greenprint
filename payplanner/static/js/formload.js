@@ -1,12 +1,6 @@
 //Function to highlight first row of today
 function isToday(add_class) {
-    $('[id^="budget-line"]').each(function(){ 
-        //get istoday in name  
-        if ($(this).attr("name") == "True"){
-            $(this).addClass(add_class);
-            return;
-        };
-    });
+    $('[name="True"]:first').addClass(add_class);
 }
 
 
