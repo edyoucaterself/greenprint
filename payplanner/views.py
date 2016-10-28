@@ -387,11 +387,13 @@ def config(request):
             form = usercatformload(request)
             #put request.post into dict and pass to template
             expensesform = request.POST
+            form3 = CategoriesForm()
             temp = 'manage.html'
             footer = 'Select desired categories'
-            c = {'form':form,
+            c = {'form': form,
+                 'form3': form3,
                  'nextform': expensesform,
-                 'footer':footer}
+                 'footer': footer}
             return render(request, temp, c)
         
         #Cancel Button    
