@@ -50,7 +50,14 @@
   });
  
   $(document).ready(function(){
-    isToday("#budget_table", "teal lighten-4");
+    $('[id^="budget-line"]').hover(function() {
+        $(this).addClass("z-depth-3");
+        }, function(){
+        $(this).removeClass("z-depth-3");
+    });
+
+    isToday("teal lighten-4");
+
     $( ".modal-form-trigger" ).click(function() { 
         loadModalForm('#modalform',$(this)); 
         $('#modal1').openModal();
