@@ -2,7 +2,7 @@
 function isToday(table, add_class) {
     $('[id^="budget-line"]').each(function(){ 
         //get istoday in id  
-        if ($(this).attr("name") == "True"){; 
+        if ($(this).attr("name") == "True"){
             $(this).addClass(add_class);
             exit();
         };
