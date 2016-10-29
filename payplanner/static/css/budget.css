@@ -127,9 +127,12 @@ form p {
   z-index : 1;
   border: none;
   float: right;
+  background-color: transparent;
 }
 
-
+.form-widget {
+  font-size: 20px; !important;
+}
 /** Test 
 div, span, p{
     border: 1px solid red;
