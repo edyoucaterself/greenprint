@@ -86,9 +86,9 @@ put correct title
    {% else %}
     <input type="hidden" name="formdata" value="{{ nextform }}"/>
 
-     <input type="submit" name="account_mgmt_btn" value="Save {{ form.Meta.name }}" class="btn btn-primary">
+     <button type="submit" name="account_mgmt_btn" value="Save {{ form.Meta.name }}" class="btn btn-primary">Save</button>
       {% if form.Meta.has_key %}
-     <a class="btn modal-trigger" href="#modal3"><i class="large material-icons left">add</i>Category</a>
+     <a class="btn modal-trigger" href="#modal3"><i class="large material-icons">add</i></a>
        
        <!-- Modal Structure -->
        <div id="modal3" class="modal modal-fixed-footer">

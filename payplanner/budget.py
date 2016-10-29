@@ -4,8 +4,10 @@
 
 #Set up Environment
 import json
+import re
 from datetime import date
 from dateutil.relativedelta import relativedelta
+from calendar import monthrange
 
 from django.db.models import Max
 
@@ -300,6 +302,7 @@ class Budget():
                     exitstatus = 0
                     exitmsg.append('Added %s: %s - %s - %s' % (name,itemduedate,amount,paycycle))
                     continue
+            
             #Reoccuring line item, cycle through till budget end        
 	    else:
                 #If no end date specified create fake on that will always be greater then itemduedate
@@ -324,6 +327,34 @@ class Budget():
                     if itemduedate in skiplist:
                         itemduedate += itemcycle
                         continue
+                    
+                    #If paycycle is semi monthly 1st/15 or 15/last use monthrange
+                    #Add code for semi-monthly here, finish with continue
+                    # Replace with regex to handle both types, start with just 1st/15
+                    #Need to test
+                    if re.match('Semi-Monthly', paycycle):
+                        #Get semi monthly pattern
+                        cycle,pattern = paycycle.split()
+                        if re.search('Last', pattern):
+                            month = itemduedate.month
+                            year = itemduedate.year
+                            first,sec = monthrange(year, month)
+                            first = 15
+                        else:
+                            first = 1
+                            sec = 15
+                            
+                        for d in first,sec:
+                            itemduedate = itemduedate.replace(day=d)
+                            if not BudgetData.objects.values().filter(parentItem = item,effectiveDate = itemduedate):
+                                data = BudgetData(parentItem = item, effectiveDate = itemduedate,itemAmmount = amount)
+                                data.save()
+                                exitstatus = 0
+                                exitmsg.append('Added %s: %s - %s - %s' % (name,itemduedate,amount,paycycle))
+                        
+                        itemduedate += relativedelta(months=1)
+                        continue
+                    
                     #Write to BudgetData table if a matching item is not already found
                     if BudgetData.objects.values().filter(parentItem = item,effectiveDate = itemduedate):
                         itemduedate += itemcycle
