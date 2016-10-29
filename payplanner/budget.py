@@ -193,7 +193,17 @@ class Budget():
             amount = item.itemAmmount
             itemdate = item.effectiveDate
             itemid = item.id
-            itemnote = item.itemNote
+            
+            #Get itemnote from item or parent add prefix if found
+            if item.itemNote is None:
+                itemnote = item.parentItem.itemNote
+            else:
+                itemnote = item.itemNote
+                
+            if itemnote != '':    
+                itemnote = ('Note: %s' % item.itemNote)
+
+            #Adjust Total    
             if itemtype == 'income':
                 running_total += amount
                 isincome = True
