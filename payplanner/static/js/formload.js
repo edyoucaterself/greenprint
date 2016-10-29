@@ -1,6 +1,22 @@
-//Function to highlight first row of today
-function isToday(add_class) {
-    $('[name="True"]:first').addClass(add_class);
+
+
+//Function to show tooltips one at a time
+function showToast(row) {
+    var toast_str = row.attr("title");
+    //if toast_str empty return from script
+    //test for div with class of toast-container
+    if ($('#toast-container')) {
+        //Remove children, call toast
+        console.log('Before Remove: ' + $('#toast-container'));
+        $('#toast-container').remove()
+        console.log('After Remove: ' + $('#toast-container'));
+        Materialize.toast(toast_str, 4000);
+ 
+    } else {
+        //open toast
+        Materialize.toast(toast_str, 4000);
+        console.log('Container Not Found: ' + $(this));
+    };
 }
 
 

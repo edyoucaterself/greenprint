@@ -53,19 +53,24 @@
   });
  
   $(document).ready(function(){
+    //Add depth to budget line on hover and see if toast should be shown
     $('[id^="budget-line"]').hover(function() {
+        showToast($(this));
         $(this).addClass("z-depth-1");
         }, function(){
-        $(this).removeClass("z-depth-1");
+        $(this).removeClass("z-depth-1"); 
     });
 
+    //Highlight first row with current day
     $('[name="True"]:first').addClass("teal lighten-4");
 
+    //Load modal with edititem form
     $( ".modal-form-trigger" ).click(function() { 
         loadModalForm('#modalform',$(this)); 
         $('#modal1').openModal();
       }); 
-   
+
+   //Load other modals
     $('.modal-trigger').leanModal();  
      });
   
