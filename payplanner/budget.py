@@ -246,8 +246,10 @@ class Budget():
         itemduedate = item.nextDueDate
         amount = item.itemAmount
         paycycle = item.payCycle.cycleName
+        enddate = item.endDate
         startmonth = itemduedate.month
         year = itemduedate.year
+        
         
         #for each month in budget length
         i = 0
@@ -260,13 +262,14 @@ class Budget():
             else:
                 first = 1
                 sec = 15
-            print("counter: %s    length: %s" % (i, budgetlength))    
+               
             #Build budgetdata object for each day pattern    
             for d in first,sec:
                 #Create date object based on month and pattern
                 adjusteddate = date(year, month, d)
-                #make sure adjust date is >= itemduedate
-                if adjusteddate < itemduedate:
+                
+                #Adjusted date needs to be greater than itemduedate and less than enddate
+                if adjusteddate < itemduedate or adjusteddate > enddate:
                     continue
             
                 #Test if object exists
