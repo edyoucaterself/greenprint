@@ -45,6 +45,7 @@ class Budget():
             x = date(a['y'],a['m'],a['d'])
             date_list.append(x)
         return date_list
+    
     #Function to Delete Budget Items/Data
     @staticmethod
     def delete_item(line, opt):
@@ -134,6 +135,7 @@ class Budget():
             datestr = Budget.date_to_json(skipdate)
             parItem.skiplst = datestr
             parItem.save()
+            
         #Edit New parentItem - Only if parItem.cycleName.cycleName is not Single
         if cycle != 'Single':
             #Create parent copy
@@ -147,6 +149,7 @@ class Budget():
             newparent.nextDueDate = line.effectiveDate
             newparent.save()
             line.parentItem = newparent
+            
         #If single entry, modify the parent item
         else:
             parItem.itemAmount = newdata['itemAmmount']
@@ -195,13 +198,10 @@ class Budget():
             itemid = item.id
             
             #Get itemnote from item or parent add prefix if found
-            if item.itemNote is None:
+            if item.itemNote == '' and item.parentItem.itemNote != '':
                 itemnote = item.parentItem.itemNote
             else:
                 itemnote = item.itemNote
-                
-            if itemnote != '':    
-                itemnote = ('Note: %s' % item.itemNote)
 
             #Adjust Total    
             if itemtype == 'income':
@@ -226,7 +226,65 @@ class Budget():
             #print('%s %s\t%s\t\t%s\t\t%s' % (linenum,itemdate,name,amount,running_total))
             linenum +=1
         return budget_output
-    
+
+
+    #Method to update semi monthly data
+    @staticmethod
+    def update_semi_monthly(item, budgetlength, **kwargs):
+
+        """Updated semi monthly budget data - defaults to 15/last pattern """
+        #List of exit messages
+        exitmsg = []
+        #get pattern from kwargs, set day
+        if 'pattern' in kwargs:
+            pattern = kwargs['pattern']
+        else:
+            pattern = 'last'
+
+        #Get data from item
+        name = item.itemName
+        itemduedate = item.nextDueDate
+        amount = item.itemAmount
+        paycycle = item.payCycle.cycleName
+        startmonth = itemduedate.month
+        year = itemduedate.year
+        
+        #for each month in budget length
+        i = 0
+        month = startmonth
+        while i < (budgetlength):
+            #Get date pattern
+            if pattern == 'last':
+                first,sec = monthrange(year, month)
+                first = 15
+            else:
+                first = 1
+                sec = 15
+            print("counter: %s    length: %s" % (i, budgetlength))    
+            #Build budgetdata object for each day pattern    
+            for d in first,sec:
+                #Create date object based on month and pattern
+                adjusteddate = date(year, month, d)
+                #make sure adjust date is >= itemduedate
+                if adjusteddate < itemduedate:
+                    continue
+            
+                #Test if object exists
+                if not BudgetData.objects.values().filter(parentItem = item,effectiveDate = adjusteddate):
+                    data = BudgetData(parentItem = item, effectiveDate = adjusteddate,itemAmmount = amount)
+                    data.save()
+                    exitmsg.append('Added %s: %s - %s - %s' % (name,adjusteddate,amount,paycycle))
+
+            #Increment Months and Counter
+            if month == 12:
+                month = 1
+                year += 1
+            else:
+                month += 1
+            i +=1
+            
+        return exitmsg
+        
     #Method to Add New items to budget
     @staticmethod
     def update_data(userid, **kwargs):
@@ -247,10 +305,11 @@ class Budget():
             
         #Get End Date from kwargs
 	if 'budget_length' in kwargs:
-            m = kwargs['budget_length']
-            yearlen = relativedelta(months=m)
+            budget_length = kwargs['budget_length']
         else:
-            yearlen = relativedelta(months=12) 
+            budget_length = 12
+
+        yearlen = relativedelta(months=budget_length)
         today = date.today()
 	end_date = today + yearlen
 	
@@ -312,6 +371,18 @@ class Budget():
                     exitstatus = 0
                     exitmsg.append('Added %s: %s - %s - %s' % (name,itemduedate,amount,paycycle))
                     continue
+            #Semi Monthly cycle, needs special attention    
+            elif re.match('Semi-Monthly', paycycle):
+                #Get semi monthly pattern
+                cycle,pattern = paycycle.split()
+                #Call update_semi_monthly with pattern
+                print("Semi-Monthly - Item: %s Months: %s" % (item, budget_length))
+                if re.search('Last', pattern):
+                    msg = Budget.update_semi_monthly(item, budget_length)
+                else:
+                    msg = Budget.update_semi_monthly(item, budget_length, pattern="first")
+                exitmsg.append(msg)
+                continue
             
             #Reoccuring line item, cycle through till budget end        
 	    else:
@@ -336,33 +407,6 @@ class Budget():
                     #If date is on skip list increase duedate and continue
                     if itemduedate in skiplist:
                         itemduedate += itemcycle
-                        continue
-                    
-                    #If paycycle is semi monthly 1st/15 or 15/last use monthrange
-                    #Add code for semi-monthly here, finish with continue
-                    # Replace with regex to handle both types, start with just 1st/15
-                    #Need to test
-                    if re.match('Semi-Monthly', paycycle):
-                        #Get semi monthly pattern
-                        cycle,pattern = paycycle.split()
-                        if re.search('Last', pattern):
-                            month = itemduedate.month
-                            year = itemduedate.year
-                            first,sec = monthrange(year, month)
-                            first = 15
-                        else:
-                            first = 1
-                            sec = 15
-                            
-                        for d in first,sec:
-                            itemduedate = itemduedate.replace(day=d)
-                            if not BudgetData.objects.values().filter(parentItem = item,effectiveDate = itemduedate):
-                                data = BudgetData(parentItem = item, effectiveDate = itemduedate,itemAmmount = amount)
-                                data.save()
-                                exitstatus = 0
-                                exitmsg.append('Added %s: %s - %s - %s' % (name,itemduedate,amount,paycycle))
-                        
-                        itemduedate += relativedelta(months=1)
                         continue
                     
                     #Write to BudgetData table if a matching item is not already found

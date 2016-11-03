@@ -469,14 +469,15 @@ def edit(request, item_id):
                     #If All button selected    
                     elif editopt == 'all':
                         Budget.update_all(item,request.POST)
-                        Budget.update_data(request.user,
-                                           budget_length=budlen,
-                                           force=True)
                         
                     #If single or not present (implied single) update line
                     else:
                         Budget.update_line(item,request.POST)
-                  
+
+                    #Rebuild budget
+                    Budget.update_data(request.user,
+                                       budget_length=budlen,
+                                       force=True)
                     #Redirect to home
                     return redirect('home')
             #Form Not Valid
