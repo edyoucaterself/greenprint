@@ -5,6 +5,17 @@ from payplanner.models import BudgetData, Items, BudgetProfile
 from payplanner.budget import Budget
 
 #Test Budget.update_data for various scenarios
+"""
+Test functions
+ - Add income, expense of each pay cycle
+ - Cycle for each should:
+     -Create Item
+     -update_data
+     -modify note and amount on single,future double
+     -Check if pattern is correct (dates and amounts)
+     -Check running total
+     -Report errors
+"""
 class UpdateBudgetNewUser(TestCase):
 
     """Test update_budget function in various different scenarios"""
