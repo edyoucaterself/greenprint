@@ -19,10 +19,10 @@ python manage.py loaddata payplanner/fixtures/init_payplanner.json
 ```
 
 ###Backup Database
-'''
+```
 python manage.py dumpdata payplanner --indent 4 --natural-foreign --format json -o payplanner/fixtures/$(date -I)_payplanner.json
 python manage.py dumpdata auth.user --indent 4 --natural-foreign --format json -o payplanner/fixtures/$(date -I)_user.json
-'''
+```
 
 ## Contributing
 
