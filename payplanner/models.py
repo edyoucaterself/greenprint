@@ -97,6 +97,7 @@ class Items(models.Model):
     itemAmount = models.DecimalField(
         max_digits=10,
         decimal_places=2,
+        validators=[MinValueValidator(1)],
         verbose_name='Amount'
     )
     
@@ -157,6 +158,7 @@ class BudgetData(models.Model):
     itemAmmount = models.DecimalField(
         max_digits=8,
         decimal_places=2,
+        validators=[MinValueValidator(1)],
         verbose_name='Amount'
     )
     #Hold effective date item

@@ -462,6 +462,7 @@ def edit(request, item_id):
                         editopt = request.POST['edit_opt']
                     except:
                         editopt = 'single'
+                        
                     #If future radio button selected    
                     if editopt == 'future':
                         #Update current and future dates()
@@ -470,6 +471,7 @@ def edit(request, item_id):
                         footer = Budget.update_data(request.user,
                                            budget_length=budlen,
                                            force=True)
+                        
                     #If All button selected    
                     elif editopt == 'all':
                         Budget.update_all(item,request.POST)
