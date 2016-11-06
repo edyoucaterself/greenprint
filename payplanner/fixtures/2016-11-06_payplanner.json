@@ -1,0 +1,499 @@
+[
+{
+    "fields": {
+        "cycleLength": 0,
+        "cycleName": "Single"
+    },
+    "model": "payplanner.cycles",
+    "pk": 1
+},
+{
+    "fields": {
+        "cycleLength": 7,
+        "cycleName": "Weekly"
+    },
+    "model": "payplanner.cycles",
+    "pk": 2
+},
+{
+    "fields": {
+        "cycleLength": 14,
+        "cycleName": "Bi-Weekly"
+    },
+    "model": "payplanner.cycles",
+    "pk": 3
+},
+{
+    "fields": {
+        "cycleLength": 30,
+        "cycleName": "Monthly"
+    },
+    "model": "payplanner.cycles",
+    "pk": 4
+},
+{
+    "fields": {
+        "cycleLength": 91,
+        "cycleName": "Quarterly"
+    },
+    "model": "payplanner.cycles",
+    "pk": 5
+},
+{
+    "fields": {
+        "cycleLength": 365,
+        "cycleName": "Annual"
+    },
+    "model": "payplanner.cycles",
+    "pk": 6
+},
+{
+    "fields": {
+        "cycleLength": 15,
+        "cycleName": "Semi-Monthly 1st/15th"
+    },
+    "model": "payplanner.cycles",
+    "pk": 7
+},
+{
+    "fields": {
+        "cycleLength": 17,
+        "cycleName": "Semi-Monthly 15th/Last"
+    },
+    "model": "payplanner.cycles",
+    "pk": 8
+},
+{
+    "fields": {
+        "catName": "Other"
+    },
+    "model": "payplanner.categories",
+    "pk": 1
+},
+{
+    "fields": {
+        "catName": "Rent"
+    },
+    "model": "payplanner.categories",
+    "pk": 2
+},
+{
+    "fields": {
+        "catName": "Utilities"
+    },
+    "model": "payplanner.categories",
+    "pk": 3
+},
+{
+    "fields": {
+        "catName": "Concerts"
+    },
+    "model": "payplanner.categories",
+    "pk": 4
+},
+{
+    "fields": {
+        "catName": "Medical Expenses"
+    },
+    "model": "payplanner.categories",
+    "pk": 5
+},
+{
+    "fields": {
+        "catName": "Groceries"
+    },
+    "model": "payplanner.categories",
+    "pk": 6
+},
+{
+    "fields": {
+        "catName": "Pet Care"
+    },
+    "model": "payplanner.categories",
+    "pk": 7
+},
+{
+    "fields": {
+        "catName": "test"
+    },
+    "model": "payplanner.categories",
+    "pk": 8
+},
+{
+    "fields": {
+        "catName": "Dining Out"
+    },
+    "model": "payplanner.categories",
+    "pk": 9
+},
+{
+    "fields": {
+        "cats": [
+            1
+        ],
+        "user": [
+            "freshuser"
+        ]
+    },
+    "model": "payplanner.usercat",
+    "pk": 1
+},
+{
+    "fields": {
+        "cats": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+        ],
+        "user": [
+            "root"
+        ]
+    },
+    "model": "payplanner.usercat",
+    "pk": 3
+},
+{
+    "fields": {
+        "cats": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+        ],
+        "user": [
+            "magresta"
+        ]
+    },
+    "model": "payplanner.usercat",
+    "pk": 5
+},
+{
+    "fields": {
+        "category": null,
+        "endDate": null,
+        "itemType": "income",
+        "payCycle": "Semi-Monthly 15th/Last",
+        "itemNote": "",
+        "itemAmount": "1015.00",
+        "nextDueDate": "2016-11-06",
+        "user": [
+            "root"
+        ],
+        "itemName": "Test",
+        "skiplst": "[{\"y\": 2016, \"m\": 11, \"d\": 15}]"
+    },
+    "model": "payplanner.items",
+    "pk": 118
+},
+{
+    "fields": {
+        "category": null,
+        "endDate": null,
+        "itemType": "income",
+        "payCycle": "Single",
+        "itemNote": "",
+        "itemAmount": "1050.00",
+        "nextDueDate": "2016-11-15",
+        "user": [
+            "root"
+        ],
+        "itemName": "Test*",
+        "skiplst": null
+    },
+    "model": "payplanner.items",
+    "pk": 119
+},
+{
+    "fields": {
+        "itemNote": "",
+        "itemAmmount": "1050.00",
+        "effectiveDate": "2016-11-15",
+        "parentItem": 119
+    },
+    "model": "payplanner.budgetdata",
+    "pk": 3245
+},
+{
+    "fields": {
+        "itemNote": "",
+        "itemAmmount": "1015.00",
+        "effectiveDate": "2016-11-30",
+        "parentItem": 118
+    },
+    "model": "payplanner.budgetdata",
+    "pk": 3271
+},
+{
+    "fields": {
+        "itemNote": "",
+        "itemAmmount": "1015.00",
+        "effectiveDate": "2016-12-15",
+        "parentItem": 118
+    },
+    "model": "payplanner.budgetdata",
+    "pk": 3272
+},
+{
+    "fields": {
+        "itemNote": "",
+        "itemAmmount": "1015.00",
+        "effectiveDate": "2016-12-31",
+        "parentItem": 118
+    },
+    "model": "payplanner.budgetdata",
+    "pk": 3273
+},
+{
+    "fields": {
+        "itemNote": "",
+        "itemAmmount": "1015.00",
+        "effectiveDate": "2017-01-15",
+        "parentItem": 118
+    },
+    "model": "payplanner.budgetdata",
+    "pk": 3274
+},
+{
+    "fields": {
+        "itemNote": "",
+        "itemAmmount": "1015.00",
+        "effectiveDate": "2017-01-31",
+        "parentItem": 118
+    },
+    "model": "payplanner.budgetdata",
+    "pk": 3275
+},
+{
+    "fields": {
+        "itemNote": "",
+        "itemAmmount": "1015.00",
+        "effectiveDate": "2017-02-15",
+        "parentItem": 118
+    },
+    "model": "payplanner.budgetdata",
+    "pk": 3276
+},
+{
+    "fields": {
+        "itemNote": "",
+        "itemAmmount": "1015.00",
+        "effectiveDate": "2017-02-28",
+        "parentItem": 118
+    },
+    "model": "payplanner.budgetdata",
+    "pk": 3277
+},
+{
+    "fields": {
+        "itemNote": "",
+        "itemAmmount": "1015.00",
+        "effectiveDate": "2017-03-15",
+        "parentItem": 118
+    },
+    "model": "payplanner.budgetdata",
+    "pk": 3278
+},
+{
+    "fields": {
+        "itemNote": "",
+        "itemAmmount": "1015.00",
+        "effectiveDate": "2017-03-31",
+        "parentItem": 118
+    },
+    "model": "payplanner.budgetdata",
+    "pk": 3279
+},
+{
+    "fields": {
+        "itemNote": "",
+        "itemAmmount": "1015.00",
+        "effectiveDate": "2017-04-15",
+        "parentItem": 118
+    },
+    "model": "payplanner.budgetdata",
+    "pk": 3280
+},
+{
+    "fields": {
+        "itemNote": "",
+        "itemAmmount": "1015.00",
+        "effectiveDate": "2017-04-30",
+        "parentItem": 118
+    },
+    "model": "payplanner.budgetdata",
+    "pk": 3281
+},
+{
+    "fields": {
+        "itemNote": "",
+        "itemAmmount": "1015.00",
+        "effectiveDate": "2017-05-15",
+        "parentItem": 118
+    },
+    "model": "payplanner.budgetdata",
+    "pk": 3282
+},
+{
+    "fields": {
+        "itemNote": "",
+        "itemAmmount": "1015.00",
+        "effectiveDate": "2017-05-31",
+        "parentItem": 118
+    },
+    "model": "payplanner.budgetdata",
+    "pk": 3283
+},
+{
+    "fields": {
+        "itemNote": "",
+        "itemAmmount": "1015.00",
+        "effectiveDate": "2017-06-15",
+        "parentItem": 118
+    },
+    "model": "payplanner.budgetdata",
+    "pk": 3284
+},
+{
+    "fields": {
+        "itemNote": "",
+        "itemAmmount": "1015.00",
+        "effectiveDate": "2017-06-30",
+        "parentItem": 118
+    },
+    "model": "payplanner.budgetdata",
+    "pk": 3285
+},
+{
+    "fields": {
+        "itemNote": "",
+        "itemAmmount": "1015.00",
+        "effectiveDate": "2017-07-15",
+        "parentItem": 118
+    },
+    "model": "payplanner.budgetdata",
+    "pk": 3286
+},
+{
+    "fields": {
+        "itemNote": "",
+        "itemAmmount": "1015.00",
+        "effectiveDate": "2017-07-31",
+        "parentItem": 118
+    },
+    "model": "payplanner.budgetdata",
+    "pk": 3287
+},
+{
+    "fields": {
+        "itemNote": "",
+        "itemAmmount": "1015.00",
+        "effectiveDate": "2017-08-15",
+        "parentItem": 118
+    },
+    "model": "payplanner.budgetdata",
+    "pk": 3288
+},
+{
+    "fields": {
+        "itemNote": "",
+        "itemAmmount": "1015.00",
+        "effectiveDate": "2017-08-31",
+        "parentItem": 118
+    },
+    "model": "payplanner.budgetdata",
+    "pk": 3289
+},
+{
+    "fields": {
+        "itemNote": "",
+        "itemAmmount": "1015.00",
+        "effectiveDate": "2017-09-15",
+        "parentItem": 118
+    },
+    "model": "payplanner.budgetdata",
+    "pk": 3290
+},
+{
+    "fields": {
+        "itemNote": "",
+        "itemAmmount": "1015.00",
+        "effectiveDate": "2017-09-30",
+        "parentItem": 118
+    },
+    "model": "payplanner.budgetdata",
+    "pk": 3291
+},
+{
+    "fields": {
+        "itemNote": "",
+        "itemAmmount": "1015.00",
+        "effectiveDate": "2017-10-15",
+        "parentItem": 118
+    },
+    "model": "payplanner.budgetdata",
+    "pk": 3292
+},
+{
+    "fields": {
+        "itemNote": "",
+        "itemAmmount": "1015.00",
+        "effectiveDate": "2017-10-31",
+        "parentItem": 118
+    },
+    "model": "payplanner.budgetdata",
+    "pk": 3293
+},
+{
+    "fields": {
+        "itemNote": "",
+        "itemAmmount": "1015.00",
+        "effectiveDate": "2017-11-15",
+        "parentItem": 118
+    },
+    "model": "payplanner.budgetdata",
+    "pk": 3294
+},
+{
+    "fields": {
+        "itemNote": "",
+        "itemAmmount": "1015.00",
+        "effectiveDate": "2017-11-30",
+        "parentItem": 118
+    },
+    "model": "payplanner.budgetdata",
+    "pk": 3295
+},
+{
+    "fields": {
+        "histLength": 4,
+        "user": [
+            "magresta"
+        ],
+        "budgetLength": 18
+    },
+    "model": "payplanner.budgetprofile",
+    "pk": 2
+},
+{
+    "fields": {
+        "histLength": 3,
+        "user": [
+            "root"
+        ],
+        "budgetLength": 13
+    },
+    "model": "payplanner.budgetprofile",
+    "pk": 3
+}
+]
