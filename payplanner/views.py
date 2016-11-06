@@ -356,9 +356,12 @@ def config(request):
                                    force=True)
                 return redirect('home')
             else:
-                temp = 'config.html'     
+                temp = 'config.html'
+                itemtype = 'Expense'
                 footer = 'Expense Form Invalid'
-                c = {'form':form,'footer':footer,}
+                c = {'itemtype':itemtype,
+                     'form':form,
+                     'footer':footer,}
                 return render(request, temp, c)
             
         #Save Income
@@ -375,9 +378,12 @@ def config(request):
                 return redirect('home')
             else:
                 form = IncomeForm(request.POST)
-                temp = 'config.html'     
+                temp = 'config.html'
+                itemtype = 'Income'
                 footer = 'Form Invalid'
-                c = {'form':form,'footer':footer,}
+                c = {'itemtype':itemtype,
+                     'form':form,
+                     'footer':footer,}
                 return render(request, temp, c)
             
         #Edit Categories Button Pressed on ExpensesForm
