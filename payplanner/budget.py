@@ -96,19 +96,63 @@ class Budget():
     #Function to update BudgetData Future Rows
     @staticmethod
     def update_future(line,newdata):
+
+        """ Update item from certain date and on """
+        
         #Add End Date to Parent Item
         a = newdata['parentItem']
         parItem = Items.objects.get(pk=newdata['parentItem'])
+        
         #Copy parent to new parent
         newparent = parItem
-        #Remove All BudgetData rows of old parent and current line
+        
+        #Remove All BudgetData rows of old parent 
         BudgetData.objects.filter(parentItem = parItem).delete()
+
+        #Get paycycle from parent
+        paycycle = parItem.payCycle.cycleName
+        
         #Modify Old Parent
-        cyclength = parItem.payCycle.cycleLength
-        cycle = relativedelta(days=cyclength)
-        enddate = (line.effectiveDate - cycle)
+        #If cycle is semi monthly figure out pattern, day and create end date
+        if re.match('Semi-Monthly', paycycle):
+            #Get effectiveDate 
+            effDate = line.effectiveDate
+            
+            #Get semi monthly pattern
+            cycle,pattern = paycycle.split()
+            if effDate.month != 1:
+                prevmonth = effDate.month - 1
+            else:
+                prevmonth = 12
+            
+            #if the pattern is last
+            if re.search('Last', pattern):
+                #If effectiveDate.day = 15, get last day of last month
+                if effDate.day == 15:
+                    first,last = monthrange(effDate.year, effDate.month)
+                    enddate = effDate.replace(month=prevmonth)
+                    enddate = endate.replace(day=last)
+                #else set enddate.day to 15
+                else:
+                    enddate = effDate.replace(day=15)
+                    
+            else:
+                #If effectiveDate.day = 15, set enddate.day to 1
+                if effDate.day == 15:
+                    enddate = effDate.replace(day=1)
+                #else set enddate.day to 15 of last month
+                else:
+                    enddate = effDate.replace(month=prevmonth)
+                    enddate = endate.replace(day=1)
+            
+        else:        
+            cyclength = parItem.payCycle.cycleLength
+            cycle = relativedelta(days=cyclength)
+            enddate = (line.effectiveDate - cycle)
+
         parItem.endDate = enddate
         parItem.save()
+        
         #Modify New Parent
         newparent.id = None
         newparent.nextDueDate = line.effectiveDate
@@ -246,11 +290,14 @@ class Budget():
         itemduedate = item.nextDueDate
         amount = item.itemAmount
         paycycle = item.payCycle.cycleName
-        enddate = item.endDate
+        skiplist = Budget.json_to_date(item.skiplst)
         startmonth = itemduedate.month
         year = itemduedate.year
-        
-        
+
+        if item.endDate is None:
+            enddate = date(9999, 12, 25)
+        else:
+            enddate = item.endDate
         #for each month in budget length
         i = 0
         month = startmonth
@@ -267,6 +314,10 @@ class Budget():
             for d in first,sec:
                 #Create date object based on month and pattern
                 adjusteddate = date(year, month, d)
+
+                #If date is on skip list increase duedate and continue
+                if adjusteddate in skiplist:
+                    continue
                 
                 #Adjusted date needs to be greater than itemduedate and less than enddate
                 if adjusteddate < itemduedate or adjusteddate > enddate:
@@ -379,7 +430,6 @@ class Budget():
                 #Get semi monthly pattern
                 cycle,pattern = paycycle.split()
                 #Call update_semi_monthly with pattern
-                print("Semi-Monthly - Item: %s Months: %s" % (item, budget_length))
                 if re.search('Last', pattern):
                     msg = Budget.update_semi_monthly(item, budget_length)
                 else:

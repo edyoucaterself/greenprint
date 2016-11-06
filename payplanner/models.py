@@ -95,7 +95,7 @@ class Items(models.Model):
     
     #Ammount Due Ex 9999.99
     itemAmount = models.DecimalField(
-        max_digits=6,
+        max_digits=10,
         decimal_places=2,
         verbose_name='Amount'
     )

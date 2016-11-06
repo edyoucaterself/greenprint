@@ -420,7 +420,7 @@ def home(request):
         histlen = 3
     form = EditForm()
     footer = '* Line item modified'
-    Budget.update_data(request.user,budget_length=budlen)
+    footer2 = Budget.update_data(request.user,budget_length=budlen)
     lineitems = Budget.build(request.user,
                              historical_length=histlen,
                              budget_length=budlen)
@@ -445,6 +445,7 @@ def edit(request, item_id):
         edit_btn = request.POST.get("edit_btn")
         
         if edit_btn == "Update":
+            exitmsg = ""
             item = BudgetData.objects.get(pk=item_id)
             init = {'itemAmmount':item.itemAmmount,
                     'itemNote':item.itemNote}
@@ -465,21 +466,22 @@ def edit(request, item_id):
                     if editopt == 'future':
                         #Update current and future dates()
                         junk,bunk = Budget.update_future(item,request.POST)
-                        footer = ''
+                        #Rebuild budget
+                        footer = Budget.update_data(request.user,
+                                           budget_length=budlen,
+                                           force=True)
                     #If All button selected    
                     elif editopt == 'all':
                         Budget.update_all(item,request.POST)
                         
                     #If single or not present (implied single) update line
                     else:
-                        Budget.update_line(item,request.POST)
+                        exitmsg = Budget.update_line(item,request.POST)
 
-                    #Rebuild budget
-                    Budget.update_data(request.user,
-                                       budget_length=budlen,
-                                       force=True)
+                    
                     #Redirect to home
                     return redirect('home')
+
             #Form Not Valid
             else:
                 temp = 'edititem.html'
