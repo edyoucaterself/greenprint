@@ -1,4 +1,45 @@
+//Function to update date inpute if semi monthly cycle is chosen
+function autoDate(date_input,cycle_input) {
+    //Get cycle name and test for semi monthly
+    var cycle = $("#id_payCycle option:selected").text()
 
+    //Get current day
+    var d = new Date();
+    var currentday = d.getDate();
+    var currentmonth = d.getMonth()+1;
+    var currentyear = d.getFullYear();
+    var newday = currentday;
+
+    console.log(cycle, currentday, currentmonth, currentyear);
+
+    if (cycle == "Semi-Monthly 1st/15th") {
+        //If current day > 15 then set date_input day to 1st, else set to 15th
+        if (currentday > 15){
+            newday = "01";
+        } else {
+            newday = "15";
+        }
+        //Build date and set input text
+        newdate = currentmonth + "/" + newday + "/" + currentyear;
+        console.log(newdate);
+        $('#id_nextDueDate').val(newdate);
+
+    } else if (cycle == "Semi-Monthly 15th/Last") {
+        //If current day is > 15 set to last, else set to 15th
+        if (currentday > 15){
+            //Find last day of month
+            newday = "28";
+        } else {
+            newday = "15";
+        } 
+        //Build date and set input text
+        newdate = currentmonth + "/" + newday + "/" + currentyear;
+        console.log(newdate);
+        $('#id_nextDueDate').val(newdate);
+    }
+    
+
+}
 
 //Function to show tooltips one at a time
 function showToast(row) {
