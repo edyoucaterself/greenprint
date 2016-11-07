@@ -28,13 +28,13 @@ function autoDate(date_input,cycle_input) {
         //If current day is > 15 set to last, else set to 15th
         if (currentday > 15){
             //Find last day of month
-            newday = "28";
+            var lastday = new Date(currentyear, currentmonth, 0);
+            newday = lastday.getDate();
         } else {
             newday = "15";
         } 
         //Build date and set input text
         newdate = currentmonth + "/" + newday + "/" + currentyear;
-        console.log(newdate);
         $('#id_nextDueDate').val(newdate);
     }
     
