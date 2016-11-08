@@ -343,6 +343,7 @@ class Budget():
     @staticmethod
     def update_data(userid, **kwargs):
         exitmsg = []
+        addedmsg = []
         #exit status
         #1 - Nothing to Build
         #0 - Items Added
@@ -423,8 +424,9 @@ class Budget():
                     data = BudgetData(parentItem = item, effectiveDate = itemduedate,itemAmmount = amount)
                     data.save()
                     exitstatus = 0
-                    exitmsg.append('Added %s: %s - %s - %s' % (name,itemduedate,amount,paycycle))
+                    addedmsg.append('Added %s: %s - %s - %s' % (name,itemduedate,amount,paycycle))
                     continue
+                
             #Semi Monthly cycle, needs special attention    
             elif re.match('Semi-Monthly', paycycle):
                 #Get semi monthly pattern
@@ -434,7 +436,7 @@ class Budget():
                     msg = Budget.update_semi_monthly(item, budget_length)
                 else:
                     msg = Budget.update_semi_monthly(item, budget_length, pattern="first")
-                exitmsg.append(msg)
+                addedmsg.append(msg)
                 continue
             
             #Reoccuring line item, cycle through till budget end        
@@ -474,10 +476,10 @@ class Budget():
                                           itemNote = itemnote)
                         data.save()
                         exitstatus = 0
-                        exitmsg.append('Added %s: %s - %s - %s' % (name,itemduedate,amount,paycycle))
+                        addedmsg.append('Added %s: %s - %s - %s' % (name,itemduedate,amount,paycycle))
                         itemduedate += itemcycle
                     
         #Exit with message
-        return exitstatus, exitmsg
+        return exitstatus, exitmsg, addedmsg
                     
 				 

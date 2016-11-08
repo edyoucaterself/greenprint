@@ -1,7 +1,9 @@
+from datetime import date
+
 from django.test import TestCase
 from django.contrib.auth.models import User
 
-from payplanner.models import BudgetData, Items, BudgetProfile
+from payplanner.models import BudgetData, Items, Cycles, BudgetProfile
 from payplanner.budget import Budget
 
 #Test Budget.update_data for various scenarios
@@ -16,27 +18,78 @@ Test functions
      -Check running total
      -Report errors
 """
-class UpdateBudgetNewUser(TestCase):
+class UpdateBudget(TestCase):
 
-    """Test update_budget function in various different scenarios"""
+    """ Test update_budget function in various different scenarios """
 
-    fixtures = ['base.json',]
-    
-    def setUp(self):
-        self.user = User.objects.get(username='freshuser')
+    fixtures = ['init_user.json', 'init_payplanner.json']
+
+    def test_pay_cycles(self):
         
+        """ Test each paycycle """
 
-    def test_update_data_no_items_no_force(self):
-        """Run update_data as it would be on home call first login"""
+        testuser = User.objects.get(username='freshuser')
+        cycles = Cycles.objects.all()
+        types = ['income', 'expense']
+
+        #Dictionary to hold test values
+        rtotaldct = {'Single': 1000,
+                     'Weekly': 52000,
+                     'Bi-Weekly': 26000,
+                     'Monthly': 12000,
+                     'Quarterly': 4000,
+                     'Annual': 1000,
+                     'Semi-Monthly 1st/15th': 24000,
+                     'Semi-Monthly 15th/Last': 24000
+                     }
+        print("------------------------------------------------------------")             
+        for i in cycles:
+            for itemtype in types:
+                name = ("%s - %s" % (i.cycleName, itemtype))
+                #Create Item
+                newitem = Items.objects.create(user=testuser,
+                                               itemName=name,
+                                               itemType=itemtype,
+                                               category="UpdateBudget Test",
+                                               itemAmount=1000,
+                                               payCycle=i,
+                                               nextDueDate=date.today())
+                #Run update_data
+                exitstat, exitmsg, addedmsg = Budget.update_data(testuser, force=True)
         
-        #Get settings from budget profile
-        try:
-            budgetprofile = BudgetProfile.objects.get(user=self.user)
-            budlen = budgetprofile.budgetLength
-            histlen = budgetprofile.histLength
-        except BudgetProfile.DoesNotExist:
-            budlen = 12
-            histlen = 3
-            
-        status,message = Budget.update_data(request.user,budget_length=budlen)
-        self.assertEqual(status, 1)
+                #Test if BudgetData is correct length and total
+                budgetdata = BudgetData.objects.filter(parentItem=newitem)
+                lineitems = Budget.build(testuser)
+                budgetlen = len(lineitems) - 1
+                item = lineitems[budgetlen]
+                name = item['name']
+                cycle = item['cycle']
+                amount = item['amount']
+                running_total = item['running_total']
+
+                #compare total to rtotaldct
+                if running_total == rtotaldct[cycle.cycleName]:
+                    print("Cycle Passed: %s\t%s\t%s\t%s" % (name, cycle, amount, running_total))
+                else:
+                    print("Cycle Failed: %s\t%s\t%s\t%s" % (name, cycle, amount, running_total))
+
+                print("------------------------------------------------------------")
+
+                #Create new single, future and all items
+                
+                #Call update_line(item object, new data dict)
+
+                #Test if BudgetData is correct length and total
+
+                #Call update_future(item object, new data dict)
+
+                #Test if BudgetData is correct length and total
+
+                #Call update_all(item object, new data dict)
+
+                #Test if BudgetData is correct length and total
+
+                #Erase item and budgetdata
+                BudgetData.objects.filter(parentItem=newitem).delete()
+                Items.objects.filter(user=testuser).delete()
+                

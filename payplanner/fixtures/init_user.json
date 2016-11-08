@@ -1,38 +1,56 @@
 [
 {
-    "model": "auth.user",
-    "pk": 1,
     "fields": {
-        "password": "pbkdf2_sha256$30000$BX1J6NOHxv49$JyBU0k5mFZJMxC3Rql3GtsJBMiCFZ27QrQjfEI8MdcM=",
-        "last_login": "2016-10-22T13:35:09.758Z",
-        "is_superuser": true,
         "username": "root",
         "first_name": "",
         "last_name": "",
-        "email": "agresta_matt@yahoo.com",
-        "is_staff": true,
         "is_active": true,
-        "date_joined": "2016-10-22T13:19:14.930Z",
+        "is_superuser": true,
+        "is_staff": true,
+        "last_login": "2016-11-06T18:22:41.832Z",
         "groups": [],
-        "user_permissions": []
-    }
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$20000$jR24nrPVQToW$SmEMcwPlZhmiRJhLPdMLaMM9HPdUCBI6vZP7NroRV2g=",
+        "email": "agresta_matt@yahoo.com",
+        "date_joined": "2016-10-22T13:19:14.930Z"
+    },
+    "model": "auth.user",
+    "pk": 1
 },
 {
-    "model": "auth.user",
-    "pk": 2,
     "fields": {
-        "password": "pbkdf2_sha256$30000$KOObGfOYJ0Eq$WQi+oLr13ObKVqcZLKwMZCvdU8iEJmwUOEKnj+XFebs=",
-        "last_login": "2016-10-22T13:34:54.876Z",
-        "is_superuser": false,
         "username": "freshuser",
         "first_name": "",
         "last_name": "",
-        "email": "test@test.com",
-        "is_staff": false,
         "is_active": true,
-        "date_joined": "2016-10-22T13:34:54.571Z",
+        "is_superuser": false,
+        "is_staff": false,
+        "last_login": "2016-10-25T17:25:04.219Z",
         "groups": [],
-        "user_permissions": []
-    }
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$20000$RH6d6S0PnN6X$cAYVoPElr9/DGjGHe+yyc/N+ATqIlhdIllhUvlb840o=",
+        "email": "test@test.com",
+        "date_joined": "2016-10-22T13:34:54.571Z"
+    },
+    "model": "auth.user",
+    "pk": 2
+},
+{
+    "fields": {
+        "username": "magresta",
+        "first_name": "Matt",
+        "last_name": "Agresta",
+        "is_active": true,
+        "is_superuser": false,
+        "is_staff": false,
+        "last_login": "2016-10-26T02:10:45.128Z",
+        "groups": [],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$20000$YFpXMDv4Sb2e$P108em4sbkJ0M2Pf/Bl+BF+hZNUqIibk919yxY0S/zY=",
+        "email": "agresta_matt@yahoo.com",
+        "date_joined": "2016-10-26T02:10:44.809Z"
+    },
+    "model": "auth.user",
+    "pk": 5
 }
 ]
