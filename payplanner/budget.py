@@ -84,7 +84,9 @@ class Budget():
     #Function to update all budgetdata lines
     @staticmethod
     def update_all(line,newdata):
-        #Remove all budgetdata lines with parent
+
+        """Update all budgetdata items with line parentItem """
+        
         a = newdata['parentItem']
         parItem = Items.objects.get(pk=newdata['parentItem'])
         BudgetData.objects.filter(parentItem = parItem).delete()
@@ -92,6 +94,7 @@ class Budget():
         parItem.itemAmount = newdata['itemAmmount']
         parItem.itemNote = newdata['itemNote']
         parItem.save()
+        return parItem
         
     #Function to update BudgetData Future Rows
     @staticmethod
