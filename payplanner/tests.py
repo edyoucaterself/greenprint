@@ -57,10 +57,10 @@ class UpdateBudget(TestCase):
                 #Run update_data
                 exitstat, exitmsg, addedmsg = Budget.update_data(testuser, force=True)
         
-                #Test if BudgetData is correct length and total
-                budgetdata = BudgetData.objects.filter(parentItem=newitem)
-                lineitems = Budget.build(testuser)
+                #Build budget
+                tstmsg, lineitems = Budget.build(testuser,test=True)
                 budgetlen = len(lineitems) - 1
+                #Get last item in budget
                 item = lineitems[budgetlen]
                 name = item['name']
                 cycle = item['cycle']
@@ -68,10 +68,32 @@ class UpdateBudget(TestCase):
                 running_total = item['running_total']
 
                 #compare total to rtotaldct
-                if running_total == rtotaldct[cycle.cycleName]:
-                    print("Cycle Passed: %s\t%s\t%s\t%s" % (name, cycle, amount, running_total))
+                #Add try clause incase of mismatch
+                #Test distance from 0 (absolute value?)
+                if itemtype == 'expense':
+                    testtotal = rtotaldct[cycle.cycleName] * -1
                 else:
-                    print("Cycle Failed: %s\t%s\t%s\t%s" % (name, cycle, amount, running_total))
+                    testtotal = rtotaldct[cycle.cycleName]
+
+                #Get absolute value
+                running_total = abs(running_total)
+                testtotal = abs(testtotal)
+                if running_total >= testtotal:
+                    print("Cycle Passed: %s\t%s\t%s\t%s" % (name, cycle, testtotal, running_total))
+                else:
+                    beg_date, end_date = tstmsg
+                    print("Cycle Failed: Name:%s\tTest Total:%s\tRunning Total:%s\tBeg. Date:%s\tEnd Date:%s\tExit Msg:%s" % (name, testtotal, running_total, beg_date, end_date, exitmsg))
+                    x = len(addedmsg)
+                    for m in addedmsg:
+                        print(m)
+                    """
+                    for li in lineitems:
+                        j = li['name']
+                        k = li['itemdate']
+                        l = li['amount']
+                        m = li['running_total']
+                        print("%s:%s:%s:%s" % (j,k,l,m))
+                    """
 
                 print("------------------------------------------------------------")
 

@@ -269,7 +269,12 @@ class Budget():
             budget_output.append(lineitem)
             #print('%s %s\t%s\t\t%s\t\t%s' % (linenum,itemdate,name,amount,running_total))
             linenum +=1
-        return budget_output
+
+        if 'test' in kwargs:
+            tstmsg = (beg_date, end_date)
+            return tstmsg, budget_output
+        else:
+            return budget_output
 
 
     #Method to update semi monthly data
@@ -301,7 +306,8 @@ class Budget():
         #for each month in budget length
         i = 0
         month = startmonth
-        while i < (budgetlength):
+        while i <= (budgetlength):
+            exitmsg.append("Counter: %s\t B_length%s" % (i, budgetlength))
             #Get date pattern
             if pattern == 'last':
                 first,sec = monthrange(year, month)
@@ -454,11 +460,12 @@ class Budget():
                     itemcycle = relativedelta(months=3)
                 else:
                     itemcycle = relativedelta(days=cyclength)
-	
+	        exitmsg.append(end_date)
                 while itemduedate < end_date:
                     #Break loop, go to next item if due date is past budget end date
                     if itemduedate > itemenddate:
-                            break
+                        addedmsg.append("Out of Range: %s - %s" % (itemduedate, itemenddate))
+                        break
                     #If date is on skip list increase duedate and continue
                     if itemduedate in skiplist:
                         itemduedate += itemcycle
@@ -478,7 +485,7 @@ class Budget():
                         exitstatus = 0
                         addedmsg.append('Added %s: %s - %s - %s' % (name,itemduedate,amount,paycycle))
                         itemduedate += itemcycle
-                    
+                addedmsg.append("Out of Range: Due:%s - End:%s" % (itemduedate, end_date))
         #Exit with message
         return exitstatus, exitmsg, addedmsg
                     
