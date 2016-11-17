@@ -170,10 +170,14 @@ class Budget():
     #Function to update BudgetData line item
     @staticmethod
     def update_line(line, newdata):
+        
         #Get Parent Item
         a = newdata['parentItem']
         parItem = Items.objects.get(pk=newdata['parentItem'])
         cycle = parItem.payCycle.cycleName
+
+        #Delete line
+        del_item = line.delete()
         
         #Add Date to Items.skipDate
         skipdate = Budget.json_to_date(parItem.skiplst)
@@ -195,19 +199,16 @@ class Budget():
             newparent.skiplst = None
             newparent.nextDueDate = line.effectiveDate
             newparent.save()
-            line.parentItem = newparent
             
         #If single entry, modify the parent item
         else:
             parItem.itemAmount = newdata['itemAmmount']
             parItem.itemNote = newdata['itemNote']
             parItem.save()
-        
-        #Alter BudgetData row: parentItem(newly created above), itemAmmount(from newdata)
-        line.itemAmmount = newdata['itemAmmount']
-        line.itemNote = newdata['itemNote']
-        line.save()
-
+            #Alter BudgetData row: parentItem(newly created above), itemAmmount(from newdata)
+            line.itemAmmount = newdata['itemAmmount']
+            line.itemNote = newdata['itemNote']
+            line.save()
     
     #Method to build budget with Budget Data
     @staticmethod
@@ -310,7 +311,6 @@ class Budget():
         i = 0
         month = startmonth
         while i <= (budgetlength):
-            exitmsg.append("Counter: %s\t B_length%s" % (i, budgetlength))
             #Get date pattern
             if pattern == 'last':
                 first,sec = monthrange(year, month)
@@ -326,6 +326,7 @@ class Budget():
 
                 #If date is on skip list increase duedate and continue
                 if adjusteddate in skiplist:
+                    #print("Skip Date Found for %s %s %s" % (name,amount,adjusteddate))
                     continue
                 
                 #Adjusted date needs to be greater than itemduedate and less than enddate
@@ -336,7 +337,7 @@ class Budget():
                 if not BudgetData.objects.values().filter(parentItem = item,effectiveDate = adjusteddate):
                     data = BudgetData(parentItem = item, effectiveDate = adjusteddate,itemAmmount = amount)
                     data.save()
-                    exitmsg.append('Added %s: %s - %s - %s' % (name,adjusteddate,amount,paycycle))
+                    exitmsg.append('Added %s: %s: %s - %s - %s' % (data.id, name,adjusteddate,amount,paycycle))
 
             #Increment Months and Counter
             if month == 12:

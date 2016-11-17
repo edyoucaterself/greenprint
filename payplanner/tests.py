@@ -26,6 +26,75 @@ class UpdateBudget(TestCase):
 
     fixtures = ['init_user.json', 'init_payplanner.json']
 
+    @staticmethod
+    def rand_item(testuser, budgetlen):
+
+        """ Function to return random itemid for specified user """
+        
+                #Create new single, future and all items
+        #If not single pick random line
+        if budgetlen != 0:    
+            #Pick random number within range and grab item
+            min_id = BudgetData.objects.filter(parentItem__user=testuser).aggregate(Min('id'))
+            max_id = BudgetData.objects.filter(parentItem__user=testuser).aggregate(Max('id'))
+            item_id = randrange(min_id['id__min'],max_id['id__max'])
+        else:
+            item_id = BudgetData.objects.filter(parentItem__user=testuser).values_list('id')
+            item_id = item_id[0]
+            item_id = item_id[0]
+        line = BudgetData.objects.get(pk=item_id)
+        return line
+    
+    @staticmethod
+    def length_total_check(testuser,testparam, **kwargs):
+
+        """Test if User Budget is correct length and total"""
+        
+        ##Grab test type from kwargs
+        if 'test' in kwargs:
+            testtype = kwargs['test']
+        else:
+            testtype = 'Initial Build'
+
+        if 'no_update' in kwargs:
+            no_update = kwargs['no_update']
+        else:
+            no_update = False
+            
+        ##Outputs - Pass/Fail correct length and total
+        
+        #Run update_data
+        exitstat, exitmsg, addedmsg = ('Update Data Skipped...', 'Update Data Skipped...', 'Update Data Skipped...')    
+        if not no_update:
+            exitstat, exitmsg, addedmsg = Budget.update_data(testuser, force=True)
+
+        #Build budget
+        tstmsg, lineitems = Budget.build(testuser,test=True)
+        budgetlen = len(lineitems) - 1
+        #Get last item in budget
+        item = lineitems[budgetlen]
+        name = item['name']
+        cycle = item['cycle']
+        amount = item['amount']
+        running_total = item['running_total']
+
+        #compare total to rtotaldct
+        testtotal = testparam[testtype]
+        #Get absolute value
+        running_total = abs(running_total)
+        testtotal = abs(testtotal)
+        #print("TEST %s: %s" % (cycle.cycleName,running_total))
+        
+        if running_total == testtotal:
+            print("%s Passed: %s %s Test: %s == %s" % (testtype, cycle.cycleName, name, running_total, testtotal))
+            status = True
+        else:
+            beg_date, end_date = tstmsg
+            print("%s Failed: %s %s Test: %s != %s" % (testtype, cycle.cycleName, name, running_total, testtotal))
+            status = False
+
+        return addedmsg, budgetlen, status, lineitems
+
     def test_pay_cycles(self):
         
         """ Test each paycycle """
@@ -35,16 +104,17 @@ class UpdateBudget(TestCase):
         types = ['income', 'expense']
 
         #Dictionary to hold test values
-        rtotaldct = {'Single': 1000,
-                     'Weekly': 52000,
-                     'Bi-Weekly': 26000,
-                     'Monthly': 12000,
-                     'Quarterly': 4000,
-                     'Annual': 1000,
-                     'Semi-Monthly 1st/15th': 24000,
-                     'Semi-Monthly 15th/Last': 24000
-                     }
-        print("------------------------------------------------------------")             
+        testparamdct = {'Single': {'Initial Build': 1000,  "Update All": 1500, "Update Single": 2000},
+                        'Weekly': {'Initial Build': 53000, "Update All": 79500, "Update Single": 80000},
+                        'Bi-Weekly': {'Initial Build': 27000, "Update All": 40500, "Update Single": 41000},
+                        'Monthly': {'Initial Build': 12000, "Update All": 18000, "Update Single": 18500},
+                        'Quarterly': {'Initial Build': 4000, "Update All": 6000, "Update Single": 6500},
+                        'Annual': {'Initial Build': 1000, "Update All": 1500, "Update Single": 2000},
+                        'Semi-Monthly 1st/15th': {'Initial Build': 24000, "Update All": 36000, "Update Single": 36500},
+                        'Semi-Monthly 15th/Last': {'Initial Build': 24000, "Update All": 36000, "Update Single": 36500},
+                        }
+        print("------------------------------------------------------------")
+        
         for i in cycles:
             for itemtype in types:
                 name = ("%s - %s" % (i.cycleName, itemtype))
@@ -56,79 +126,33 @@ class UpdateBudget(TestCase):
                                                itemAmount=1000,
                                                payCycle=i,
                                                nextDueDate=date.today())
-                #Run update_data
-                exitstat, exitmsg, addedmsg = Budget.update_data(testuser, force=True)
-        
-                #Build budget
-                tstmsg, lineitems = Budget.build(testuser,test=True)
-                budgetlen = len(lineitems) - 1
-                #Get last item in budget
-                item = lineitems[budgetlen]
-                name = item['name']
-                cycle = item['cycle']
-                amount = item['amount']
-                running_total = item['running_total']
+                #Test item creation
+                testparam = testparamdct[i.cycleName]
+                addedmsg, budgetlen, status, lineitems = UpdateBudget.length_total_check(testuser, testparam, test="Initial Build")
 
-                #compare total to rtotaldct
-                #Add try clause incase of mismatch
-                #Test distance from 0 (absolute value?)
-                if itemtype == 'expense':
-                    testtotal = rtotaldct[cycle.cycleName] * -1
-                else:
-                    testtotal = rtotaldct[cycle.cycleName]
-
-                #Get absolute value
-                running_total = abs(running_total)
-                testtotal = abs(testtotal)
-                if running_total >= testtotal:
-                    print("Cycle Build Passed: %s" % name)
-                else:
-                    beg_date, end_date = tstmsg
-                    print("Cycle Build Failed: Name:%s\tTest Total:%s\tRunning Total:%s\tBeg. Date:%s\tEnd Date:%s\tExit Msg:%s" % (name, testtotal, running_total, beg_date, end_date, exitmsg))
-                    x = len(addedmsg)
-                    for m in addedmsg:
-                        print(m)
-                    """
-                    for li in lineitems:
-                        j = li['name']
-                        k = li['itemdate']
-                        l = li['amount']
-                        m = li['running_total']
-                        print("%s:%s:%s:%s" % (j,k,l,m))
-                    """
-
-                
-
-                #Create new single, future and all items
-                #If not single pick random line
-                if budgetlen != 0:    
-                    #Pick random number within range and grab item
-                    min_id = BudgetData.objects.filter(parentItem__user=testuser).aggregate(Min('id'))
-                    max_id = BudgetData.objects.filter(parentItem__user=testuser).aggregate(Max('id'))
-                    item_id = randrange(min_id['id__min'],max_id['id__max'])
-                else:
-                    item_id = BudgetData.objects.filter(parentItem__user=testuser).values_list('id')
-                    item_id = item_id[0]
-                    item_id = item_id[0]
-
-                #Create object and information for update
-                all_line = BudgetData.objects.get(pk=item_id)
-                all_parent = all_line.parentItem.id
-                all_newdata = {"parentItem": all_parent, "itemAmmount":1500, "itemNote":"All Items Update"}
+                #Create objects and information for updates
+                line = UpdateBudget.rand_item(testuser, budgetlen)
+                parent = line.parentItem.id
+                newdata = {"parentItem": parent, "itemAmmount":1500, "itemNote":"All Items Update"}
                 
                 #Call update_all(item object, new data dict)
-                new_par = Budget.update_all(all_line, all_newdata)
-
-                #Test difference, should be 500
-                if new_par.itemAmount - all_line.itemAmmount != 500:
-                    print("Update All Failed on item %s" % all_line)
-                else:
-                    print("Update All Succeeced on item %s" % all_line)
+                new_par = Budget.update_all(line, newdata)
+                    
                 #Test if BudgetData is correct length and total
-                
+                testparam = testparamdct[i.cycleName]    
+                addedmsg, budgetlen, status, lineitems = UpdateBudget.length_total_check(testuser, testparam, test="Update All")
+                    
                 #Call update_line(item object, new data dict)
-
-                #Test if BudgetData is correct length and total
+                line = UpdateBudget.rand_item(testuser, budgetlen)
+                newdata['itemAmmount'] += 500
+                Budget.update_line(line, newdata)
+                addedmsg, budgetlen, status, lineitems = UpdateBudget.length_total_check(testuser, testparam, test="Update Single")
+                '''
+                for w in addedmsg:
+                    print(w)
+                for w in lineitems:
+                    print("%s:%s:%s:%s" % (w['itemdate'], w['name'],w['amount'],w['running_total']))
+                '''
 
                 #Call update_future(item object, new data dict)
 
