@@ -27,25 +27,6 @@ class UpdateBudget(TestCase):
     fixtures = ['init_user.json', 'init_payplanner.json']
 
     @staticmethod
-    def rand_item(testuser, budgetlen):
-
-        """ Function to return random itemid for specified user """
-        
-                #Create new single, future and all items
-        #If not single pick random line
-        if budgetlen != 0:    
-            #Pick random number within range and grab item
-            min_id = BudgetData.objects.filter(parentItem__user=testuser).aggregate(Min('id'))
-            max_id = BudgetData.objects.filter(parentItem__user=testuser).aggregate(Max('id'))
-            item_id = randrange(min_id['id__min'],max_id['id__max'])
-        else:
-            item_id = BudgetData.objects.filter(parentItem__user=testuser).values_list('id')
-            item_id = item_id[0]
-            item_id = item_id[0]
-        line = BudgetData.objects.get(pk=item_id)
-        return line
-    
-    @staticmethod
     def length_total_check(testuser,testparam, **kwargs):
 
         """Test if User Budget is correct length and total"""
@@ -104,14 +85,14 @@ class UpdateBudget(TestCase):
         types = ['income', 'expense']
 
         #Dictionary to hold test values
-        testparamdct = {'Single': {'Initial Build': 1000,  "Update All": 1500, "Update Single": 2000},
-                        'Weekly': {'Initial Build': 53000, "Update All": 79500, "Update Single": 80000},
-                        'Bi-Weekly': {'Initial Build': 27000, "Update All": 40500, "Update Single": 41000},
-                        'Monthly': {'Initial Build': 12000, "Update All": 18000, "Update Single": 18500},
-                        'Quarterly': {'Initial Build': 4000, "Update All": 6000, "Update Single": 6500},
-                        'Annual': {'Initial Build': 1000, "Update All": 1500, "Update Single": 2000},
-                        'Semi-Monthly 1st/15th': {'Initial Build': 24000, "Update All": 36000, "Update Single": 36500},
-                        'Semi-Monthly 15th/Last': {'Initial Build': 24000, "Update All": 36000, "Update Single": 36500},
+        testparamdct = {'Single': {'Initial Build': 1000,  "Update All": 1500, "Update Single": 2000, "Update Future": 2000},
+                        'Weekly': {'Initial Build': 53000, "Update All": 79500, "Update Single": 80000, "Update Future": 2000},
+                        'Bi-Weekly': {'Initial Build': 27000, "Update All": 40500, "Update Single": 41000, "Update Future": 2000},
+                        'Monthly': {'Initial Build': 12000, "Update All": 18000, "Update Single": 18500, "Update Future": 2000},
+                        'Quarterly': {'Initial Build': 4000, "Update All": 6000, "Update Single": 6500, "Update Future": 2000},
+                        'Annual': {'Initial Build': 1000, "Update All": 1500, "Update Single": 2000, "Update Future": 2000},
+                        'Semi-Monthly 1st/15th': {'Initial Build': 24000, "Update All": 36000, "Update Single": 36500, "Update Future": 2000},
+                        'Semi-Monthly 15th/Last': {'Initial Build': 24000, "Update All": 36000, "Update Single": 36500, "Update Future": 2000},
                         }
         print("------------------------------------------------------------")
         
@@ -131,7 +112,7 @@ class UpdateBudget(TestCase):
                 addedmsg, budgetlen, status, lineitems = UpdateBudget.length_total_check(testuser, testparam, test="Initial Build")
 
                 #Create objects and information for updates
-                line = UpdateBudget.rand_item(testuser, budgetlen)
+                line = BudgetData.objects.filter(parentItem__user=testuser).order_by("?").first()
                 parent = line.parentItem.id
                 newdata = {"parentItem": parent, "itemAmmount":1500, "itemNote":"All Items Update"}
                 
@@ -143,7 +124,7 @@ class UpdateBudget(TestCase):
                 addedmsg, budgetlen, status, lineitems = UpdateBudget.length_total_check(testuser, testparam, test="Update All")
                     
                 #Call update_line(item object, new data dict)
-                line = UpdateBudget.rand_item(testuser, budgetlen)
+                line = BudgetData.objects.filter(parentItem__user=testuser).order_by("?").first()
                 newdata['itemAmmount'] += 500
                 Budget.update_line(line, newdata)
                 addedmsg, budgetlen, status, lineitems = UpdateBudget.length_total_check(testuser, testparam, test="Update Single")
@@ -155,8 +136,11 @@ class UpdateBudget(TestCase):
                 '''
 
                 #Call update_future(item object, new data dict)
-
+                line = BudgetData.objects.filter(parentItem__user=testuser).order_by("?").first()
+                newdata['itemAmmount'] += 500
+                Budget.update_line(line, newdata)
                 #Test if BudgetData is correct length and total
+                addedmsg, budgetlen, status, lineitems = UpdateBudget.length_total_check(testuser, testparam, test="Update Future")
 
                 #Erase item and budgetdata
                 BudgetData.objects.filter(parentItem=newitem).delete()
