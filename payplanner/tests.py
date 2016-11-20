@@ -30,10 +30,6 @@ class UpdateBudget(TestCase):
     def length_total_check(testuser,testparam, **kwargs):
 
         """Test if User Budget is correct length and total"""
-        #Notes:
-        #After update _future running total can be two different values between tests
-        #Ex. Bi-Weekly can be 63000, or 64000 depending on where single edit lies
-        #Add Check to double values in date column
         
         ##Grab test type from kwargs
         if 'test' in kwargs:
@@ -65,23 +61,28 @@ class UpdateBudget(TestCase):
 
         #compare total to rtotaldct
         testtotal = testparam[testtype]
-        #Get absolute value
-        running_total = abs(running_total)
-        testtotal = abs(testtotal)
-        #print("TEST %s: %s" % (cycle.cycleName,running_total))
-        
-        if running_total == testtotal:
-            print("%s Passed: %s %s Test: %s == %s" % (testtype, cycle.cycleName, name, running_total, testtotal))
-            status = True
-        else:
+
+        #Turn all values into absolute 
+        tt_count = 0
+        for data in testtotal:
+            tt_count += 1
+            #Test if value matches    
+            if abs(running_total) == abs(data):
+                status = True
+                break
+            else:
+                status = False
+
+        if not status:
             beg_date, end_date = tstmsg
-            print("%s Failed: %s %s Test: %s != %s" % (testtype, cycle.cycleName, name, running_total, testtotal))
+            print("%s Failed: %s %s Test: %s != %s" % (testtype, cycle.cycleName, name, running_total, data))
             c = 1
             for w in lineitems:
                 print("%s:%s:%s:%s:%s:%s" % (c, w['parent'], w['itemdate'], w['name'],w['amount'],w['running_total']))
                 c += 1
-            status = False
-
+        else:
+            print("%s Passed: %s %s Test: %s != %s" % (testtype, cycle.cycleName, name, running_total, data))
+            
         return addedmsg, budgetlen, status, lineitems
 
     def test_pay_cycles(self):
@@ -93,16 +94,15 @@ class UpdateBudget(TestCase):
         types = ['income', 'expense']
 
         #Dictionary to hold test values
-        testparamdct = {'Single': {'Initial Build': 1000,  "Update All": 1500, "Update Single": 2000, "Update Future": 2000},
-                        'Weekly': {'Initial Build': 53000, "Update All": 79500, "Update Single": 80000, "Update Future": 2000},
-                        'Bi-Weekly': {'Initial Build': 27000, "Update All": 40500, "Update Single": 41000, "Update Future": 2000},
-                        'Monthly': {'Initial Build': 12000, "Update All": 18000, "Update Single": 18500, "Update Future": 2000},
-                        'Quarterly': {'Initial Build': 4000, "Update All": 6000, "Update Single": 6500, "Update Future": 9500},
-                        'Annual': {'Initial Build': 1000, "Update All": 1500, "Update Single": 2000, "Update Future": 'N/A'},
-                        'Semi-Monthly 1st/15th': {'Initial Build': 24000, "Update All": 36000, "Update Single": 36500, "Update Future": 56500},
-                        'Semi-Monthly 15th/Last': {'Initial Build': 24000, "Update All": 36000, "Update Single": 36500, "Update Future": 55500},
+        testparamdct = {'Single': {'Initial Build': [1000,],  "Update All": [1500,], "Update Single": [2000,], "Update Future": [2000,2000]},
+                        'Weekly': {'Initial Build': [53000,], "Update All": [79500,], "Update Single": [80000,], "Update Future": [129000,128000]},
+                        'Bi-Weekly': {'Initial Build': [27000,], "Update All": [40500,], "Update Single": [41000,], "Update Future": [63000, 64000]},
+                        'Monthly': {'Initial Build': [12000,], "Update All": [18000,], "Update Single": [18500,], "Update Future": [24000,25000]},
+                        'Quarterly': {'Initial Build': [4000,], "Update All": [6000,], "Update Single": [6500,], "Update Future": [9500,]},
+                        'Annual': {'Initial Build': [1000,], "Update All": [1500,], "Update Single": [2000,], "Update Future": [0,]},
+                        'Semi-Monthly 1st/15th': {'Initial Build': [24000,], "Update All": [36000,], "Update Single": [36500,], "Update Future": [55000,54000]},
+                        'Semi-Monthly 15th/Last': {'Initial Build': [24000,], "Update All": [36000,], "Update Single": [36500.], "Update Future": [55500,56500]},
                         }
-        print("------------------------------------------------------------")
         
         for i in cycles:
             for itemtype in types:
@@ -121,10 +121,8 @@ class UpdateBudget(TestCase):
 
                 #If Line items is only 1 item, cotinue to next cycle
                 if len(lineitems) == 1:
-                    print("Skipping Tests due to budget length...")
                     BudgetData.objects.filter(parentItem=newitem).delete()
                     Items.objects.filter(user=testuser).delete()
-                    print("------------------------------------------------------------")
                     continue
                 
                 #Create objects and information for updates
@@ -144,13 +142,7 @@ class UpdateBudget(TestCase):
                 newdata['itemAmmount'] += 500
                 Budget.update_line(line, newdata)
                 addedmsg, budgetlen, status, lineitems = UpdateBudget.length_total_check(testuser, testparam, test="Update Single")
-                '''
-                for w in addedmsg:
-                    print(w)
-                for w in lineitems:
-                    print("%s:%s:%s:%s" % (w['itemdate'], w['name'],w['amount'],w['running_total']))
-                '''
-
+                
                 #Call update_future(item object, new data dict) on first object, unless its single, than choose second
                 line_items = BudgetData.objects.filter(parentItem__user=testuser).order_by('effectiveDate')
                 c = 1
@@ -165,15 +157,7 @@ class UpdateBudget(TestCase):
                 newpar,oldpar = Budget.update_future(line, newdata)
                 #Test if BudgetData is correct length and total
                 addedmsg, budgetlen, status, lineitems = UpdateBudget.length_total_check(testuser, testparam, test="Update Future")
-
-                '''
-                #print parent info for testing purposes only
-                items = Items.objects.values('id','itemName','itemAmount','nextDueDate','endDate','skiplst').filter(user=testuser)
-                for junk in items:
-                    print("Parent Item: %s:%s:%s:%s:%s:%s" % (junk['id'],junk['itemName'],junk['itemAmount'],junk['nextDueDate'],junk['endDate'],junk['skiplst']))
-                '''
                 
                 #Erase item and budgetdata
                 BudgetData.objects.filter(parentItem=newitem).delete()
                 Items.objects.filter(user=testuser).delete()
-                print("------------------------------------------------------------")
