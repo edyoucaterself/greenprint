@@ -101,17 +101,15 @@ class Budget():
     def update_future(line,newdata):
 
         """ Update item from certain date and on """
-        
+        #Monthly, Semi Monthly 1st/15 not starting at current line
+
         #Add End Date to Parent Item
-        a = newdata['parentItem']
         parItem = Items.objects.get(pk=newdata['parentItem'])
-        
         #Copy parent to new parent
         newparent = parItem
-        
         #Remove All BudgetData rows of old parent 
-        BudgetData.objects.filter(parentItem = parItem).delete()
-
+        a = BudgetData.objects.filter(parentItem = parItem).delete()
+        a = BudgetData.objects.filter(parentItem = parItem)
         #Get paycycle from parent
         paycycle = parItem.payCycle.cycleName
         
@@ -120,7 +118,6 @@ class Budget():
         if re.match('Semi-Monthly', paycycle):
             #Get effectiveDate 
             effDate = line.effectiveDate
-            
             #Get semi monthly pattern
             cycle,pattern = paycycle.split()
             if effDate.month != 1:
@@ -134,7 +131,7 @@ class Budget():
                 if effDate.day == 15:
                     first,last = monthrange(effDate.year, effDate.month)
                     enddate = effDate.replace(month=prevmonth)
-                    enddate = endate.replace(day=last)
+                    enddate = enddate.replace(day=last)
                 #else set enddate.day to 15
                 else:
                     enddate = effDate.replace(day=15)
@@ -146,7 +143,7 @@ class Budget():
                 #else set enddate.day to 15 of last month
                 else:
                     enddate = effDate.replace(month=prevmonth)
-                    enddate = endate.replace(day=1)
+                    enddate = enddate.replace(day=1)
             
         else:        
             cyclength = parItem.payCycle.cycleLength
@@ -165,7 +162,7 @@ class Budget():
         newparent.endDate = None
         newparent.save()
         line.delete()
-        return type(newparent),type(parItem)
+        return newparent, parItem
     
     #Function to update BudgetData line item
     @staticmethod
