@@ -27,7 +27,25 @@ class UpdateBudget(TestCase):
     fixtures = ['init_user.json', 'init_payplanner.json']
 
     @staticmethod
-    def length_total_check(self, testuser,testparam, **kwargs):
+    def duplicate_check(self, lineitems):
+
+        """  Check lineitems for duplicates """
+
+        for d in lineitems:
+            #Grab Date
+            date = d['itemdate']
+            found_dates = BudgetData.objects.filter(parentItem__user=self.testuser, effectiveDate=date)
+            #If more than one occurance of date found throw exception
+            try:
+                self.assertEquals(found_dates.count(),1)
+            except AssertionError:
+                print("Duplicate Found!\n")
+                for o in found_dates:
+                    print("%s - %s - %s" % (o.parentItem.itemName,o.effectiveDate,o.itemAmmount))
+            
+                    
+    @staticmethod
+    def length_total_check(self, testparam, **kwargs):
 
         """Test if User Budget is correct length and total"""
 
@@ -51,10 +69,10 @@ class UpdateBudget(TestCase):
         #Run update_data
         exitstat, exitmsg, addedmsg = ('Update Data Skipped...', 'Update Data Skipped...', 'Update Data Skipped...')    
         if not no_update:
-            exitstat, exitmsg, addedmsg = Budget.update_data(testuser, force=True)
+            exitstat, exitmsg, addedmsg = Budget.update_data(self.testuser, force=True)
 
         #Build budget
-        tstmsg, lineitems = Budget.build(testuser,test=True)
+        tstmsg, lineitems = Budget.build(self.testuser,test=True)
         budgetlen = len(lineitems) - 1
         
         #Get last item in budget
@@ -82,7 +100,7 @@ class UpdateBudget(TestCase):
         
         """ Test each paycycle """
 
-        testuser = User.objects.get(username='freshuser')
+        self.testuser = User.objects.get(username='freshuser')
         cycles = Cycles.objects.all()
         types = ['income', 'expense']
 
@@ -93,7 +111,7 @@ class UpdateBudget(TestCase):
                         'Monthly': {'Initial Build': [12000,], "Update All": [18000,], "Update Single": [18500,], "Update Future": [24000,25000,26500]},
                         'Quarterly': {'Initial Build': [4000,], "Update All": [6000,], "Update Single": [6500,], "Update Future": [9500,]},
                         'Annual': {'Initial Build': [1000,], "Update All": [1500,], "Update Single": [2000,], "Update Future": [0,]},
-                        'Semi-Monthly 1st/15th': {'Initial Build': [24000,], "Update All": [36000,], "Update Single": [36500,], "Update Future": [55000,54000]},
+                        'Semi-Monthly 1st/15th': {'Initial Build': [24000,], "Update All": [36000,], "Update Single": [36500,], "Update Future": [55000,54000,56500]},
                         'Semi-Monthly 15th/Last': {'Initial Build': [24000,], "Update All": [36000,], "Update Single": [36500.], "Update Future": [55500,56500]},
                         }
         
@@ -101,7 +119,7 @@ class UpdateBudget(TestCase):
             for itemtype in types:
                 name = ("%s - %s" % (i.cycleName, itemtype))
                 #Create Item
-                newitem = Items.objects.create(user=testuser,
+                newitem = Items.objects.create(user=self.testuser,
                                                itemName=name,
                                                itemType=itemtype,
                                                category="UpdateBudget Test",
@@ -110,16 +128,19 @@ class UpdateBudget(TestCase):
                                                nextDueDate=date.today())
                 #Test item creation
                 testparam = testparamdct[i.cycleName]
-                addedmsg, budgetlen, status, lineitems = UpdateBudget.length_total_check(self, testuser, testparam, test="Initial Build")
+                addedmsg, budgetlen, status, lineitems = UpdateBudget.length_total_check(self, testparam, test="Initial Build")
 
+                #Test for duplicates
+                self.duplicate_check(self, lineitems)
+                
                 #If Line items is only 1 item, cotinue to next cycle
                 if len(lineitems) == 1:
                     BudgetData.objects.filter(parentItem=newitem).delete()
-                    Items.objects.filter(user=testuser).delete()
+                    Items.objects.filter(user=self.testuser).delete()
                     continue
                 
                 #Create objects and information for updates
-                line = BudgetData.objects.filter(parentItem__user=testuser).order_by("?").first()
+                line = BudgetData.objects.filter(parentItem__user=self.testuser).order_by("?").first()
                 parent = line.parentItem.id
                 newdata = {"parentItem": parent, "itemAmmount":1500, "itemNote":"All Items Update"}
 
@@ -128,16 +149,20 @@ class UpdateBudget(TestCase):
                     
                 #Test if BudgetData is correct length and total
                 testparam = testparamdct[i.cycleName]    
-                addedmsg, budgetlen, status, lineitems = UpdateBudget.length_total_check(self, testuser, testparam, test="Update All")
-                    
+                addedmsg, budgetlen, status, lineitems = UpdateBudget.length_total_check(self, testparam, test="Update All")
+
+                #Test for duplicates
+                self.duplicate_check(self, lineitems)    
                 #Call update_line(item object, new data dict)
-                line = BudgetData.objects.filter(parentItem__user=testuser).order_by("?").first()
+                line = BudgetData.objects.filter(parentItem__user=self.testuser).order_by("?").first()
                 newdata['itemAmmount'] += 500
                 Budget.update_line(line, newdata)
-                addedmsg, budgetlen, status, lineitems = UpdateBudget.length_total_check(self, testuser, testparam, test="Update Single")
-                
+                addedmsg, budgetlen, status, lineitems = UpdateBudget.length_total_check(self, testparam, test="Update Single")
+
+                #Test for duplicates
+                self.duplicate_check(self, lineitems)
                 #Call update_future(item object, new data dict) on first object, unless its single, than choose second
-                line_items = BudgetData.objects.filter(parentItem__user=testuser).order_by('effectiveDate')
+                line_items = BudgetData.objects.filter(parentItem__user=self.testuser).order_by('effectiveDate')
                 c = 1
                 if len(line_items) < 5:
                     line = line_items[0]
@@ -149,8 +174,10 @@ class UpdateBudget(TestCase):
                 newdata['itemAmmount'] += 500
                 newpar,oldpar = Budget.update_future(line, newdata)
                 #Test if BudgetData is correct length and total
-                addedmsg, budgetlen, status, lineitems = UpdateBudget.length_total_check(self, testuser, testparam, test="Update Future")
-                
+                addedmsg, budgetlen, status, lineitems = UpdateBudget.length_total_check(self, testparam, test="Update Future")
+
+                #Test for duplicates
+                self.duplicate_check(self, lineitems)
                 #Erase item and budgetdata
                 BudgetData.objects.filter(parentItem=newitem).delete()
-                Items.objects.filter(user=testuser).delete()
+                Items.objects.filter(user=self.testuser).delete()
