@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load bootstrap3 %}
 {% comment %}
 Login
 Author: Matt Agresta
@@ -10,22 +9,26 @@ Created on: 9/20/2016
 <title>PayPlanner Login</title>
 {% endblock %}
 {% block content %}
-{%if form.errors %}
-    <p> Invalid username/password combination, please try again </p>
+<div class="col s12 m4 push-m4">
+  <div class="card">
+   <div class="card-content">
+    {%if form.errors %}
+      <p> Invalid username/password combination, please try again </p>
     {% endif %}
-    <div class="center">
-    <div class="form-group">
-    <h1>Please sign in</h1>
+      <span class="card-title">Please sign in</span>
       <form action="{% url 'login' %}" method="post">
         {% csrf_token %}
-        {% bootstrap_form form layout='inline' %}
-        <input type="submit" id="submit" name="submit" value="Sign in" class = "btn btn-primary"/>
+        {{ form }}
+   </div>
+   <div class="card-action center">
+        <input type="submit" id="submit" name="submit" value="Sign in" class = "btn valign"/>
         <input type="hidden" name="next" value="{{ next }}" />        
       </form>
-    </div>
+   </div>
+  </div>
     <a href="/register" id="new">new user</a><br />
-    <a href="{% url "password_reset_recover" %}" id="forgot"> forgot username/password</a><br />
-    </div>
+    <!--<a href="{% url "password_reset_recover" %}" id="forgot"> forgot username/password</a><br />-->
+</div>
 {% endblock %}
 {% block footer %}
 {{ footer }}

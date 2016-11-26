@@ -95,8 +95,9 @@ class Items(models.Model):
     
     #Ammount Due Ex 9999.99
     itemAmount = models.DecimalField(
-        max_digits=6,
+        max_digits=10,
         decimal_places=2,
+        validators=[MinValueValidator(1)],
         verbose_name='Amount'
     )
     
@@ -109,7 +110,7 @@ class Items(models.Model):
     
     #Hold day of the month expense is due
     nextDueDate = models.DateField(
-        default=date.today,
+        default=date.today().strftime('%m/%d/%Y'),
         verbose_name='Next Due Date',
     )
     
@@ -157,6 +158,7 @@ class BudgetData(models.Model):
     itemAmmount = models.DecimalField(
         max_digits=8,
         decimal_places=2,
+        validators=[MinValueValidator(1)],
         verbose_name='Amount'
     )
     #Hold effective date item
@@ -174,6 +176,13 @@ class BudgetData(models.Model):
     class Meta:
         
         verbose_name_plural = 'Budget Data'
+
+
+    @property
+    def is_today(self):
+       if date.today() == self.effectiveDate:
+           return True
+       return False
 
 
 class BudgetProfile(models.Model):

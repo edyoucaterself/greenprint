@@ -1,122 +1,147 @@
-
-.inline {
-  display: inline;
+/** General Site-wide **/
+ /* Site Header */
+.page-header {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#b2dfdb+0,80cbc4+16,4db6ac+53,26a69a+100 */
+  background: #b2dfdb; /* Old browsers */
+  background: -moz-linear-gradient(top,  #b2dfdb 0%, #80cbc4 16%, #4db6ac 53%, #26a69a 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top,  #b2dfdb 0%,#80cbc4 16%,#4db6ac 53%,#26a69a 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom,  #b2dfdb 0%,#80cbc4 16%,#4db6ac 53%,#26a69a 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b2dfdb',   endColorstr='#26a69a',GradientType=0 ); /* IE6-9 */
 }
 
-.link-button {
-  background: none;
-  border: none;
-  color: blue;
-  text-decoration: underline;
-  cursor: pointer;
-  font-size: 1em;
-  font-family: serif;
+.page-header a {
+  background: transparent;
+  font-size: 22pt;
+  font-weight: 600;
 }
-.link-button:focus {
-  outline: none;
-}
-.link-button:active {
-    color:red;
-}
-.well{
-    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#1e5799+0,1969aa+44,207cca+75,7db9e8+100 */
-    background: #1e5799; /* Old browsers */
-    background: -moz-linear-gradient(top,  #1e5799 0%, #1969aa 44%, #207cca 75%, #7db9e8 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(top,  #1e5799 0%,#1969aa 44%,#207cca 75%,#7db9e8 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to bottom,  #1e5799 0%,#1969aa 44%,#207cca 75%,#7db9e8 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#7db9e8',GradientType=0 ); /* IE6-9 */
-    color: rgb(255,255, 240);
-    font-weight: bold;
-    height: 25%;
-    margin: 0 auto;
+.card .card-action.header {
+  font-size: 12pt;
+  font-weight: 600;
+  padding: 20 20 30 20px;
 }
 
-.btn-xl {
-   .button-size(20px; 20px; 24px; 1; 10px);
+.card .card-action.header a{
+  font-size: 12pt;
+  font-weight: 600;
+}
+ /* Format btn group adding onto materialize collection class */
+
+.collection.btn-group {
+    border: none;
 }
 
-.center {
-    text-align: center;
-}
-.left {
-    test-align: left;
-}
-.nav{
-    text-align: center;
-    font-weight: bold;
-    font-size: large;
-}
-    
-label {
-    display: block;
-    font-size: 120%;
+.btn-grp {
+    width: 100%;
 }
 
-.button {
-    font-size: 100%;
+ /* Currect select box labels for materialize */
+.select-wrapper+label {
+   margin: 24 auto;
 }
 
-.debit {
-    color: green;
+/* modal customizations */
+.modal.bottom-sheet.open {
+   width: 60%;
+   margin: 0 auto;
 }
 
-.credit {
-    color: red;
+.model {
+   height: 100% !important ;
 }
 
-a.page-header {
-    border: 0px;
-}
-a.page-header:link {
-    text-decoration: none;
-    color: rgb(255, 255, 240);
-}
-
-a.page-header:visited {
-    text-decoration: none;
-    color: rgb(255, 255, 240);
-}
-
-a.page-header:hover {
-    text-decoration: underline;
-    color: rgb(245, 245, 230);
-}
-
-a.page-header:active {
-    text-decoration: underline;
-    color: rgb(245, 245, 230);
-}
-
-.radio {
-    width: 70%;
-    margin: 0 auto;
-}
-
+/** edititem page **/
+ /* Radio Buttons */
 .radio label {
     font-size: 10pt;
+    margin-right: 15;
+    margin-bottom: 28;
 }
 
-label#id_budgetLength {
-    font-size: 5em;
-}
-
-label#id_histLength {
-    font-size: 5em;
-}
-
-#id_budgetLength, #id_histLength {
-    vertical-align: top;
-    width: 25%;
-    min-width: 60px;
-}
-
-.input-small label {
-    width: 70%;
-    float: left;
-    font-size: 12pt;
-    font-weight: 600;
-    margin: 5 2;
-    max-width: 210px;
+ /* Format materialize rows containing forms */
+.row.form {
+   margin: 0 auto;
 }
 
 
+/** Registration form **/
+.regform {
+  margin: 30 20px;
+  padding-bottom: 10px;
+}
+
+.regform label {
+  padding: 5 0px
+}
+.regform span {
+  font-size: 10pt;
+}
+
+input#id_username, input#id_password2 {
+  margin-bottom: 5px;
+}
+
+/** Home Page **/
+ /* welcome message formatting */
+form p {
+  margin: 10 10px;
+  padding: 5 5px;
+}
+
+.card .card-content.welcome {
+  padding-bottom: 0px;
+}
+
+
+/* buttons on top of budget */
+.btn.budget-header {
+  padding: 0 14px;
+}
+
+/* Table columns for budget */
+
+.tcol-date {
+  width: 20%;
+}
+
+.tcol-name {
+  width: 30%;
+}
+
+.tcol-income {
+  width: 15%;
+}
+
+.tcol-expense {
+  width: 15%;
+}
+
+.tcol-total {
+  width: 20%;
+}
+
+
+/** item config page **/
+/* edit category button */
+.btn-edit-rel {
+  position: relative;
+  z-index : 1;
+  border: none;
+  float: right;
+  background-color: transparent;
+}
+
+.form-widget {
+  font-size: 20px; !important;
+}
+
+/* Select drop down font-size */
+
+.dropdown-content li {
+  font-size: 20px; 
+}
+
+/** Test 
+div, span, p{
+    border: 1px solid red;
+}
+**/

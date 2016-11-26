@@ -1,9 +1,16 @@
 {% extends "base.html" %}
 
-{% block title %}Page not found{% endblock %}
+{% block title %}{% endblock %}
 
-{% block content %}
-<h1>Page not found</h1>
-
-<p>Sorry, but the requested page could not be found.</p>
+ {% block content %}
+<div class="col s12 m4 push-m4">
+ <div class="card z-depth-3">
+    <div class="card-content center">
+      <span class="card-title">Whoopsies....</span>
+    </div>
+    <div class="card-action center">
+      <p>Sorry, but I have no idea what you want.</p>
+    </div>
+ </div>
+</div>
 {% endblock %}

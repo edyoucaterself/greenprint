@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load bootstrap3 %}
 {% comment %}
 Item edit template
 Author: Matt Agresta
@@ -14,22 +13,7 @@ put correct title
 {% endblock %}
 
 {% block content %}
-<form action="{% url 'edit' itemid %}" method="post">
-{% csrf_token %}
-{% bootstrap_form form layout='vertical' %}
-{% if notsingle %}
-<div class="radio">
-<input type="radio" name="edit_opt" value="single" checked="checked"> This occurrence only<br>
-<input type="radio" name="edit_opt" value="future"> Adjust future occurrences<br>
-<input type="radio" name="edit_opt" value="all"> Adjust all occurrence<br><br>
-</div>
-{% endif %}
-<div class="btn-group">
-<input type="submit" name="edititem_update" value="Update" class="btn btn-primary"/>
-<input type="submit" name="edititem_delete" value="Delete" class="btn btn-danger"/>
-<input type="submit" name="cancel" value="Cancel" class="btn btn-default"/>
-</div>
-</form>
+<h1> Bye </h1>
 {% endblock %}
 {% block footer %}
 {{ footer }}

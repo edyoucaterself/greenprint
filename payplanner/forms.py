@@ -51,8 +51,8 @@ class ExpensesForm(forms.ModelForm):
                                                                                    'config',
                                                                                    edit_url='settings',
                                                                                    to_page='ExpensesForm',
-                                                                                   choices=catchoices,
-                                                                                   attrs={'class':'form-control'}))
+                                                                                   choices=catchoices)
+                                                  )
 
         
     class Meta:
@@ -60,15 +60,9 @@ class ExpensesForm(forms.ModelForm):
         exclude = ('skiplst',)
         widgets = {'user': forms.HiddenInput(),
                    'itemType': forms.HiddenInput(),
-                   'itemName': forms.TextInput(attrs={'class':'form-control',}),
-                   'category': forms.Select(attrs={'class':'form-control',}),
-                   'itemAmount': forms.NumberInput(attrs={'class':'form-control',}),
-                   'payCycle': forms.Select(attrs={'class':'form-control',}),
-                   'itemNote': forms.TextInput(attrs={'class':'form-control',}),
-                   'nextDueDate': forms.DateInput(attrs={'name': 'date',
-                                                         'class':'form-control'}),
-                   'endDate': forms.DateInput(attrs={'name': 'date',
-                                                     'class':'form-control'})
+                   'payCycle': forms.Select(),
+                   'nextDueDate': forms.DateInput(attrs={'class': 'datepicker'}),
+                   'endDate': forms.DateInput(attrs={'class': 'datepicker'})
                    }
 
         
@@ -82,14 +76,8 @@ class IncomeForm(forms.ModelForm):
         exclude = ('category','skiplst')
         widgets = {'user': forms.HiddenInput(),
                    'itemType': forms.HiddenInput(),
-                   'itemName': forms.TextInput(attrs={'class':'form-control',}),
-                   'itemAmount': forms.NumberInput(attrs={'class':'form-control',}),
-                   'payCycle': forms.Select(attrs={'class':'form-control',}),
-                   'itemNote': forms.TextInput(attrs={'class':'form-control',}),
-                   'nextDueDate': forms.DateInput(attrs={'name': 'date',
-                                                         'class':'form-control'}),
-                   'endDate': forms.DateInput(attrs={'name': 'date',
-                                                     'class':'form-control'})
+                   'nextDueDate': forms.DateInput(attrs={'class': 'datepicker'}),
+                   'endDate': forms.DateInput(attrs={'class': 'datepicker'})
                    }
         
 
@@ -101,11 +89,10 @@ class EditForm(forms.ModelForm):
         model = BudgetData
         exclude = ('effectiveDate',)
         widgets = {'parentItem':forms.HiddenInput(),
-                   'itemAmmount':forms.NumberInput(attrs={'class':'form-control',}),
-                   'itemNote':forms.TextInput(attrs={'class':'form-control',})
                    }
         
 
+        
 class UserCatForm(forms.ModelForm):
 
     """Form to select Categories for user"""
@@ -115,7 +102,9 @@ class UserCatForm(forms.ModelForm):
         error_messages=form_errors,
         label="",
         queryset=Categories.objects.all(),
-        widget=FilteredSelectMultiple("Categories", is_stacked=False, attrs={'class':'form-control'}),
+        widget=FilteredSelectMultiple("Categories",
+                                      is_stacked=False,
+                                      attrs={'class':'browser-default'}),
         )
     
     class Meta:
@@ -129,8 +118,6 @@ class UserCatForm(forms.ModelForm):
         fields = "__all__"
         widgets = {'user':forms.HiddenInput(),}
 
-    class Media:
-        js = ("js/catsfilter.js",)
 
 class UserProfileForm(forms.ModelForm):
 
@@ -140,10 +127,6 @@ class UserProfileForm(forms.ModelForm):
         name = "User Profile"
         model = User
         fields = ('first_name','last_name','email')
-        widgets = {'first_name':forms.TextInput(attrs={'class':'form-control',}),
-                  'last_name': forms.TextInput(attrs={'class':'form-control',}),
-                  'email': forms.TextInput(attrs={'class':'form-control',})
-                   }
         
         
 class CategoriesForm(forms.ModelForm):
@@ -154,7 +137,6 @@ class CategoriesForm(forms.ModelForm):
         name = "Category"
         model = Categories
         fields = ('catName',)
-        widgets = {'catName': forms.TextInput(attrs={'class':'form-control',})}
 
 
 class BudgetProfileForm(forms.ModelForm):
@@ -166,6 +148,4 @@ class BudgetProfileForm(forms.ModelForm):
         model = BudgetProfile
         fields = '__all__'
         widgets = {'user':forms.HiddenInput(),
-                   'budgetLength':forms.NumberInput(attrs={'class':'form-control',}),
-                   'histLength':forms.NumberInput(attrs={'class':'form-control',})
                    }

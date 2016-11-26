@@ -1,16 +1,9 @@
 {% extends "base.html" %}
-{% load bootstrap3 %}
 {% comment %}
-Item edit template
+PW Reset
 Author: Matt Agresta
 Created on: 9/4/2016
-TODO:
-Add if statement to read variable to see if income or expense and
-put correct title
-{{form.username.label_tag}}{{form.username}}
-{{form.password.label_tag}}{{form.password}}<br>
-<input type="submit" id="submit" name="submit" value="Sign in" />
-<input type="hidden" name="next" value="{{ next }}" />
+
 {% endcomment %}
 
 
@@ -23,7 +16,7 @@ put correct title
     <h1>Please sign in</h1>
       <form action="{% url 'pwreset' %}" method="post">
         {% csrf_token %}
-        {% bootstrap_form form layout='inline' %}
+        {{ form }}
       </form>
     </div>
     </div>

@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load bootstrap3 %}
 {% comment %}
 Item edit template
 Author: Matt Agresta
@@ -14,26 +13,29 @@ put correct title
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid">
- <div class="row">
-  <div class="col-lg-3"></div>
-  <div class="col-xs-12 col-lg-6 form-group">
+<div class="container">
+ <div class="row form">
+  <div class="col s12">
    <form action="{% url 'manage' %}" method="post">
      {% csrf_token %}
-     {{ form.as_table }}
-  <div>
-  <div class="col-sm-3"></div>
+     {% if form.Meta.name == 'User Categories' %}
+      <div class="browser-default">
+      {{ form.as_table }}
+      </div>
+     {% else %}
+      {{ form.as_table }}
+     {% endif %}
+  </div>
  </div>
- <div class="row">
-  <div class="col-sm-3"></div>
+ <div class="row form">
      {% for hidden in form2.hidden_fields %}
-      <div class="col-xs-12 col-sm-6 form-group">{{ hidden }}</div>
+  <div class="col s12">{{ hidden }}</div>
      {% endfor %}
-  <div class="col-sm-3"></div>
+  
  </div>
  <div class="row">
      {% for field in form2.visible_fields %}
-       <div class="col-xs-6 input-small form-group">
+       <div class="col s6">
         {{ field.errors }}
         {{ field.label_tag }}
         {{ field }}
@@ -44,24 +46,65 @@ put correct title
      {% endfor %}
  </div>
  <div class="row center">
-  <div class="col-xs-12">
+  <div class="col s12 l6 push-l3">
    {% if is_get %}
-    <div class="center btn-group-vertical btn-group-lg">
-     <input type="submit" name="account_mgmt_btn" value="Edit Profile" class="btn btn-primary"/>
-     <input type="submit" name="account_mgmt_btn" value="Edit Categories" class="btn btn-primary"/>
-     <input type="submit" name="account_mgmt_btn" value="Delete Budget" class="btn btn-warning" onclick="return confirm('Remove all budget data?');"/>
-     <input type="submit" name="account_mgmt_btn" value="Delete Account" class="btn btn-danger" onclick="return confirm('Remove all account data?');"/>
-     <input type="submit" name="account_mgmt_btn" value="Home" class="btn btn-default"/>
-    </div>
+    <ul class="collection btn-group">
+     <li><button name="account_mgmt_btn" value="Edit Profile" class="btn-grp btn btn-large"><i class="large material-icons left">person</i>Edit Profile</button></li>
+     <li><button name="account_mgmt_btn" value="Edit Categories" class="btn-grp btn btn-large"><i class="large material-icons left">tune</i>Edit Categories</button></li>
+     <li><a class="btn btn-grp btn-large modal-trigger" href="#modal1"><i class="large material-icons left">delete</i>Reset Budget</a></li>
+
+       <!-- Modal Structure -->
+       <div id="modal1" class="modal bottom-sheet">
+          <div class="modal-content">
+             <h4>Delete Budget?</h4>
+             <p>This will erase your budget, are you sure?</p>
+          </div>
+          <div class="modal-footer">
+             <button name="account_mgmt_btn" value="Delete Budget" class="btn">Yes</button>
+             <a href="#" class="modal-action modal-close btn"/>No</a>
+          </div>
+       </div>
+      <!-- End of Modal -->
+
+     <li><a class="btn btn-grp btn-large modal-trigger" href="#modal2"><i class="large material-icons left">delete_forever</i>Delete Account</a></li>
+
+      <!-- Modal Structure -->
+       <div id="modal2" class="modal bottom-sheet">
+          <div class="modal-content">
+             <h4>Delete Account?</h4>
+             <p>This will erase all of your data, are you sure?</p>
+          </div>
+          <div class="modal-footer">
+             <button name="account_mgmt_btn" value="Delete Account" class="btn">Yes</button>
+             <a href="#" class="modal-action modal-close btn"/>No</a>
+          </div>
+       </div>
+       <!-- End of Modal -->
+
+     <li><button name="account_mgmt_btn" value="Home" class="btn-grp btn btn-large"><i class="large material-icons left">home</i>Home</button></li>
+    </ul>
    {% else %}
     <input type="hidden" name="formdata" value="{{ nextform }}"/>
-    <div class="btn-group">
-     <input type="submit" name="account_mgmt_btn" value="Save {{ form.Meta.name }}" class="btn btn-primary">
+
+     <button type="submit" name="account_mgmt_btn" value="Save {{ form.Meta.name }}" class="btn btn-primary">Save</button>
       {% if form.Meta.has_key %}
-     <input type="submit" name="account_mgmt_btn" value="Add {{ form.Meta.key_name }}" class="btn btn-primary">
+     <a class="btn modal-trigger" href="#modal3"><i class="large material-icons">add</i></a>
+       
+       <!-- Modal Structure -->
+       <div id="modal3" class="modal modal-fixed-footer">
+          <div class="modal-content">
+             <h4>Add Category</h4>
+             {{ form3 }}
+          </div>
+          <div class="modal-footer">
+             <button name="account_mgmt_btn" value="Save {{ form3.Meta.name }}" class="btn btn-primary">Save</button>
+          </div>
+       </div>
+       <!-- End of Modal -->
+   
       {% endif %}
      <input type="submit" name="account_mgmt_btn" value="Cancel" class="btn btn-default"/>
-    </div>
+
    {% endif %}
   </div>
  </div>

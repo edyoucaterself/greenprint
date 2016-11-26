@@ -26,15 +26,16 @@ class RelatedFieldWidgetAddEdit(widgets.Select):
         #Add Link
         if self.add_url:
             alt = 'Add Another'
-            output.append(u'<a href="%s" class="add-another" id="add_id_%s" onclick="return showAddAnotherPopup(this);"> ' % \
+            output.append(u'<a href="%s" class="add-another right" id="add_id_%s" onclick="return showAddAnotherPopup(this);"> ' % \
                 (self.add_url, name))
             output.append(u'<img src="%sadmin/img/icon_addlink.gif" width="10" height="10" alt="%s"/></a>&nbsp&nbsp' % (settings.STATIC_URL, alt))
 
         #Edit Button
         if self.edit_url:
             alt = 'Edit List'
-            output.append(u'<button type="submit" name="%s_btn" value="edit_%s" class="link-button">' % (self.view_name, name))
-            output.append(u'<img src="%sadmin/img/icon_changelink.gif" width="10" height="10" alt="%s"/></button>' % (settings.STATIC_URL, alt))
+            output.append(u'<button type="submit" name="%s_btn" value="edit_%s" class="btn-edit-rel">' % (self.view_name, name))
+            output.append(u'<i class="material-icons form-widget">mode_edit</i></button>')
+            
         selectobj = super(RelatedFieldWidgetAddEdit, self).render(name, value, *args, **kwargs)
         output.append(selectobj)
         

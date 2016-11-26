@@ -1,69 +1,124 @@
 {% load staticfiles %}
 <html>
 <head>
- {% load bootstrap3 %}
- {% bootstrap_css %}
- {% bootstrap_messages %}
- 
- <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
- <link rel="stylesheet" href="{% static 'css/datepicker.css' %}">
- <link rel="stylesheet" href="{% static 'admin/css/widgets.css' %}" />
- <link rel="stylesheet" href="{% static 'css/selector.css' %}">
- <link rel="stylesheet" href="{% static 'css/budget.css' %}">
- <link rel="stylesheet" href="{% static 'css/radios-to-slider.css' %}">
+ <!--Import Google Icon Font-->
+   <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+ <!--Import jquery CSS-->
+   <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+ <!--Import materialize.css-->
+   <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}" media="screen,projection"/>
+ <!--Import Custom CSS to formate widgets-->
+   <link rel="stylesheet" href="{% static 'admin/css/widgets.css' %}" />
+   <link rel="stylesheet" href="{% static 'css/selector.css' %}">
+   <link rel="stylesheet" href="{% static 'css/budget.css' %}">
+ <!--Import materialize.css-->
+   <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}"  media="screen,projection"/>
+   <link rel="stylesheet" href="{% static 'css/budget.css' %}">
+
 
  
- <script type="text/javascript" src="{% static 'js/jsi18n.js' %}"></script>
- <script type="text/javascript" src="/static/admin/js/jquery.min.js"></script>
- <script type="text/javascript" src="/static/admin/js/jquery.init.js"></script>
-    {{ form.media }}
- <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
- <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
- <script type="text/javascript" src="{% static 'js/jquery.radios-to-slider.js' %}"></script>
+<!--Import materialize.js-->
+      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+      <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+
+<!--Import local jquery scripts for filtered multiple select-->
+   <script type="text/javascript" src="{% static 'js/jsi18n.js' %}"></script>
+   <script type="text/javascript" src="{% static 'admin/js/jquery.min.js' %}"></script>
+   <script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>
+   
+<!--JS for home page table formatting -->
+<script type="text/javascript" src="{% static 'js/formload.js' %}"></script>
+
+<!--Form Media -->
+{{ form.media }}
+
+<!--Initialize select boxes and date pickers -->
+<script>
  
- <script>
- $(function() {
-     $( "#id_nextDueDate" ).datepicker({
-            showOtherMonths: true,
-            selectOtherMonths: true
-        });
-     $( "#id_endDate" ).datepicker({
-            showOtherMonths: true,
-            selectOtherMonths: true
-        });
- });
+ $(document).ready(function() {
+    $( '#id_category' ).material_select();
+    $( '#id_payCycle' ).material_select();
+    $('.datepicker').pickadate({
+    	selectMonths: true, // Creates a dropdown to control month
+    	selectYears: 15, // Creates a dropdown of 15 years to control year
+        format: 'mm/dd/yyyy',
+        onSet: function( arg ){
+            if ( 'select' in arg ){ //prevent closing on selecting month/year
+                 this.close();
+            }
+        }
+    });
+  });
+ 
+  $(document).ready(function(){
+    //Add depth to budget line on hover and see if toast should be shown
+     $('[id^="budget-line"]').hover(function() {
+        showToast($(this));
+        $(this).addClass("z-depth-1");
+        }, function(){
+        $(this).removeClass("z-depth-1"); 
+     });
+
+    //Highlight first row with current day
+     $('[name="True"]:first').addClass("teal lighten-4");
+
+    //Load modal with edititem form
+     $( ".modal-form-trigger" ).click(function() { 
+        loadModalForm('#modalform',$(this)); 
+        $('#modal1').openModal();
+     }); 
+   
+   //Load tooltips
+    $('.budget-header').tooltip({delay: 50});
+   
+   //Load other modals
+    $('.modal-trigger').leanModal(); 
+  
+   //Update date select on semi monthly
+    $('#id_payCycle').change(function() {
+        autoDate('#id_nextDueDate',$(this));
+    }); 
+     
+  });
+  
  </script>
  
-
+ <!--Let browser know website is optimized for mobile-->
+   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 {% block title %}{% endblock %}
 </head>
-<div class="container-fluid">
+<body class="grey lighten-4">
+<div class="container">
   <div class="row">
-    <div class="col-xs-12 well well-sm">
-     <h1 class="center"><a title="PayPlanner Home" href="{% url 'home' %}" class="page-header">GreenPrint PayPlanner</a></h1>
-      <div class="row">
-      <div class="col-xs-6">
-      {% if user.is_authenticated %}
-       {% if user.get_full_name %}
-       <p>Welcome {{ user.first_name }}!
-       {% else %}
-       <p>Welcome {{ user }}!
-       {% endif %}
-        <a title="Manage Settings" href="{% url 'manage' %}"><img border="0" width="75" alt="Manage Account" src="{% static "pics/settings.png" %}"></a>
-       </p>
+    <div class="col s12">
+      <div class="card page-header z-depth-3">
+       <div class="card-content center">
+        <span class="card-title"><a title="PayPlanner Home" href="{% url 'home' %}" class="amber-text text-darken-1 page-header">GreenPrint PayPlanner</a></span>
        </div>
-       <div class="col-xs-6 text-right">
-       <a href="{% url 'logout' %}" class="text-warning">Logout</a>
+        {% if user.is_authenticated %}
+       <div class="card-action header">
+         <span class="left">
+          {% if user.get_full_name %}
+           Welcome {{ user.first_name }}!
+          {% else %}
+           Welcome {{ user }}!
+          {% endif %}
+         <a title="Manage Settings" href="{% url 'manage' %}"><i class="tiny material-icons">settings</i></a>
+         </span>
+           <a href="{% url 'logout' %}" class="right">Logout<i class="material-icons right">exit_to_app</i></a>
+        {% endif %}
        </div>
-      {% endif %}
       </div>
     </div>
   </div>
- <div class="row">
-   <div class="col-xs-12">{% block content %}{% endblock %}</div>
+  <div class="row">
+    <div class="col s12">{% block content %}{% endblock %}</div>
   </div>
   <div class="row">
-   <div class="col-xs-12">{% block footer %}{% endblock %}</div>
+    <div class="col s12">{% block footer %}{% endblock %}</div>
   </div>
  </div>
+</body>
 </html>

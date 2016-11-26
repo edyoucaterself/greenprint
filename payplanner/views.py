@@ -198,12 +198,15 @@ def account_mgmt(request):
                     c = {'form': form,'footer':footer}
                     
             else:
+                temp = 'manage.html'
                 footer = 'Form Invalid'
+                c = {'form': form,'footer':footer}
                 
             #Render form with context
             return render(request, temp, c)
 
-        #Add Category Button
+        #Add Category Button - Depricated
+        #Replaced with modal (form3) on Edit Cateogries 
         elif account_mgmt_btn == "Add Category":
             form = CategoriesForm()
             footer = 'Add Category'
@@ -255,9 +258,12 @@ def account_mgmt(request):
         elif account_mgmt_btn == "Edit Categories":
             #Load UserCatForm from custom function
             form = usercatformload(request)
+            #Cateogry form for modal
+            form3 = CategoriesForm()
             temp = 'manage.html'
             footer = 'Select Desired Expense Categories'
             c = {'form':form,
+                 'form3': form3,
                  'footer':footer}
             return render(request, temp, c)
         
@@ -350,9 +356,12 @@ def config(request):
                                    force=True)
                 return redirect('home')
             else:
-                temp = 'config.html'     
+                temp = 'config.html'
+                itemtype = 'Expense'
                 footer = 'Expense Form Invalid'
-                c = {'form':form,'footer':footer,}
+                c = {'itemtype':itemtype,
+                     'form':form,
+                     'footer':footer,}
                 return render(request, temp, c)
             
         #Save Income
@@ -360,15 +369,21 @@ def config(request):
             form = IncomeForm(request.POST)
             if form.is_valid():
                 form.save()
-                Budget.update_data(request.user,
+                msg = Budget.update_data(request.user,
                                    budget_length=budlen,
                                    force=True)
-                return redirect('home')
-            else:
                 form = IncomeForm(request.POST)
                 temp = 'config.html'     
                 footer = 'Form Invalid'
-                c = {'form':form,'footer':footer,}
+                return redirect('home')
+            else:
+                form = IncomeForm(request.POST)
+                temp = 'config.html'
+                itemtype = 'Income'
+                footer = 'Form Invalid'
+                c = {'itemtype':itemtype,
+                     'form':form,
+                     'footer':footer,}
                 return render(request, temp, c)
             
         #Edit Categories Button Pressed on ExpensesForm
@@ -378,11 +393,13 @@ def config(request):
             form = usercatformload(request)
             #put request.post into dict and pass to template
             expensesform = request.POST
+            form3 = CategoriesForm()
             temp = 'manage.html'
             footer = 'Select desired categories'
-            c = {'form':form,
+            c = {'form': form,
+                 'form3': form3,
                  'nextform': expensesform,
-                 'footer':footer}
+                 'footer': footer}
             return render(request, temp, c)
         
         #Cancel Button    
@@ -407,12 +424,14 @@ def home(request):
     except BudgetProfile.DoesNotExist:
         budlen = 12
         histlen = 3
+    form = EditForm()
     footer = '* Line item modified'
-    Budget.update_data(request.user,budget_length=budlen)
+    footer2 = Budget.update_data(request.user,budget_length=budlen)
     lineitems = Budget.build(request.user,
                              historical_length=histlen,
                              budget_length=budlen)
-    c = {'lineitems': lineitems,
+    c = {'form': form,
+         'lineitems': lineitems,
          'footer':footer,}
     return render(request, 'home.html', c)
 
@@ -432,6 +451,7 @@ def edit(request, item_id):
         edit_btn = request.POST.get("edit_btn")
         
         if edit_btn == "Update":
+            exitmsg = ""
             item = BudgetData.objects.get(pk=item_id)
             init = {'itemAmmount':item.itemAmmount,
                     'itemNote':item.itemNote}
@@ -448,24 +468,28 @@ def edit(request, item_id):
                         editopt = request.POST['edit_opt']
                     except:
                         editopt = 'single'
+                        
                     #If future radio button selected    
                     if editopt == 'future':
                         #Update current and future dates()
                         junk,bunk = Budget.update_future(item,request.POST)
-                        footer = ''
-                    #If All button selected    
-                    elif editopt == 'all':
-                        Budget.update_all(item,request.POST)
-                        Budget.update_data(request.user,
+                        #Rebuild budget
+                        footer = Budget.update_data(request.user,
                                            budget_length=budlen,
                                            force=True)
                         
+                    #If All button selected    
+                    elif editopt == 'all':
+                        Budget.update_all(item,request.POST)
+                        
                     #If single or not present (implied single) update line
                     else:
-                        Budget.update_line(item,request.POST)
-                  
+                        exitmsg = Budget.update_line(item,request.POST)
+
+                    
                     #Redirect to home
                     return redirect('home')
+
             #Form Not Valid
             else:
                 temp = 'edititem.html'
@@ -509,11 +533,11 @@ def edit(request, item_id):
             notsingle = False
         form = EditForm(instance=item)
         name = item.parentItem.itemName.rstrip('*')
-        content_title = "%s - %s" % (name, item.effectiveDate.strftime("%m/%d/%Y"))
         footer = ''
         c = {'itemid': item_id,
              'name':name,
-             'content_title': content_title,
+             'name': name,
+             'date': item.effectiveDate,
              'notsingle':notsingle,
              'form':form,
              'footer':footer,}
