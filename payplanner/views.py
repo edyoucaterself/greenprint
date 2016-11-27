@@ -474,9 +474,6 @@ def edit(request, item_id):
                         #Update current and future dates()
                         junk,bunk = Budget.update_future(item,request.POST)
                         #Rebuild budget
-                        footer = Budget.update_data(request.user,
-                                           budget_length=budlen,
-                                           force=True)
                         
                     #If All button selected    
                     elif editopt == 'all':
@@ -486,7 +483,10 @@ def edit(request, item_id):
                     else:
                         exitmsg = Budget.update_line(item,request.POST)
 
-                    
+                    #Update Budget
+                    footer = Budget.update_data(request.user,
+                                                budget_length=budlen,
+                                               force=True)
                     #Redirect to home
                     return redirect('home')
 
