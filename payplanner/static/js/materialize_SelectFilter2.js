@@ -22,7 +22,7 @@ window.SelectFilter = {
         if('ontouchstart' in document.documentElement && screen.height < 700){
         //Need to add search filter - Anytime input changed hide all options not matching
             $('#id_cats').css('display','block');
-            $('#id_cats').css('-webkit-appearance', 'menulist-textfield');
+            $('#id_cats').css('-webkit-appearance', 'menuitem');
 	    $('#id_cats').css('height','175px');
             $('#id_cats').css('background-color','transparent');
             $('#id_cats').attr('size', 10);
