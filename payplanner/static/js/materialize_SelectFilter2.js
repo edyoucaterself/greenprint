@@ -18,6 +18,15 @@ window.SelectFilter = {
             // Don't initialize on empty forms.
             return;
         }
+        //Don't initialize on touch screen
+        if('ontouchstart' in document.documentElement){
+            $('#id_cats').css('display','block');
+            $('#id_cats').css('-webkit-appearance', 'menulist-textfield');
+	    $('#id_cats').css('height','175px');
+            $('#id_cats').css('background-color','transparent');
+            $('#id_cats').attr('size', 10);
+            return;
+        }
         var from_box = document.getElementById(field_id);
         from_box.id += '_from'; // change its ID
         from_box.className = 'filtered browser-default';
@@ -111,6 +120,7 @@ window.SelectFilter = {
 
         // Initial icon refresh
         SelectFilter.refresh_icons(field_id);
+
     },
     refresh_icons: function(field_id) {
         var from = $('#' + field_id + '_from');

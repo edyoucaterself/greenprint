@@ -106,7 +106,10 @@ class UserCatForm(forms.ModelForm):
                                       is_stacked=False,
                                       attrs={'class':'browser-default'}),
         )
-    
+    class Media:
+        js = ('js/materialize_SelectFilter2.js', )
+
+        
     class Meta:
         #Name used in save button 
         name = 'User Categories'
