@@ -23,10 +23,9 @@ window.SelectFilter = {
         //Need to add search filter - Anytime input changed hide all options not matching
             $('#id_cats').css('display','block');
             $('#id_cats').css('-webkit-appearance', 'menuitem');
-	    $('#id_cats').css('height','175px');
-            $('#id_cats').css('background-color','transparent');
-            $('#id_cats').attr('size', 10);
-            console.log(screen.height)
+	    $('#id_cats').css('height','75px');
+	    $('#id_cats').addClass('z-depth-2 blue-grey lighten-5')
+            $('#id_cats').css('box-shadow', '0 8px 17px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)');
             return;
         }
         var from_box = document.getElementById(field_id);
