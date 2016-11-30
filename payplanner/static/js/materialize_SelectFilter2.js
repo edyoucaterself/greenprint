@@ -18,13 +18,15 @@ window.SelectFilter = {
             // Don't initialize on empty forms.
             return;
         }
-        //Don't initialize on touch screen
-        if('ontouchstart' in document.documentElement){
+        //Show multiple select if touch screen
+        if('ontouchstart' in document.documentElement && screen.height < 700){
+        //Need to add search filter - Anytime input changed hide all options not matching
             $('#id_cats').css('display','block');
             $('#id_cats').css('-webkit-appearance', 'menulist-textfield');
 	    $('#id_cats').css('height','175px');
             $('#id_cats').css('background-color','transparent');
             $('#id_cats').attr('size', 10);
+            console.log(screen.height)
             return;
         }
         var from_box = document.getElementById(field_id);
