@@ -36,9 +36,9 @@ remove item, edit item
     
 	{% if item.running_total < 0 %}
        
-       <tr id="budget-line-{{ item.itemid }}" name="{{ item.istoday }}" title="{{ item.itemnote }}" class="modal-form-trigger red-text text-darken-1">
+       <tr id="budget-line-{{ item.itemid }}" name="{{ item.istoday }}" data-note="{{ item.itemnote }}" class="modal-form-trigger red-text text-darken-1">
         {% else %}
-       <tr id="budget-line-{{ item.itemid }}" name="{{ item.istoday }}" title="{{ item.itemnote }}" class="modal-form-trigger">
+       <tr id="budget-line-{{ item.itemid }}" name="{{ item.istoday }}" data-note="{{ item.itemnote }}" class="modal-form-trigger">
         {% endif %}
 
         <td name="{{ item.itemid }}_header">{{ item.itemdate }}  </td>

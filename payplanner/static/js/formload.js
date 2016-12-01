@@ -43,14 +43,13 @@ function autoDate(date_input,cycle_input) {
 
 //Function to show tooltips one at a time
 function showToast(row) {
-    var toast_str = row.attr("title");
+    var toast_str = row.attr("data-note");
+    console.log(toast_str)
     //if toast_str empty return from script
     //test for div with class of toast-container
     if ($('#toast-container')) {
-        //Remove children, call toast
-        console.log('Before Remove: ' + $('#toast-container'));
+        //Remove other containers, call toast
         $('#toast-container').remove()
-        console.log('After Remove: ' + $('#toast-container'));
         Materialize.toast(toast_str, 4000);
  
     } else {
