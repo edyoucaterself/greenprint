@@ -71,7 +71,8 @@ function loadModalForm(modalform, row) {
     $(modalform).attr("action", formpath);
 
     //Get cycle, if single set #radios attr style to "display:none;"
-    var cycle = $('[name="' + itemid +'_cycle"]').text();
+    var cycle = $('[name="' + itemid +'_header"]').attr('data-cycle');
+    console.log(cycle)
     if (cycle == "Single"){
         $('#radios').attr("style","display:none");
     } else {
@@ -93,4 +94,29 @@ function loadModalForm(modalform, row) {
         $(form_input).val(data); 
     }); 
     
+}
+
+//Format budget table for small screens
+function mobileformat(table) {
+    //Reduce padding and text size in table rows 
+    $("[id^='budget-line-']").css('padding', '3');
+    $("[id^='budget-line-']").css('font-size','small');
+    //Remove text from buttons in head
+    $("[data-tooltip='Add Expense']").text("-");
+    $("[data-tooltip='Add Income']").text("+");
+    console.log($("[name='id_runningTotal']"));
+    //cycle through all tds with budget-line-date and change text - NOT WORKING
+   //$("[name='id_itemDate']").each(function(i, obj) {
+   //    var d Date($(this).text());
+   //    var numdate = d.toString(MM-dd-YY);
+   //    $(this).text(numdate);
+   //}
+   //Drop running total column
+   //$("[name='id_runningTotal']").remove();
+   //$("[name$='_cycle']").css('width','0');
+   $("[name='id_runningTotal']").remove();
+   $(".tcol-total").remove();
+   //Shift expenses to the right, incomes to the left
+   //$("[class^='light-green-text']").css('text-align','left')
+   //$("[class^='red-text']").css('text-align','right')
 }

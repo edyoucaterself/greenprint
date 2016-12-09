@@ -19,7 +19,7 @@ remove item, edit item
  <div class="row">
   <div class="col s12">
    <div class="card-panel z-depth-2">
-   <table id="budget_table" class="highlight">
+   <table id="budget_table">
      <thead class="grey lighten-5">
        <tr>
         <th class="tcol-date"></th>
@@ -41,7 +41,7 @@ remove item, edit item
        <tr id="budget-line-{{ item.itemid }}" name="{{ item.istoday }}" data-note="{{ item.itemnote }}" class="modal-form-trigger">
         {% endif %}
 
-        <td name="{{ item.itemid }}_header">{{ item.itemdate }}  </td>
+        <td data-cycle="{{ item.cycle }}" name="{{ item.itemid }}_header">{{ item.itemdate }}  </td>
         <td name="{{ item.itemid }}_header">{{ item.name }}</td>
 
        {% if item.isincome %}
@@ -52,9 +52,7 @@ remove item, edit item
         <td name="id_itemAmmount" class="red-text text-darken-2">{{ item.amount }}</td>      
        {% endif %}
 
-        <td>{{ item.running_total }}</td>
-        <td name="id_itemNote" <div style="display:none;">{{ item.itemnote }}</div></td> 
-        <td name="{{ item.itemid }}_cycle"><div style="display:none;">{{ item.cycle }}</div></td> 
+        <td name="id_runningTotal">{{ item.running_total }}</td> 
       </tr>
     
       {% endfor %}

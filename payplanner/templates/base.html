@@ -56,9 +56,9 @@
     //Add depth to budget line on hover and see if toast should be shown
      $('[id^="budget-line"]').hover(function() {
         showToast($(this));
-        $(this).addClass("z-depth-1");
+        $(this).addClass("z-depth-1 amber lighten-5");
         }, function(){
-        $(this).removeClass("z-depth-1"); 
+        $(this).removeClass("z-depth-1 amber lighten-5"); 
      });
 
     //Highlight first row with current day
@@ -79,7 +79,13 @@
    //Update date select on semi monthly
     $('#id_payCycle').change(function() {
         autoDate('#id_nextDueDate',$(this));
-    });  
+    });
+    
+   //mobile formatting  
+    if($(document).width() < 500){
+        mobileformat();
+    }
+    console.log($(document).width());
   });
   
  </script>
