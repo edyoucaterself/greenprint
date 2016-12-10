@@ -111,13 +111,17 @@ function mobileformat(table) {
    //    $(this).text(numdate);
    //}
    //Drop running total column
-      $("[name='id_runningTotal']").remove();
+   $("[name='id_runningTotal']").remove();
    $(".tcol-total").remove();
    //format header
+
+   //Resize text
     $("#page_header").css('font-size','medium');
-    $("#username").remove();
     $("#header_controls").css('font-size','small');
+   //remove username and logout test
+    $("#username").remove();
     $("#logout").html($('#logout_icon'));
+   //Move logout and manage account buttons up
     $("#logout").css(
     {
       'position': 'relative',
@@ -130,11 +134,13 @@ function mobileformat(table) {
       'position': 'relative',
       'top': '-10px'
     });
+   //Reduce padding on header card
     $(".card-content").css(
     {
       'padding':'1',
       'height': '20px'
     });
     $(".card-action").css('padding', '18');
+   //Bring header and content closer together
     $("#header_row").css('margin-bottom', '2');
 }
