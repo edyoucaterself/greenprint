@@ -31,7 +31,8 @@ DEBUG = True
 #DEBUG = False
 ADMINS = (('Matt Agresta','agresta_matt@yahoo.com'),)
 MANAGERS = (('Matt Agresta','agresta_matt@yahoo.com'),)
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['*']
+#ALLOWED_HOSTS = ['localhost']
 
 #Redirect user login
 LOGIN_REDIRECT_URL = 'home'

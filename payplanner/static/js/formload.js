@@ -104,7 +104,6 @@ function mobileformat(table) {
     //Remove text from buttons in head
     $("[data-tooltip='Add Expense']").text("-");
     $("[data-tooltip='Add Income']").text("+");
-    console.log($("[name='id_runningTotal']"));
     //cycle through all tds with budget-line-date and change text - NOT WORKING
    //$("[name='id_itemDate']").each(function(i, obj) {
    //    var d Date($(this).text());
@@ -112,11 +111,30 @@ function mobileformat(table) {
    //    $(this).text(numdate);
    //}
    //Drop running total column
-   //$("[name='id_runningTotal']").remove();
-   //$("[name$='_cycle']").css('width','0');
-   $("[name='id_runningTotal']").remove();
+      $("[name='id_runningTotal']").remove();
    $(".tcol-total").remove();
-   //Shift expenses to the right, incomes to the left
-   //$("[class^='light-green-text']").css('text-align','left')
-   //$("[class^='red-text']").css('text-align','right')
+   //format header
+    $("#page_header").css('font-size','medium');
+    $("#username").remove();
+    $("#header_controls").css('font-size','small');
+    $("#logout").html($('#logout_icon'));
+    $("#logout").css(
+    {
+      'position': 'relative',
+      'top': '-15px',
+      'right': '-10px',
+      'font-size': 'small'
+    });
+    $("#manage_btn").css(
+    {
+      'position': 'relative',
+      'top': '-10px'
+    });
+    $(".card-content").css(
+    {
+      'padding':'1',
+      'height': '20px'
+    });
+    $(".card-action").css('padding', '18');
+    $("#header_row").css('margin-bottom', '2');
 }
