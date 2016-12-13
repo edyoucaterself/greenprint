@@ -107,23 +107,8 @@
   <div id="header_row" class="row">
     <div class="col s12">
       <div id="header_card" class="card page-header z-depth-3">
-       <div class="card-content center">
+       <div id="header_content" class="card-content center">
         <span class="card-title"><a id="page_header" title="PayPlanner Home" href="{% url 'home' %}" class="amber-text text-darken-1 page-header">GreenPrint PayPlanner</a></span>
-       </div>
-        {% if user.is_authenticated %}
-       <div class="card-action header">
-         <span class="left">
-          <div id="username">
-          {% if user.get_full_name %}
-           Welcome {{ user.first_name }}!
-          {% else %}
-           Welcome {{ user }}!
-          {% endif %}
-          </div>
-         <a id="manage_btn" title="Manage Settings" href="{% url 'manage' %}"><i class="tiny material-icons">settings</i></a>
-         </span>
-           <a id="logout" href="{% url 'logout' %}" class="right">Logout<i id="logout_icon" class="material-icons right">exit_to_app</i></a>
-        {% endif %}
        </div>
       </div>
     </div>

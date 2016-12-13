@@ -117,30 +117,40 @@ function mobileformat(table) {
 
    //Resize text
     $("#page_header").css('font-size','medium');
-    $("#header_controls").css('font-size','small');
-   //remove username and logout test
-    $("#username").remove();
-    $("#logout").html($('#logout_icon'));
-   //Move logout and manage account buttons up
-    $("#logout").css(
-    {
-      'position': 'relative',
-      'top': '-15px',
-      'right': '-10px',
-      'font-size': 'small'
-    });
-    $("#manage_btn").css(
-    {
-      'position': 'relative',
-      'top': '-10px'
-    });
+   
    //Reduce padding on header card
-    $(".card-content").css(
+   
+    $("#header_content").css(
     {
-      'padding':'1',
-      'height': '20px'
+      'padding':'2',
+      'height': '30px'
     });
-    $(".card-action").css('padding', '18');
+    
+
+    $("#header_action").css('padding', '18');
    //Bring header and content closer together
     $("#header_row").css('margin-bottom', '2');
+
+   //Format login page
+   $("#login_form").css(
+   {
+     'height': '244px',
+     'padding': '20px'
+   });
+   //Move title up
+   $("#page_header").css(
+   {
+     'position': 'relative',
+     'top': '-12px'
+   });
+
+   //Move FAB to the right
+   $(".fixed-action-btn").css(
+   {
+     'right': '-1px',
+     //'width': '8px',
+     //'height': '8px'
+   });
+   $("#fab_lnk").removeClass('btn-large');
+   $("#fab_lnk").addClass('btn');
 }

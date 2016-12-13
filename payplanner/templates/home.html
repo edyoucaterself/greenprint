@@ -107,6 +107,15 @@ checked="checked">
 </form>
 </div>
  {% endif %}
+<div class="fixed-action-btn">
+    <a id="fab_lnk" class="btn-floating btn-large teal">
+      <i class="large material-icons">view_module</i>
+    </a>
+    <ul>
+      <li><a class="btn-floating teal" href="{% url 'manage' %}"><i class="tiny material-icons">settings</i></a></li>
+      <li><a id="logout" class="btn-floating teal" href="{% url 'logout' %}"><i id="logout_icon" class="material-icons right">exit_to_app</i></a></li>
+    </ul>
+  </div>
 </div>
 {% endblock %}
 {% block footer %}

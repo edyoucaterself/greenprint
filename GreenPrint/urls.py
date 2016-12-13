@@ -3,13 +3,14 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.views.generic.edit import CreateView
 from password_reset import views as pwviews
-from payplanner.views import signup
+from payplanner.views import signup, billender
 
 urlpatterns = [
     url('^register/', signup, name="reg"),
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout_then_login, name='logout'),
     url(r'^payplanner/', include('payplanner.urls')),
+    url(r'^billender/$', billender, name='billender'),
     url(r'', include('payplanner.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^recover/(?P<signature>.+)/$', pwviews.recover_done, name='password_reset_sent'),
