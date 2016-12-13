@@ -24,7 +24,9 @@ from .budget import Budget
 def billender(request):
     """ Displays budget in calender view """
     #Build HTML Calender
-    billender = "<h2>Calender goes here</h2>"
+    year = 2016
+    month = 12
+    billender = Budget.build_cal(request.user, year, month)
     #Display in template
     temp = 'billender.html'
     c = {'billender': billender}

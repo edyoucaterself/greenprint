@@ -6,6 +6,7 @@
 import json
 import re
 from datetime import date
+from calendar import HTMLCalendar
 from dateutil.relativedelta import relativedelta
 from calendar import monthrange
 
@@ -17,6 +18,13 @@ from .models import Items, BudgetData, Cycles
 class Budget():
 
     """ Controls BudgetData via Items tables """
+
+    #Returns budget calender
+    @staticmethod
+    def build_cal(user, year, month):
+        cal = HTMLCalendar(6)
+        cal_month = cal.formatmonth(year, month)
+        return cal_month
     #Function to serialize date list to json
     #Returns str of serialized data
     @staticmethod
