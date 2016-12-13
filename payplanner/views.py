@@ -19,6 +19,17 @@ from .models import Items, BudgetData, Categories, UserCat, BudgetProfile
 from .budget import Budget
 
 
+#Billender view     
+@login_required
+def billender(request):
+    """ Displays budget in calender view """
+    #Build HTML Calender
+    billender = "<h2>Calender goes here</h2>"
+    #Display in template
+    temp = 'billender.html'
+    c = {'billender': billender}
+    return render(request, temp, c)
+
 #Function to load Expenses Form with previous Data
 #Need to pass category added to this and set it in forminit
 def expensesformload(request, **kwargs):
