@@ -71,8 +71,8 @@ function loadModalForm(modalform, row) {
     $(modalform).attr("action", formpath);
 
     //Get cycle, if single set #radios attr style to "display:none;"
-    var cycle = $('[name="' + itemid +'_header"]').attr('data-cycle');
-    console.log(cycle)
+    var cycle = row.attr('data-cycle');
+    console.log("Cycle - " + cycle)
     if (cycle == "Single"){
         $('#radios').attr("style","display:none");
     } else {
@@ -80,17 +80,20 @@ function loadModalForm(modalform, row) {
     }
 
     //Pass values to header
-    var header = $('[name="' + itemid + '_header"]').text();
-    console.log(header);        
+    var itemdate = row.find('[name="id_effectiveDate"]').text();
+    var itemname = row.find('[name="id_itemName"]').text();
+    var header = itemdate + " " + itemname
+    console.log("Modal Header " + header);        
     $("#subhead").text(header);
 
     //Get parentItem and pass
     //find each td element and populate form 
-    row.find("td").each(function(){ 
+    row.find('[name^="id_"]').each(function(){ 
         var data=$(this).text(); 
         var line_id=$(this).attr("name");  
         //put value into form 
         var form_input=modalform + " input[id=" + line_id + "]"; 
+        console.log($(this).attr('name') + " -- " + data)
         $(form_input).val(data); 
     }); 
     

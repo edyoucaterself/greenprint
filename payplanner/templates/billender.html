@@ -24,10 +24,33 @@ remove item, edit item
   </div>
  </div>
 </div> 
-{% endblock %}
-{% block footer %}
-{{ footer }}
-{% endblock %}
+
+<!-- Modal Structure --> 
+       <div id="modal1" class="modal modal-fixed-footer"> 
+          <div class="modal-content"> 
+            <h4>Edit Item</h4>
+            <h5 id="subhead"></h5> 
+            <form id="modalform" action="/config/" method="post"> 
+             {% csrf_token %}
+             {{ form }} 
+             <div id="radios" class="radio"> 
+              <input title="Apply Changes to this line only" id="single" type="radio" name="edit_opt" value="single"
+checked="checked"> 
+              <label for="single">This date only</label> 
+              <input title="Apply Changes to this line and future dates"id="future" type="radio" name="edit_opt" value="future"> 
+              <label for="future">Future</label> 
+              <input title="Apply Changes to all lines like this" id="all" type="radio" name="edit_opt" value="all"> 
+              <label for="all">All</label> 
+             </div> 
+          </div> 
+          <div class="modal-footer"> 
+              <input type="submit" name="edit_btn" value="Update" class="btn"/> 
+              <input type="submit" name="edit_btn" value="Delete" class="btn"/> 
+              <a href="#" class="modal-action modal-close btn"/>Cancel</a>
+          </div> 
+       </div> 
+<!-- End of Modal --> 
+
 <!-- FAB -->
 <div class="fixed-action-btn">
     <a class="btn-floating btn-large red">
@@ -40,5 +63,10 @@ remove item, edit item
     </ul>
   </div>
 </div>
+{% endblock %}
+{% block footer %}
+{{ footer }}
+{% endblock %}
+
 
 
