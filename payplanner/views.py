@@ -17,6 +17,7 @@ from .forms import UserCreateForm, UserCatForm, UserProfileForm
 from .forms import BudgetProfileForm, UserProfileForm
 from .models import Items, BudgetData, Categories, UserCat, BudgetProfile
 from .budget import Budget
+from .widgets import BillendarHTML
 
 
 #Billender view     
@@ -26,10 +27,11 @@ def billender(request):
     #Build HTML Calender
     year = 2016
     month = 12
-    billender = Budget.build_cal(request.user, year, month)
+    cal = BillendarHTML(6, request.user)
+    billendar = cal.formatmonth(2016,12)
     #Display in template
     temp = 'billender.html'
-    c = {'billender': billender}
+    c = {'billendar': billendar}
     return render(request, temp, c)
 
 #Function to load Expenses Form with previous Data

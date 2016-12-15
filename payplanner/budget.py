@@ -6,8 +6,8 @@
 import json
 import re
 from datetime import date
-from calendar import HTMLCalendar
 from dateutil.relativedelta import relativedelta
+from calendar import HTMLCalendar
 from calendar import monthrange
 
 from django.db.models import Max
@@ -18,13 +18,7 @@ from .models import Items, BudgetData, Cycles
 class Budget():
 
     """ Controls BudgetData via Items tables """
-
-    #Returns budget calender
-    @staticmethod
-    def build_cal(user, year, month):
-        cal = HTMLCalendar(6)
-        cal_month = cal.formatmonth(year, month)
-        return cal_month
+    
     #Function to serialize date list to json
     #Returns str of serialized data
     @staticmethod
@@ -219,7 +213,14 @@ class Budget():
     @staticmethod
     def build(username, **kwargs):
         #Grab all items from BudgetData and sort by date and then income/expense
-        itemlst = BudgetData.objects.values().filter(parentItem__user=username).order_by('effectiveDate','-parentItem__itemType')
+        #kwarg month should be tuple (month,year)
+        if 'month' in kwargs:
+            month,year = kwargs['month']
+            itemlst = BudgetData.objects.values().filter(parentItem__user=username,
+                                                         effectiveDate__month=month,
+                                                         effectiveDate__year=year).order_by('effectiveDate','-parentItem__itemType')
+        else:
+            itemlst = BudgetData.objects.values().filter(parentItem__user=username).order_by('effectiveDate','-parentItem__itemType')
         running_total = 0
         budget_output = []
         linenum = 1
