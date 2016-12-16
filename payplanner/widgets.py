@@ -79,16 +79,20 @@ class BillendarHTML(HTMLCalendar):
         table = soup.table
 
         for daycell in table.find_all("td"):
-            testvar = daycell.text
-            if daycell['class'] == 'noday':
+            try:
+                theday = int(daycell.text)
+            except ValueError:
                 continue
-            theday = daycell.string
+            
             curdate = date(theyear, themonth, theday)
+            #Skip if no budget items this day
+            if curdate not in calendaritems:
+                continue
             #Insert any items matching curdate
-            #for ele in calendaritems[curdate]:
-                #daycell.append(ele)
+            for ele in calendaritems[curdate]:
+                daycell.append(ele)
         #output.append(table)    
-        return curdate
+        return mark_safe(soup)
         #return mark_safe(u''.join(output))
         
 class RelatedFieldWidgetAddEdit(widgets.Select):
