@@ -79,21 +79,37 @@ class BillendarHTML(HTMLCalendar):
         table = soup.table
 
         for daycell in table.find_all("td"):
+            
+            #Assign CSS class
+            #BS4 no retruning list as documented, overwrite
+            daycell['class'] = 'cal-day'
+
+            #Add div element and put everything inside of it
+            
+            #Incremental value to be used in noday cells
+            noday = 1
             try:
                 theday = int(daycell.text)
             except ValueError:
+                # Set ID to ("day_%s" % noday)
                 continue
-            
+
             curdate = date(theyear, themonth, theday)
+            #Set id to ("day_%s" % curdate)
+
+            #Add Horizontal Rule
+            hrule = soup.new_tag("hr")
+            hrule['class'] = 'cal-day-hr'
+            daycell.append(hrule)
+            
             #Skip if no budget items this day
             if curdate not in calendaritems:
                 continue
             #Insert any items matching curdate
             for ele in calendaritems[curdate]:
                 daycell.append(ele)
-        #output.append(table)    
+                
         return mark_safe(soup)
-        #return mark_safe(u''.join(output))
         
 class RelatedFieldWidgetAddEdit(widgets.Select):
 

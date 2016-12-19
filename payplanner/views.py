@@ -27,11 +27,13 @@ def billender(request):
     #Build HTML Calender
     year = 2016
     month = 12
+    form = EditForm()
     cal = BillendarHTML(6, request.user)
     billendar = cal.formatmonth(2016,12)
     #Display in template
     temp = 'billender.html'
-    c = {'billendar': billendar}
+    c = {'billendar': billendar,
+         'form': form}
     return render(request, temp, c)
 
 #Function to load Expenses Form with previous Data
