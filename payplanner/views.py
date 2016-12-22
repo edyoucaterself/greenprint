@@ -4,6 +4,7 @@
 #-----------------------------------------------------------#
 #Set up Environment
 import ast
+from datetime import date
 
 from django.shortcuts import render,redirect
 from django.views.decorators.csrf import csrf_exempt
@@ -22,14 +23,12 @@ from .widgets import BillendarHTML
 
 #Billender view     
 @login_required
-def billender(request):
+def billender(request, year, month):
     """ Displays budget in calender view """
     #Build HTML Calender
-    year = 2016
-    month = 12
     form = EditForm()
     cal = BillendarHTML(6, request.user)
-    billendar = cal.formatmonth(2016,12)
+    billendar = cal.formatmonth(int(year),int(month))
     #Display in template
     temp = 'billender.html'
     c = {'billendar': billendar,
@@ -447,7 +446,10 @@ def home(request):
     lineitems = Budget.build(request.user,
                              historical_length=histlen,
                              budget_length=budlen)
+    #Pass Current date for url to billendar
+    curdate = date.today()
     c = {'form': form,
+         'curdate': curdate,
          'lineitems': lineitems,
          'footer':footer,}
     return render(request, 'home.html', c)
