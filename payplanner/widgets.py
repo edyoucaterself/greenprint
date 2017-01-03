@@ -79,14 +79,6 @@ class BillendarHTML(HTMLCalendar):
         soup = BeautifulSoup(html_doc, 'html.parser')
         table = soup.table
 
-        #Give Header elements a class
-        '''
-        for headercell in table.find_all("th"):
-            if 'colspan' in headercell.attrs:
-                headercell['class'] = "month-header"
-            else:
-                headercell['class'] = "cal-header"
-        '''
 
         rows = table.find_all("tr")
         monthrow = rows[0]
@@ -118,6 +110,7 @@ class BillendarHTML(HTMLCalendar):
         next_td = soup.new_tag("th", **{'class':'monthctrl'})
         next_td.append(next_btn)
         monthrow.append(next_td)
+
         
         for daycell in table.find_all("td"):
             
@@ -136,6 +129,14 @@ class BillendarHTML(HTMLCalendar):
             #Wrap date in p tag with class
             ptag = soup.new_tag("p", **{'class': 'daynum'})
             ptag.string  = daycell.text
+            #Button to expand day cell into modal
+            addbtn = soup.new_tag("a",
+                                  **{'class': 'modal-trigger-expand-day'})
+            addicon = soup.new_tag("i", **{'class': 'tiny material-icons right teal add_item'})
+            #Materialize icon in daycell header
+            addicon.string = 'open_in_new'
+            addbtn.append(addicon)
+            ptag.append(addbtn)
             daycell.string = ''
             daycell.insert(0,ptag)
 

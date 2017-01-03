@@ -1,10 +1,9 @@
 {% extends "base.html" %}
 {% comment %}
-Home index template
+billendar template
 Author: Matt Agresta
-Created on: 9/4/2016
-Will hold form to display budget, contain buttons to add item,
-remove item, edit item
+Created on: 12/16/2016
+Will hold form to display budget in calendar format
 
 {% endcomment %}
 {% block title %}
@@ -47,6 +46,22 @@ checked="checked">
               <input type="submit" name="edit_btn" value="Update" class="btn"/> 
               <input type="submit" name="edit_btn" value="Delete" class="btn"/> 
               <a href="#" class="modal-action modal-close btn"/>Cancel</a>
+          </div> 
+       </div> 
+<!-- End of Modal --> 
+
+<!-- Modal Structure --> 
+       <div id="modal_expand_day" class="modal modal-fixed-footer"> 
+          <div class="modal-content"> 
+           <h3 id="daynum"></h3>
+           <hr />
+           <div id="budget-items"></div>
+          </div> 
+          <div class="modal-footer"> 
+           <form action="{% url 'config' %}" method="post">
+            <button name="config_btn" value="Add Income" class="btn budget-header teal lighten-2 tooltipped" data-position="bottom" data-delay="50" data-tooltip="Add Income"><i class="material-icons">add</i>Income</button>
+            <button name="config_btn" value="Add Expense" class="btn budget-header teal lighten-2 tooltipped" data-position="bottom" data-delay="50" data-tooltip="Add Expense"><i class="material-icons">add</i>Expense</button>
+           </form>
           </div> 
        </div> 
 <!-- End of Modal --> 

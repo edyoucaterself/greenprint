@@ -149,13 +149,18 @@ div, span, p{
 
 /** Billender Page **/
 
+/*Calendar Month */
+table.month {
+
+   height: 70%;
+}
+
 /* Set Borders and Width on cells */
 .cal-day {
    border: 2px;
    border-style: solid;
    border-color: #E0E0E0; 
    width: 14%;
-   height: 20%;
    padding: 0 4;
    vertical-align: text-top;
    font-size: 10;
@@ -172,6 +177,12 @@ div, span, p{
    width: 80%; 
 }
 
+/* add item button */
+i.add_item {
+  border-radius: 4px;
+  color: white;
+}
+
 /* Scroll bar inside td elements */
 div.scrollable {
     width: 100%;
@@ -184,3 +195,5 @@ div.scrollable {
 .month-label {
     font-size: 25;
 }
+
+

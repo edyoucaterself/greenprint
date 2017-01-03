@@ -63,28 +63,34 @@
 
     //Highlight first row with current day
      $('[name="True"]:first').addClass("teal lighten-4");
+    
+     //Load modal with calendar day
+     $( ".modal-trigger-expand-day" ).click(function() { 
+        loadCalDayModay($(this).parent().parent()); 
+        $('#modal_expand_day').openModal();
+     });
 
     //Load modal with edititem form
      $( ".modal-form-trigger" ).click(function() { 
         loadModalForm('#modalform',$(this)); 
         $('#modal1').openModal();
      }); 
+
+    //Load tooltips
+     $('.budget-header').tooltip({delay: 50});
    
-   //Load tooltips
-    $('.budget-header').tooltip({delay: 50});
-   
-   //Load other modals
-    $('.modal-trigger').leanModal(); 
+    //Load other modals
+     $('.modal-trigger').leanModal(); 
   
-   //Update date select on semi monthly
-    $('#id_payCycle').change(function() {
+    //Update date select on semi monthly
+     $('#id_payCycle').change(function() {
         autoDate('#id_nextDueDate',$(this));
-    });
+     });
     
-   //mobile formatting  
-    if($(document).width() < 500){
+     //mobile formatting  
+     if($(document).width() < 500){
         mobileformat();
-    }
+     }
    
   });
   

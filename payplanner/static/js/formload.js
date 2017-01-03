@@ -157,3 +157,15 @@ function mobileformat(table) {
    $("#fab_lnk").removeClass('btn-large');
    $("#fab_lnk").addClass('btn');
 }
+
+//Format budget table for small screens
+function loadCalDayModay(daycell) {
+   //Clear modal
+   //$("#daycell_table").empty();
+   //Get class daynum and put in header
+   var daynum=daycell.find("p").text().match(/\d+/)[0];
+   $("#daynum").text(daynum)
+   //Get class scrollable 
+   var b_items=daycell.find("div").clone().first();
+   $("#budget-items").html(b_items);
+}
