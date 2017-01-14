@@ -25,6 +25,3 @@ python manage.py dumpdata payplanner --indent 4 --natural-foreign --format json 
 python manage.py dumpdata auth.user --indent 4 --natural-foreign --format json -o payplanner/fixtures/$(date -I)_user.json
 ```
 
-## Contributing
-
-Push commits to own forked repo, then submit PR. 
