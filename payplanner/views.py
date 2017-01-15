@@ -394,7 +394,7 @@ def config(request):
                                    force=True)
                 
                 #If previous page go back to billender
-                if prevpage is not None:
+                if prevpage == 'billender':
                     #return redirect(prevpage, year=curdate.year, month=curdate.month)
                     return redirect('%s/%s/%s' % (prevpage, curdate.year, curdate.strftime("%m")))
                 else:
@@ -421,7 +421,7 @@ def config(request):
                 footer = 'Form Invalid'
                 
                 #If previous page go back to billender
-                if prevpage is not None:
+                if prevpage == 'billender':
                     return redirect('%s/%s/%s' % (prevpage, curdate.year, curdate.strftime("%m")))
                 else:
                     return redirect('home')
@@ -454,7 +454,7 @@ def config(request):
         #Cancel Button    
         else:
             #If previous page go back to billender
-            if prevpage is not None:
+            if prevpage == 'billender':
                 return redirect('%s/%s/%s' % (prevpage, curdate.year, curdate.strftime("%m")))
             else:
                 return redirect('home')
