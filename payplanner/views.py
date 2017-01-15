@@ -336,14 +336,22 @@ def config(request):
             budlen = 12
             histlen = 4
 
+        #Check for previous page data
+        if 'prev_page' in request.POST:
+            prevpage = request.POST['prev_page']
+        else:
+            prevpage = None
+    
         #Check for a date to initialize nextduedate with
         if 'cur_date' in request.POST:
             s = request.POST['cur_date']
+            #d = datetime.strptime(s, "%d %B %Y")
             d = datetime.strptime(s, "%d %B %Y")
             curdate = d.date()
         else:
             curdate = date.today()
-            
+        curdate_str = (curdate.strftime("%d %B %Y"))
+        
         #Figure out which button was pressed
         #Add Income from home page
         if config_btn == "Add Income":
@@ -353,7 +361,9 @@ def config(request):
                                        'user': request.user,
                                        'nextDueDate': curdate})
             itemtype = 'Income'
-            c = {'itemtype':itemtype,
+            c = {'prevpage': prevpage,
+                 'curdate': curdate_str,
+                 'itemtype':itemtype,
                  'form':form,
                  'footer':footer,}
             return render(request, 'config.html', c)
@@ -369,7 +379,9 @@ def config(request):
                                 userid=request.user)
             c = {'itemtype':itemtype,
                  'form':form,
-                 'footer':footer,}
+                 'footer':footer,
+                 'prevpage': prevpage,
+                 'curdate': curdate_str,}
             return render(request, 'config.html', c)
         
         #Save Expense 
@@ -380,7 +392,13 @@ def config(request):
                 Budget.update_data(request.user,
                                    budget_length=budlen,
                                    force=True)
-                return redirect('home')
+                
+                #If previous page go back to billender
+                if prevpage is not None:
+                    #return redirect(prevpage, year=curdate.year, month=curdate.month)
+                    return redirect('%s/%s/%s' % (prevpage, curdate.year, curdate.strftime("%m")))
+                else:
+                    return redirect('home')
             else:
                 temp = 'config.html'
                 itemtype = 'Expense'
@@ -401,7 +419,12 @@ def config(request):
                 form = IncomeForm(request.POST)
                 temp = 'config.html'     
                 footer = 'Form Invalid'
-                return redirect('home')
+                
+                #If previous page go back to billender
+                if prevpage is not None:
+                    return redirect('%s/%s/%s' % (prevpage, curdate.year, curdate.strftime("%m")))
+                else:
+                    return redirect('home')
             else:
                 form = IncomeForm(request.POST)
                 temp = 'config.html'
@@ -430,7 +453,11 @@ def config(request):
         
         #Cancel Button    
         else:
-            return redirect('home')
+            #If previous page go back to billender
+            if prevpage is not None:
+                return redirect('%s/%s/%s' % (prevpage, curdate.year, curdate.strftime("%m")))
+            else:
+                return redirect('home')
 
     # if a GET (or any other method) we'll create a blank form
     else:

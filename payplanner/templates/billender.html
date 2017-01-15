@@ -61,6 +61,7 @@ checked="checked">
           <div class="modal-footer"> 
            <form action="{% url 'config' %}" method="post">
             <input type="hidden" name="cur_date" value="" />
+            <input type="hidden" name="prev_page" value="billender" />
             <button name="config_btn" value="Add Income" class="btn budget-header teal lighten-2 tooltipped" data-position="bottom" data-delay="50" data-tooltip="Add Income"><i class="material-icons">add</i>Income</button>
             <button name="config_btn" value="Add Expense" class="btn budget-header teal lighten-2 tooltipped" data-position="bottom" data-delay="50" data-tooltip="Add Expense"><i class="material-icons">add</i>Expense</button>
            </form>
