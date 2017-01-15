@@ -4,7 +4,7 @@
 #-----------------------------------------------------------#
 #Set up Environment
 import ast
-from datetime import date
+from datetime import date, datetime
 
 from django.shortcuts import render,redirect
 from django.views.decorators.csrf import csrf_exempt
@@ -326,8 +326,8 @@ def config(request):
     if request.method == 'POST':
         #Grab button data
         config_btn = request.POST.get("config_btn")
+        
         #Grab Settings from profile
-        #Get settings from budget profile
         try:
             budgetprofile = BudgetProfile.objects.get(user=request.user)
             budlen = budgetprofile.budgetLength
@@ -335,6 +335,14 @@ def config(request):
         except BudgetProfile.DoesNotExist:
             budlen = 12
             histlen = 4
+
+        #Check for a date to initialize nextduedate with
+        if 'cur_date' in request.POST:
+            s = request.POST['cur_date']
+            d = datetime.strptime(s, "%d %B %Y")
+            curdate = d.date()
+        else:
+            curdate = date.today()
             
         #Figure out which button was pressed
         #Add Income from home page
@@ -342,7 +350,8 @@ def config(request):
             #Render Income ModelForm
             footer = 'Adding Income'
             form = IncomeForm(initial={'itemType': 'income',
-                                       'user': request.user})
+                                       'user': request.user,
+                                       'nextDueDate': curdate})
             itemtype = 'Income'
             c = {'itemtype':itemtype,
                  'form':form,
@@ -355,7 +364,8 @@ def config(request):
             footer = 'Adding Expense'
             itemtype = 'Expense'
             form = ExpensesForm(initial={'itemType': 'expense',
-                                         'user': request.user},
+                                         'user': request.user,
+                                         'nextDueDate': curdate},
                                 userid=request.user)
             c = {'itemtype':itemtype,
                  'form':form,

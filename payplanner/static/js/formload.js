@@ -162,9 +162,20 @@ function mobileformat(table) {
 function loadCalDayModay(daycell) {
    //Clear modal
    //$("#daycell_table").empty();
+
+   //Get Year and Month from th.month-label
+   var monthyear=$(".month-label").text();
+   console.log(monthyear);
+
    //Get class daynum and put in header
    var daynum=daycell.find("p").text().match(/\d+/)[0];
    $("#daynum").text(daynum)
+   
+   //Put date value into hidden field cur_date
+   var curdate = daynum + " " + monthyear;
+   console.log(curdate);
+   $('[name="cur_date"]').attr("value", curdate);
+
    //Get class scrollable 
    var b_items=daycell.find("div").clone().first();
    $("#budget-items").html(b_items);
