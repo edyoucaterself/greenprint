@@ -505,6 +505,22 @@ def edit(request, item_id):
             budlen = 12
             histlen = 3
         edit_btn = request.POST.get("edit_btn")
+
+        #Check for previous page data
+        if 'prev_page' in request.POST:
+            prevpage = request.POST['prev_page']
+        else:
+            prevpage = None
+    
+        #Check for a date to initialize nextduedate with
+        if 'cur_date' in request.POST:
+            s = request.POST['cur_date']
+            #d = datetime.strptime(s, "%d %B %Y")
+            d = datetime.strptime(s, "%d %B %Y")
+            curdate = d.date()
+        else:
+            curdate = date.today()
+        curdate_str = (curdate.strftime("%d %B %Y"))
         
         if edit_btn == "Update":
             exitmsg = ""
@@ -516,7 +532,12 @@ def edit(request, item_id):
                 #If Nothing has changed redirect to /payplanner
                 changed = form.changed_data
                 if len(changed) < 2:
-                    return redirect('home')
+                    #If previous page go back to billender
+                    if prevpage == 'billender':
+                        return redirect('/%s/%s/%s' % (prevpage, curdate.year, curdate.strftime("%m")))
+                    else:
+                        return redirect('home')
+                    
                 #If something has changed call update_line(), redirect home
                 else:
                     #Get Radio button value if present, if not assign single
@@ -543,8 +564,13 @@ def edit(request, item_id):
                     footer = Budget.update_data(request.user,
                                                 budget_length=budlen,
                                                force=True)
-                    #Redirect to home
-                    return redirect('home')
+                    #If previous page go back to billender
+                    # Need to switch month off 0 scale
+                    ###You Are HERE!!!!
+                    if prevpage == 'billender':
+                        return redirect('%s/%s/%s' % (prevpage, curdate.year, curdate.strftime("%m")))
+                    else:
+                        return redirect('home')
 
             #Form Not Valid
             else:
@@ -571,13 +597,20 @@ def edit(request, item_id):
             except:
                 editopt = 'single'
             Budget.delete_item(item,editopt)
-            return redirect('home')
+            if prevpage == 'billender':
+                return redirect('/%s/%s/%s' % (prevpage, curdate.year, curdate.strftime("%m")))
+            else:
+                return redirect('home')
         
         #Cancel, Any other POST request
         else:
-            return redirect('home')
+            if prevpage == 'billender':#return redirect(prevpage, year=curdate.year, month=curdate.month)
+                return redirect('%s/%s/%s' % (prevpage, curdate.year, curdate.strftime("%m")))
+            else:
+                return redirect('home')
         
-    #Get Request (First call from home page)    
+    #Get Request (First call from home page)
+    #Depircated - Now in Modal
     else:
         temp = 'edititem.html'
         item = BudgetData.objects.get(pk=item_id)

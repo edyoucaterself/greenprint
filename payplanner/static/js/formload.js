@@ -80,7 +80,20 @@ function loadModalForm(modalform, row) {
     }
 
     //Pass values to header
+    //Get Date and reformat to (01 January 2017)
+    var m_names = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+
     var itemdate = row.find('[name="id_effectiveDate"]').text();
+    var curdate = itemdate.split('-');
+    curdateobj = new Date(curdate[0],curdate[1],curdate[2]);
+    var thedate = curdateobj.getDate();
+    var themonth = curdateobj.getMonth();
+    var theyear = curdateobj.getFullYear();
+    var curdate=thedate + " " + m_names[themonth] + " " + theyear;
+
+    //Assign date to hidden input
+    $('[name="cur_date"]').attr("value", curdate);
+
     var itemname = row.find('[name="id_itemName"]').text();
     var header = itemdate + " " + itemname
     console.log("Modal Header " + header);        

@@ -22,7 +22,7 @@ Will hold form to display budget in calendar format
    </div>
   </div>
  </div>
- 
+ </form>
 
 <!-- Modal Structure --> 
        <div id="modal1" class="modal modal-fixed-footer"> 
@@ -43,6 +43,8 @@ checked="checked">
              </div> 
           </div> 
           <div class="modal-footer"> 
+              <input type="hidden" name="cur_date" value="" />
+              <input type="hidden" name="prev_page" value="billender" />
               <input type="submit" name="edit_btn" value="Update" class="btn"/> 
               <input type="submit" name="edit_btn" value="Delete" class="btn"/> 
               <a href="#" class="modal-action modal-close btn"/>Cancel</a>
@@ -59,12 +61,10 @@ checked="checked">
            <div id="budget-items"></div>
           </div> 
           <div class="modal-footer"> 
-           <form action="{% url 'config' %}" method="post">
             <input type="hidden" name="cur_date" value="" />
             <input type="hidden" name="prev_page" value="billender" />
             <button name="config_btn" value="Add Income" class="btn budget-header teal lighten-2 tooltipped" data-position="bottom" data-delay="50" data-tooltip="Add Income"><i class="material-icons">add</i>Income</button>
             <button name="config_btn" value="Add Expense" class="btn budget-header teal lighten-2 tooltipped" data-position="bottom" data-delay="50" data-tooltip="Add Expense"><i class="material-icons">add</i>Expense</button>
-           </form>
           </div> 
        </div> 
 <!-- End of Modal --> 
